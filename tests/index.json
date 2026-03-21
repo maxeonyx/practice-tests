@@ -1,0 +1,18 @@
+{
+  "tests": [
+    {
+      "id": "nursing-fundamentals-sample",
+      "title": "Nursing Fundamentals Sample Test",
+      "description": "A sample nursing practice exam covering medication safety, infection control, assessment, and patient communication.",
+      "durationMinutes": 90,
+      "questionCount": 6,
+      "questionTypes": [
+        "Multiple Choice",
+        "True/False",
+        "Word Matching",
+        "Short Answer"
+      ],
+      "file": "tests/nursing-fundamentals-sample.json"
+    }
+  ]
+}

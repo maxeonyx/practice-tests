@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Tests</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <div id="app" class="site-shell">
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">Practice Test Platform</p>
+        <h1>Nursing Practice Tests</h1>
+        <p class="page-intro">Focused, exam-style practice with automatic saving, timing, and results review.</p>
+      </div>
+    </header>
+
+    <main class="page page-home">
+      <section class="panel panel-spacious">
+        <div class="section-heading">
+          <div>
+            <h2>Available Tests</h2>
+            <p>Choose a test to begin or resume where you left off.</p>
+          </div>
+        </div>
+
+        <p v-if="loading" class="empty-state">Loading tests...</p>
+        <p v-else-if="error" class="error-banner">{{ error }}</p>
+        <div v-else class="test-grid">
+          <article v-for="test in tests" :key="test.id" class="test-card">
+            <div class="test-card-header">
+              <div>
+                <h3>{{ test.title }}</h3>
+                <p>{{ test.description }}</p>
+              </div>
+              <span class="pill">{{ test.durationMinutes }} min</span>
+            </div>
+
+            <dl class="test-meta">
+              <div>
+                <dt>Questions</dt>
+                <dd>{{ test.questionCount }}</dd>
+              </div>
+              <div>
+                <dt>Question Types</dt>
+                <dd>{{ formatTypes(test.questionTypes) }}</dd>
+              </div>
+            </dl>
+
+            <div v-if="stateFor(test.id)" class="resume-banner">
+              <strong>{{ stateFor(test.id).label }}</strong>
+              <span>{{ stateFor(test.id).detail }}</span>
+            </div>
+
+            <div class="button-row">
+              <a class="button button-primary" :href="primaryLink(test.id)">{{ primaryLabel(test.id) }}</a>
+              <a v-if="hasSubmitted(test.id)" class="button button-secondary" :href="`results.html?test=${encodeURIComponent(test.id)}`">View Results</a>
+              <button v-if="canReset(test.id)" class="button button-secondary" type="button" @click="resetAttempt(test.id)">Reset Attempt</button>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script type="module" src="js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+{
+  "id": "nursing-fundamentals-sample",
+  "title": "Nursing Fundamentals Sample Test",
+  "description": "A Moodle-style sample test for nursing students preparing for a fundamentals exam.",
+  "durationMinutes": 90,
+  "questions": [
+    {
+      "id": "q1-right-patient",
+      "type": "multiple-choice",
+      "prompt": "Which action best confirms the right patient before administering medication?",
+      "options": [
+        "Ask the patient for their room number only",
+        "Compare two identifiers against the medication chart and wristband",
+        "Check the medication name against the bedside locker",
+        "Confirm the dose with another student nurse"
+      ],
+      "correctAnswer": "Compare two identifiers against the medication chart and wristband"
+    },
+    {
+      "id": "q2-pressure-injury",
+      "type": "true-false",
+      "prompt": "A stage 1 pressure injury presents with non-blanchable redness over intact skin.",
+      "correctAnswer": "True"
+    },
+    {
+      "id": "q3-matching-isolation",
+      "type": "matching",
+      "prompt": "Match each isolation precaution to the most appropriate example.",
+      "options": [
+        "N95 respirator",
+        "Single room and gown/gloves",
+        "Surgical mask within 1 metre"
+      ],
+      "pairs": [
+        {
+          "prompt": "Airborne precautions",
+          "answer": "N95 respirator"
+        },
+        {
+          "prompt": "Contact precautions",
+          "answer": "Single room and gown/gloves"
+        },
+        {
+          "prompt": "Droplet precautions",
+          "answer": "Surgical mask within 1 metre"
+        }
+      ]
+    },
+    {
+      "id": "q4-fluid-balance",
+      "type": "multiple-choice",
+      "prompt": "Which finding should the nurse report first when reviewing a postoperative fluid balance chart?",
+      "options": [
+        "Urine output of 20 mL over the last hour",
+        "Oral intake of 250 mL with lunch",
+        "IV fluids running at the prescribed rate",
+        "The patient asking for an extra blanket"
+      ],
+      "correctAnswer": "Urine output of 20 mL over the last hour"
+    },
+    {
+      "id": "q5-therapeutic-communication",
+      "type": "short-answer",
+      "prompt": "A patient says, 'I'm scared about going home after surgery.' Write a short therapeutic response you could use.",
+      "sampleResponseGuide": "Responses should acknowledge the patient's concern and invite them to share more or ask questions."
+    },
+    {
+      "id": "q6-handover",
+      "type": "true-false",
+      "prompt": "During handover, critical information should be passed on using a structured framework such as ISBAR.",
+      "correctAnswer": "True"
+    }
+  ]
+}

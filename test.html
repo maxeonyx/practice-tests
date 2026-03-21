@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <div id="app" class="site-shell">
+    <header class="site-header site-header-tight">
+      <div>
+        <p class="eyebrow">Practice Test</p>
+        <h1>{{ test?.title || 'Loading test...' }}</h1>
+        <p class="page-intro">One question at a time, with auto-save and a timed exam-style flow.</p>
+      </div>
+      <div v-if="test && attempt" class="status-strip">
+        <div class="status-card">
+          <span class="status-label">Time Remaining</span>
+          <strong :class="['timer-value', { 'timer-warning': remainingMs <= 300000 }]">{{ formatDuration(remainingMs) }}</strong>
+        </div>
+        <div class="status-card">
+          <span class="status-label">Progress</span>
+          <strong>{{ reviewMode ? 'Review' : `Question ${currentQuestionNumber} of ${test.questions.length}` }}</strong>
+        </div>
+        <div class="status-card">
+          <span class="status-label">Flagged</span>
+          <strong>{{ flaggedCount }}</strong>
+        </div>
+      </div>
+    </header>
+
+    <main class="page page-test">
+      <p v-if="loading" class="empty-state">Loading test...</p>
+      <p v-else-if="error" class="error-banner">{{ error }}</p>
+
+      <template v-else-if="test && attempt">
+        <section class="panel progress-panel">
+          <div class="progress-row">
+            <div class="progress-copy">
+              <strong>{{ reviewMode ? 'Review your responses' : `Question ${currentQuestionNumber} of ${test.questions.length}` }}</strong>
+              <span>{{ answeredCount }} answered, {{ unansweredCount }} unanswered, {{ flaggedCount }} flagged</span>
+            </div>
+            <button v-if="!reviewMode" class="button button-secondary" type="button" @click="toggleFlag(currentQuestion.id)">
+              {{ isFlagged(currentQuestion.id) ? 'Unflag Question' : 'Flag Question' }}
+            </button>
+          </div>
+          <div class="progress-bar" aria-hidden="true">
+            <div class="progress-bar-fill" :style="{ width: `${progressPercent}%` }"></div>
+          </div>
+        </section>
+
+        <section v-if="!reviewMode" class="panel question-panel">
+          <div class="question-meta-row">
+            <span class="question-type">{{ typeLabel(currentQuestion.type) }}</span>
+            <span v-if="isFlagged(currentQuestion.id)" class="pill pill-flagged">Flagged</span>
+          </div>
+
+          <h2>{{ currentQuestion.prompt }}</h2>
+
+          <div v-if="currentQuestion.type === 'multiple-choice'" class="option-list">
+            <label v-for="option in currentQuestion.options" :key="option" class="option-card">
+              <input type="radio" :name="currentQuestion.id" :value="option" :checked="currentAnswer === option" @change="updateAnswer(currentQuestion.id, option)">
+              <span>{{ option }}</span>
+            </label>
+          </div>
+
+          <div v-else-if="currentQuestion.type === 'true-false'" class="option-list option-list-inline">
+            <label v-for="option in ['True', 'False']" :key="option" class="option-card">
+              <input type="radio" :name="currentQuestion.id" :value="option" :checked="currentAnswer === option" @change="updateAnswer(currentQuestion.id, option)">
+              <span>{{ option }}</span>
+            </label>
+          </div>
+
+          <div v-else-if="currentQuestion.type === 'matching'" class="matching-grid">
+            <div v-for="pair in currentQuestion.pairs" :key="pair.prompt" class="matching-row">
+              <label :for="`match-${currentQuestion.id}-${pair.prompt}`">{{ pair.prompt }}</label>
+              <select :id="`match-${currentQuestion.id}-${pair.prompt}`" :value="matchingAnswerValue(pair.prompt)" @change="updateMatchingAnswer(currentQuestion.id, pair.prompt, $event.target.value)">
+                <option value="">Select an answer</option>
+                <option v-for="option in currentQuestion.options" :key="option" :value="option">{{ option }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div v-else-if="currentQuestion.type === 'short-answer'" class="short-answer-block">
+            <label :for="currentQuestion.id" class="visually-hidden">Answer</label>
+            <textarea :id="currentQuestion.id" rows="6" :value="currentAnswer || ''" @input="updateAnswer(currentQuestion.id, $event.target.value)" placeholder="Write your response here."></textarea>
+            <p class="helper-text">Short answers are shown on the results page for self-review and are not auto-marked.</p>
+          </div>
+
+          <div class="button-row button-row-spread">
+            <button class="button button-secondary" type="button" :disabled="attempt.currentIndex === 0" @click="goPrevious">Previous</button>
+            <div class="button-row">
+              <button class="button button-secondary" type="button" @click="openReview">Review</button>
+              <button class="button button-primary" type="button" @click="goNext">{{ isLastQuestion ? 'Review Answers' : 'Next' }}</button>
+            </div>
+          </div>
+        </section>
+
+        <section v-else class="panel review-panel">
+          <div class="section-heading">
+            <div>
+              <h2>Review Before Submission</h2>
+              <p>Check your answered and flagged questions before submitting the test.</p>
+            </div>
+          </div>
+
+          <div class="review-list">
+            <button v-for="(question, index) in test.questions" :key="question.id" class="review-item" type="button" @click="jumpToQuestion(index)">
+              <span class="review-number">Question {{ index + 1 }}</span>
+              <span class="review-text">{{ question.prompt }}</span>
+              <span class="review-badges">
+                <span :class="statusClass(question.id)">{{ answeredLabel(question.id) }}</span>
+                <span v-if="isFlagged(question.id)" class="pill pill-flagged">Flagged</span>
+              </span>
+            </button>
+          </div>
+
+          <div class="button-row button-row-spread">
+            <button class="button button-secondary" type="button" @click="closeReview">Back to Questions</button>
+            <button class="button button-primary" type="button" @click="submitTest(false)">Submit Test</button>
+          </div>
+        </section>
+      </template>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script type="module" src="js/test.js"></script>
+</body>
+</html>

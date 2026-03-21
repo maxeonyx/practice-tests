@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Test Results</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+  <div id="app" class="site-shell">
+    <header class="site-header site-header-tight">
+      <div>
+        <p class="eyebrow">Results</p>
+        <h1>{{ test?.title || 'Practice Test Results' }}</h1>
+        <p class="page-intro">Review your score, question outcomes, and any short answers that need self-assessment.</p>
+      </div>
+    </header>
+
+    <main class="page page-results">
+      <p v-if="loading" class="empty-state">Loading results...</p>
+      <p v-else-if="error" class="error-banner">{{ error }}</p>
+
+      <template v-else-if="test && summary">
+        <section class="panel score-panel">
+          <div>
+            <p class="eyebrow">Auto-marked Score</p>
+            <h2>{{ summary.earnedPoints }} / {{ summary.maxPoints }}</h2>
+            <p>{{ summary.percentage }}% across automatically marked questions.</p>
+          </div>
+          <div class="score-meta">
+            <div class="status-card">
+              <span class="status-label">Correct</span>
+              <strong>{{ summary.correctCount }}</strong>
+            </div>
+            <div class="status-card">
+              <span class="status-label">Incorrect</span>
+              <strong>{{ summary.incorrectCount }}</strong>
+            </div>
+            <div class="status-card">
+              <span class="status-label">Not Answered</span>
+              <strong>{{ summary.notAnsweredCount }}</strong>
+            </div>
+          </div>
+          <p v-if="attempt.summary?.submittedByTimer" class="status-unanswered">This attempt was submitted automatically when the timer expired.</p>
+          <p class="helper-text">Short answer responses are listed below for self-review and do not affect the score.</p>
+          <div class="button-row">
+            <button class="button button-primary" type="button" @click="retakeTest">Retake Test</button>
+            <a class="button button-secondary" :href="`test.html?test=${encodeURIComponent(test.id)}`">Open Test</a>
+            <a class="button button-secondary" href="index.html">Back to Tests</a>
+          </div>
+        </section>
+
+        <section class="panel panel-spacious">
+          <div class="section-heading">
+            <div>
+              <h2>Question Breakdown</h2>
+              <p>Each auto-marked question shows your response and the correct answer. Short answers remain for self-assessment.</p>
+            </div>
+          </div>
+
+          <article v-for="item in detailedResults" :key="item.question.id" class="result-card">
+            <div class="question-meta-row">
+              <span class="question-type">{{ typeLabel(item.question.type) }}</span>
+              <span :class="resultPillClass(item)">{{ resultLabel(item) }}</span>
+            </div>
+
+            <h3>{{ item.question.prompt }}</h3>
+
+            <div v-if="item.question.type === 'short-answer'" class="result-detail-block">
+              <p><strong>Your response:</strong></p>
+              <p>{{ item.display.response || 'No response provided.' }}</p>
+            </div>
+
+            <div v-else class="result-detail-block">
+              <p><strong>Your response:</strong> {{ item.display.response || 'Not answered' }}</p>
+              <p><strong>Correct answer:</strong> {{ item.display.correct }}</p>
+            </div>
+          </article>
+        </section>
+      </template>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script type="module" src="js/results.js"></script>
+</body>
+</html>
