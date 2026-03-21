@@ -298,6 +298,17 @@ h3 {
   background: var(--panel-muted);
 }
 
+.button-danger {
+  background: var(--danger-soft);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.button-danger:hover,
+.button-danger:focus-visible {
+  background: #f3d3d3;
+}
+
 .pill {
   display: inline-flex;
   align-items: center;

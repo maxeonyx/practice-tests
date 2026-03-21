@@ -11,6 +11,8 @@ createApp({
       attempt: null,
       summary: null,
       detailedResults: [],
+      pendingRetakeConfirmation: false,
+      retakeConfirmTimerId: null,
     };
   },
   async mounted() {
@@ -36,6 +38,9 @@ createApp({
     } finally {
       this.loading = false;
     }
+  },
+  beforeUnmount() {
+    this.clearRetakeConfirmation();
   },
   methods: {
     formatMarks,
@@ -79,13 +84,38 @@ createApp({
 
       return `${formatMarks(item.earnedPoints)} / ${formatMarks(item.maxPoints)} marks`;
     },
-    retakeTest() {
-      const confirmed = window.confirm('This will remove the saved results for this attempt and start a new attempt. Continue?');
+    retakeLabel() {
+      return this.pendingRetakeConfirmation ? 'Are you sure?' : 'Retake Test';
+    },
+    retakeButtonClass() {
+      return this.pendingRetakeConfirmation ? 'button-danger' : 'button-primary';
+    },
+    startRetakeConfirmation() {
+      if (this.retakeConfirmTimerId) {
+        window.clearTimeout(this.retakeConfirmTimerId);
+      }
 
-      if (!confirmed) {
+      this.pendingRetakeConfirmation = true;
+      this.retakeConfirmTimerId = window.setTimeout(() => {
+        this.pendingRetakeConfirmation = false;
+        this.retakeConfirmTimerId = null;
+      }, 3000);
+    },
+    clearRetakeConfirmation() {
+      if (this.retakeConfirmTimerId) {
+        window.clearTimeout(this.retakeConfirmTimerId);
+      }
+
+      this.pendingRetakeConfirmation = false;
+      this.retakeConfirmTimerId = null;
+    },
+    retakeTest() {
+      if (!this.pendingRetakeConfirmation) {
+        this.startRetakeConfirmation();
         return;
       }
 
+      this.clearRetakeConfirmation();
       clearAttempt(this.test.id);
       window.location.href = `test.html?test=${encodeURIComponent(this.test.id)}`;
     },

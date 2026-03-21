@@ -9,6 +9,8 @@ createApp({
       error: '',
       tests: [],
       attemptStates: {},
+      pendingResetTestId: null,
+      resetConfirmTimerId: null,
     };
   },
   async mounted() {
@@ -23,6 +25,9 @@ createApp({
     } finally {
       this.loading = false;
     }
+  },
+  beforeUnmount() {
+    this.clearResetConfirmation();
   },
   methods: {
     formatTypes(types) {
@@ -68,19 +73,48 @@ createApp({
     canReset(testId) {
       return Boolean(this.attemptStates[testId]);
     },
+    isResetPending(testId) {
+      return this.pendingResetTestId === testId;
+    },
     secondaryLabel(testId) {
+      if (this.isResetPending(testId)) {
+        return 'Are you sure?';
+      }
+
       return this.attemptStates[testId]?.submitted ? 'Retake' : 'Reset Attempt';
     },
-    resetAttempt(testId) {
-      const submitted = Boolean(this.attemptStates[testId]?.submitted);
-      const confirmed = window.confirm(submitted
-        ? 'This will remove the saved results for this attempt and start again. Continue?'
-        : 'This will delete your saved progress for this attempt. Continue?');
+    secondaryButtonClass(testId) {
+      return this.isResetPending(testId) ? 'button-danger' : 'button-secondary';
+    },
+    startResetConfirmation(testId) {
+      if (this.resetConfirmTimerId) {
+        window.clearTimeout(this.resetConfirmTimerId);
+      }
 
-      if (!confirmed) {
+      this.pendingResetTestId = testId;
+      this.resetConfirmTimerId = window.setTimeout(() => {
+        if (this.pendingResetTestId === testId) {
+          this.pendingResetTestId = null;
+        }
+
+        this.resetConfirmTimerId = null;
+      }, 3000);
+    },
+    clearResetConfirmation() {
+      if (this.resetConfirmTimerId) {
+        window.clearTimeout(this.resetConfirmTimerId);
+      }
+
+      this.pendingResetTestId = null;
+      this.resetConfirmTimerId = null;
+    },
+    resetAttempt(testId) {
+      if (!this.isResetPending(testId)) {
+        this.startResetConfirmation(testId);
         return;
       }
 
+      this.clearResetConfirmation();
       clearAttempt(testId);
       this.attemptStates[testId] = null;
     },
