@@ -22,6 +22,7 @@ createApp({
       attempt: null,
       remainingMs: 0,
       reviewMode: false,
+      navOpen: false,
       timerId: null,
       submitting: false,
     };
@@ -67,6 +68,7 @@ createApp({
       this.test = await loadTest(testId);
       this.attempt = getAttempt(this.test) || createAttempt(this.test);
       this.reviewMode = Boolean(this.attempt.reviewMode);
+      this.navOpen = window.innerWidth >= 960;
       this.remainingMs = remainingMs(this.attempt);
       saveAttempt(this.test.id, this.attempt);
 
@@ -159,15 +161,24 @@ createApp({
     },
     openReview() {
       this.reviewMode = true;
+      this.navOpen = true;
       this.persistAttempt();
     },
     closeReview() {
       this.reviewMode = false;
       this.persistAttempt();
     },
+    toggleNavPanel() {
+      this.navOpen = !this.navOpen;
+    },
     jumpToQuestion(index) {
       this.attempt.currentIndex = index;
       this.reviewMode = false;
+
+      if (window.innerWidth < 960) {
+        this.navOpen = false;
+      }
+
       this.persistAttempt();
     },
     answeredLabel(questionId) {
@@ -177,6 +188,17 @@ createApp({
     statusClass(questionId) {
       const question = this.test.questions.find((item) => item.id === questionId);
       return isQuestionAnswered(question, this.attempt.answers[questionId]) ? 'status-answered' : 'status-unanswered';
+    },
+    questionNavLabel(questionId) {
+      return this.isFlagged(questionId) ? `${this.answeredLabel(questionId)} - Flagged` : this.answeredLabel(questionId);
+    },
+    questionNavClass(questionId, index) {
+      return [
+        'question-nav-button',
+        isQuestionAnswered(this.test.questions[index], this.attempt.answers[questionId]) ? 'question-nav-answered' : 'question-nav-unanswered',
+        { 'question-nav-current': !this.reviewMode && this.attempt.currentIndex === index },
+        { 'question-nav-flagged': this.isFlagged(questionId) },
+      ];
     },
     submitTest(fromTimer) {
       if (this.submitting || !this.test || !this.attempt || this.attempt.submitted) {
@@ -192,6 +214,8 @@ createApp({
       this.attempt.summary = {
         earnedPoints: summary.earnedPoints,
         maxPoints: summary.maxPoints,
+        totalMarks: summary.totalMarks,
+        manualReviewMarks: summary.manualReviewMarks,
         percentage: summary.percentage,
         submittedByTimer: fromTimer,
       };

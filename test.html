@@ -44,9 +44,14 @@
               <strong>{{ reviewMode ? 'Review your responses' : `Question ${currentQuestionNumber} of ${test.questions.length}` }}</strong>
               <span>{{ answeredCount }} answered, {{ unansweredCount }} unanswered, {{ flaggedCount }} flagged</span>
             </div>
-            <button v-if="!reviewMode" class="button button-secondary" type="button" @click="toggleFlag(currentQuestion.id)">
-              {{ isFlagged(currentQuestion.id) ? 'Unflag Question' : 'Flag Question' }}
-            </button>
+            <div class="button-row progress-actions">
+              <button class="button button-secondary nav-toggle" type="button" @click="toggleNavPanel" :aria-expanded="String(navOpen)">
+                {{ navOpen ? 'Hide Question Map' : 'Show Question Map' }}
+              </button>
+              <button v-if="!reviewMode" class="button button-secondary" type="button" @click="toggleFlag(currentQuestion.id)">
+                {{ isFlagged(currentQuestion.id) ? 'Unflag Question' : 'Flag Question' }}
+              </button>
+            </div>
           </div>
           <div class="progress-bar" aria-hidden="true">
             <div class="progress-bar-fill" :style="{ width: `${progressPercent}%` }"></div>
@@ -54,78 +59,116 @@
           <p class="helper-text autosave-note">Answers, flags, and remaining time save automatically on this device.</p>
         </section>
 
-        <section v-if="!reviewMode" class="panel question-panel">
-          <div class="question-meta-row">
-            <span class="question-type">{{ typeLabel(currentQuestion.type) }}</span>
-            <span v-if="isFlagged(currentQuestion.id)" class="pill pill-flagged">Flagged</span>
-          </div>
+        <div class="test-layout">
+          <section class="panel question-panel">
+            <template v-if="!reviewMode">
+              <div class="question-meta-row">
+                <span class="question-type">{{ typeLabel(currentQuestion.type) }}</span>
+                <div class="question-meta-badges">
+                  <span class="pill pill-marks">{{ currentQuestion.marks }} mark{{ currentQuestion.marks === 1 ? '' : 's' }}</span>
+                  <span v-if="isFlagged(currentQuestion.id)" class="pill pill-flagged">Flagged</span>
+                </div>
+              </div>
 
-          <h2>{{ currentQuestion.prompt }}</h2>
+              <h2>{{ currentQuestion.prompt }}</h2>
 
-          <div v-if="currentQuestion.type === 'multiple-choice'" class="option-list">
-            <label v-for="option in currentQuestion.options" :key="option" class="option-card">
-              <input type="radio" :name="currentQuestion.id" :value="option" :checked="currentAnswer === option" @change="updateAnswer(currentQuestion.id, option)">
-              <span>{{ option }}</span>
-            </label>
-          </div>
+              <div v-if="currentQuestion.type === 'multiple-choice'" class="option-list">
+                <label v-for="option in currentQuestion.options" :key="option" class="option-card">
+                  <input type="radio" :name="currentQuestion.id" :value="option" :checked="currentAnswer === option" @change="updateAnswer(currentQuestion.id, option)">
+                  <span>{{ option }}</span>
+                </label>
+              </div>
 
-          <div v-else-if="currentQuestion.type === 'true-false'" class="option-list option-list-inline">
-            <label v-for="option in ['True', 'False']" :key="option" class="option-card">
-              <input type="radio" :name="currentQuestion.id" :value="option" :checked="currentAnswer === option" @change="updateAnswer(currentQuestion.id, option)">
-              <span>{{ option }}</span>
-            </label>
-          </div>
+              <div v-else-if="currentQuestion.type === 'true-false'" class="option-list option-list-inline">
+                <label v-for="option in ['True', 'False']" :key="option" class="option-card">
+                  <input type="radio" :name="currentQuestion.id" :value="option" :checked="currentAnswer === option" @change="updateAnswer(currentQuestion.id, option)">
+                  <span>{{ option }}</span>
+                </label>
+              </div>
 
-          <div v-else-if="currentQuestion.type === 'matching'" class="matching-grid">
-            <div v-for="pair in currentQuestion.pairs" :key="pair.prompt" class="matching-row">
-              <label :for="`match-${currentQuestion.id}-${pair.prompt}`">{{ pair.prompt }}</label>
-              <select :id="`match-${currentQuestion.id}-${pair.prompt}`" :value="matchingAnswerValue(pair.prompt)" @change="updateMatchingAnswer(currentQuestion.id, pair.prompt, $event.target.value)">
-                <option value="">Select an answer</option>
-                <option v-for="option in currentQuestion.options" :key="option" :value="option" :disabled="isMatchingOptionDisabled(option, pair.prompt)">{{ option }}</option>
-              </select>
+              <div v-else-if="currentQuestion.type === 'matching'" class="matching-grid">
+                <div v-for="pair in currentQuestion.pairs" :key="pair.prompt" class="matching-row">
+                  <label :for="`match-${currentQuestion.id}-${pair.prompt}`">{{ pair.prompt }}</label>
+                  <select :id="`match-${currentQuestion.id}-${pair.prompt}`" :value="matchingAnswerValue(pair.prompt)" @change="updateMatchingAnswer(currentQuestion.id, pair.prompt, $event.target.value)">
+                    <option value="">Select an answer</option>
+                    <option v-for="option in currentQuestion.options" :key="option" :value="option" :disabled="isMatchingOptionDisabled(option, pair.prompt)">{{ option }}</option>
+                  </select>
+                </div>
+                <p class="helper-text">Each answer can only be used once.</p>
+              </div>
+
+              <div v-else-if="currentQuestion.type === 'short-answer'" class="short-answer-block">
+                <label :for="currentQuestion.id" class="visually-hidden">Answer</label>
+                <textarea :id="currentQuestion.id" rows="6" :value="currentAnswer || ''" @input="updateAnswer(currentQuestion.id, $event.target.value)" placeholder="Write your response here."></textarea>
+                <p class="helper-text">Short answers are shown on the results page for self-review and are not auto-marked.</p>
+              </div>
+
+              <div class="button-row button-row-spread">
+                <button class="button button-secondary" type="button" :disabled="attempt.currentIndex === 0" @click="goPrevious">Previous</button>
+                <div class="button-row">
+                  <button class="button button-secondary" type="button" @click="openReview">Review</button>
+                  <button class="button button-primary" type="button" @click="goNext">{{ isLastQuestion ? 'Review Answers' : 'Next' }}</button>
+                </div>
+              </div>
+            </template>
+
+            <template v-else>
+              <div class="section-heading">
+                <div>
+                  <h2>Review Before Submission</h2>
+                  <p>Check your answered and flagged questions before submitting the test.</p>
+                </div>
+              </div>
+
+              <div class="review-list">
+                <button v-for="(question, index) in test.questions" :key="question.id" class="review-item" type="button" @click="jumpToQuestion(index)">
+                  <span class="review-number">Question {{ index + 1 }}</span>
+                  <span class="review-text">{{ question.prompt }}</span>
+                  <span class="review-badges">
+                    <span :class="statusClass(question.id)">{{ answeredLabel(question.id) }}</span>
+                    <span v-if="isFlagged(question.id)" class="pill pill-flagged">Flagged</span>
+                  </span>
+                </button>
+              </div>
+
+              <div class="button-row button-row-spread">
+                <button class="button button-secondary" type="button" @click="closeReview">Back to Questions</button>
+                <button class="button button-primary" type="button" @click="submitTest(false)">Submit Test</button>
+              </div>
+            </template>
+          </section>
+
+          <aside :class="['panel', 'question-nav-panel', { 'question-nav-panel-open': navOpen }]">
+            <div class="section-heading question-nav-heading">
+              <div>
+                <h2>Question Map</h2>
+                <p>Jump to any question. Buttons show answered, unanswered, and flagged status.</p>
+              </div>
             </div>
-            <p class="helper-text">Each answer can only be used once.</p>
-          </div>
 
-          <div v-else-if="currentQuestion.type === 'short-answer'" class="short-answer-block">
-            <label :for="currentQuestion.id" class="visually-hidden">Answer</label>
-            <textarea :id="currentQuestion.id" rows="6" :value="currentAnswer || ''" @input="updateAnswer(currentQuestion.id, $event.target.value)" placeholder="Write your response here."></textarea>
-            <p class="helper-text">Short answers are shown on the results page for self-review and are not auto-marked.</p>
-          </div>
-
-          <div class="button-row button-row-spread">
-            <button class="button button-secondary" type="button" :disabled="attempt.currentIndex === 0" @click="goPrevious">Previous</button>
-            <div class="button-row">
-              <button class="button button-secondary" type="button" @click="openReview">Review</button>
-              <button class="button button-primary" type="button" @click="goNext">{{ isLastQuestion ? 'Review Answers' : 'Next' }}</button>
+            <div class="question-nav-grid" role="navigation" aria-label="Question navigation">
+              <button
+                v-for="(question, index) in test.questions"
+                :key="question.id"
+                :class="questionNavClass(question.id, index)"
+                type="button"
+                :aria-current="!reviewMode && attempt.currentIndex === index ? 'step' : null"
+                @click="jumpToQuestion(index)"
+              >
+                <span class="question-nav-number">{{ index + 1 }}</span>
+                <span class="question-nav-label">{{ questionNavLabel(question.id) }}</span>
+                <span v-if="isFlagged(question.id)" class="question-nav-flag">Flagged</span>
+              </button>
             </div>
-          </div>
-        </section>
 
-        <section v-else class="panel review-panel">
-          <div class="section-heading">
-            <div>
-              <h2>Review Before Submission</h2>
-              <p>Check your answered and flagged questions before submitting the test.</p>
+            <div class="question-nav-legend">
+              <span class="question-nav-legend-item"><span class="question-nav-swatch question-nav-swatch-current"></span>Current</span>
+              <span class="question-nav-legend-item"><span class="question-nav-swatch question-nav-swatch-answered"></span>Answered</span>
+              <span class="question-nav-legend-item"><span class="question-nav-swatch question-nav-swatch-unanswered"></span>Unanswered</span>
+              <span class="question-nav-legend-item"><span class="question-nav-swatch question-nav-swatch-flagged"></span>Flagged</span>
             </div>
-          </div>
-
-          <div class="review-list">
-            <button v-for="(question, index) in test.questions" :key="question.id" class="review-item" type="button" @click="jumpToQuestion(index)">
-              <span class="review-number">Question {{ index + 1 }}</span>
-              <span class="review-text">{{ question.prompt }}</span>
-              <span class="review-badges">
-                <span :class="statusClass(question.id)">{{ answeredLabel(question.id) }}</span>
-                <span v-if="isFlagged(question.id)" class="pill pill-flagged">Flagged</span>
-              </span>
-            </button>
-          </div>
-
-          <div class="button-row button-row-spread">
-            <button class="button button-secondary" type="button" @click="closeReview">Back to Questions</button>
-            <button class="button button-primary" type="button" @click="submitTest(false)">Submit Test</button>
-          </div>
-        </section>
+          </aside>
+        </div>
       </template>
     </main>
   </div>

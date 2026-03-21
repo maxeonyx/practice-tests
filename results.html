@@ -27,7 +27,7 @@
         <section class="panel score-panel">
           <div>
             <p class="eyebrow">Auto-marked Score</p>
-            <h2>{{ summary.earnedPoints }} / {{ summary.maxPoints }}</h2>
+            <h2>{{ formatMarks(summary.earnedPoints) }} / {{ formatMarks(summary.maxPoints) }}</h2>
             <p>{{ summary.percentage }}% across automatically marked questions.</p>
           </div>
           <div class="score-meta">
@@ -39,13 +39,17 @@
               <span class="status-label">Incorrect</span>
               <strong>{{ summary.incorrectCount }}</strong>
             </div>
+            <div class="status-card" v-if="summary.partialCount">
+              <span class="status-label">Partially Correct</span>
+              <strong>{{ summary.partialCount }}</strong>
+            </div>
             <div class="status-card">
               <span class="status-label">Not Answered</span>
               <strong>{{ summary.notAnsweredCount }}</strong>
             </div>
           </div>
           <p v-if="attempt.summary?.submittedByTimer" class="status-unanswered">This attempt was submitted automatically when the timer expired.</p>
-          <p class="helper-text">Short answer responses are listed below for self-review and do not affect the score.</p>
+          <p class="helper-text">This test totals {{ formatMarks(summary.totalMarks) }} marks. {{ formatMarks(summary.manualReviewMarks) }} marks come from short answers for self-review.</p>
           <div class="button-row">
             <button class="button button-primary" type="button" @click="retakeTest">Retake Test</button>
             <a class="button button-secondary" href="index.html">Back to Tests</a>
@@ -63,7 +67,10 @@
           <article v-for="item in detailedResults" :key="item.question.id" class="result-card">
             <div class="question-meta-row">
               <span class="question-type">{{ typeLabel(item.question.type) }}</span>
-              <span :class="resultPillClass(item)">{{ resultLabel(item) }}</span>
+              <div class="question-meta-badges">
+                <span class="pill pill-marks">{{ marksSummary(item) }}</span>
+                <span :class="resultPillClass(item)">{{ resultLabel(item) }}</span>
+              </div>
             </div>
 
             <h3>{{ item.question.prompt }}</h3>
@@ -71,11 +78,16 @@
             <div v-if="item.question.type === 'short-answer'" class="result-detail-block">
               <p><strong>Your response:</strong></p>
               <p>{{ item.display.response || 'No response provided.' }}</p>
+              <section v-if="item.question.sampleResponseGuide" class="marking-guide">
+                <h4>What to include in your answer:</h4>
+                <p>{{ item.question.sampleResponseGuide }}</p>
+              </section>
             </div>
 
             <div v-else class="result-detail-block">
               <p><strong>Your response:</strong> {{ item.display.response || 'Not answered' }}</p>
               <p><strong>Correct answer:</strong> {{ item.display.correct }}</p>
+              <p v-if="item.display.pairSummary"><strong>Matching score:</strong> {{ item.display.pairSummary }}</p>
             </div>
           </article>
         </section>

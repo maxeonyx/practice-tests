@@ -116,6 +116,22 @@ export function questionTypesLabel(type) {
   }[type] || type;
 }
 
+export function questionMarks(question) {
+  return question.marks;
+}
+
+export function formatMarks(value) {
+  if (!Number.isFinite(value)) {
+    return '0';
+  }
+
+  if (Number.isInteger(value)) {
+    return String(value);
+  }
+
+  return value.toFixed(2).replace(/\.?0+$/, '');
+}
+
 export function isQuestionAnswered(question, answer) {
   if (question.type === 'matching') {
     if (!answer || typeof answer !== 'object') {
@@ -134,10 +150,13 @@ export function isQuestionAnswered(question, answer) {
 
 export function scoreTest(test, attempt) {
   const detailedResults = test.questions.map((question) => scoreQuestion(question, attempt.answers[question.id]));
-  const autoMarked = detailedResults.filter((item) => item.maxPoints > 0);
+  const autoMarked = detailedResults.filter((item) => item.isAutoMarked);
   const earnedPoints = autoMarked.reduce((total, item) => total + item.earnedPoints, 0);
   const maxPoints = autoMarked.reduce((total, item) => total + item.maxPoints, 0);
+  const totalMarks = detailedResults.reduce((total, item) => total + item.availableMarks, 0);
+  const manualReviewMarks = totalMarks - maxPoints;
   const correctCount = autoMarked.filter((item) => item.status === 'correct').length;
+  const partialCount = autoMarked.filter((item) => item.status === 'partial').length;
   const incorrectCount = autoMarked.filter((item) => item.status === 'incorrect').length;
   const notAnsweredCount = autoMarked.filter((item) => item.status === 'not-answered').length;
   const percentage = maxPoints === 0 ? 0 : Math.round((earnedPoints / maxPoints) * 100);
@@ -145,7 +164,10 @@ export function scoreTest(test, attempt) {
   return {
     earnedPoints,
     maxPoints,
+    totalMarks: roundScore(totalMarks),
+    manualReviewMarks: roundScore(manualReviewMarks),
     correctCount,
+    partialCount,
     incorrectCount,
     notAnsweredCount,
     percentage,
@@ -154,12 +176,16 @@ export function scoreTest(test, attempt) {
 }
 
 export function scoreQuestion(question, answer) {
+  const marks = questionMarks(question);
+
   if (question.type === 'short-answer') {
     return {
       question,
       answer,
+      availableMarks: marks,
       maxPoints: 0,
       earnedPoints: 0,
+      isAutoMarked: false,
       status: 'short-answer',
       display: {
         response: typeof answer === 'string' ? answer.trim() : '',
@@ -167,12 +193,18 @@ export function scoreQuestion(question, answer) {
     };
   }
 
+  if (question.type === 'matching') {
+    return scoreMatchingQuestion(question, answer, marks);
+  }
+
   if (!isQuestionAnswered(question, answer)) {
     return {
       question,
       answer,
-      maxPoints: 1,
+      availableMarks: marks,
+      maxPoints: marks,
       earnedPoints: 0,
+      isAutoMarked: true,
       status: 'not-answered',
       display: {
         response: formatResponse(question, answer),
@@ -186,8 +218,10 @@ export function scoreQuestion(question, answer) {
   return {
     question,
     answer,
-    maxPoints: 1,
-    earnedPoints: isCorrect ? 1 : 0,
+    availableMarks: marks,
+    maxPoints: marks,
+    earnedPoints: isCorrect ? marks : 0,
+    isAutoMarked: true,
     status: isCorrect ? 'correct' : 'incorrect',
     display: {
       response: formatResponse(question, answer),
@@ -229,6 +263,46 @@ function formatCorrectAnswer(question) {
   }
 
   return question.correctAnswer;
+}
+
+function scoreMatchingQuestion(question, answer, marks) {
+  const answers = answer && typeof answer === 'object' ? answer : {};
+  const selectedCount = question.pairs.filter((pair) => Boolean(answers[pair.prompt])).length;
+
+  if (selectedCount === 0) {
+    return {
+      question,
+      answer,
+      availableMarks: marks,
+      maxPoints: marks,
+      earnedPoints: 0,
+      isAutoMarked: true,
+      status: 'not-answered',
+      display: {
+        response: formatResponse(question, answer),
+        correct: formatCorrectAnswer(question),
+      },
+    };
+  }
+
+  const correctPairs = question.pairs.filter((pair) => answers[pair.prompt] === pair.answer).length;
+  const earnedPoints = roundScore((marks * correctPairs) / question.pairs.length);
+  const status = correctPairs === question.pairs.length ? 'correct' : correctPairs > 0 ? 'partial' : 'incorrect';
+
+  return {
+    question,
+    answer,
+    availableMarks: marks,
+    maxPoints: marks,
+    earnedPoints,
+    isAutoMarked: true,
+    status,
+    display: {
+      response: formatResponse(question, answer),
+      correct: formatCorrectAnswer(question),
+      pairSummary: `${correctPairs} of ${question.pairs.length} pairs correct`,
+    },
+  };
 }
 
 function validateCatalog(catalog) {
@@ -289,6 +363,10 @@ function validateTest(test) {
 }
 
 function validateQuestion(testId, question) {
+  if (!Number.isFinite(question.marks) || question.marks <= 0) {
+    throw new Error(`Question "${question.id}" in test "${testId}" must define a positive marks value.`);
+  }
+
   switch (question.type) {
     case 'multiple-choice':
       validateOptionsQuestion(testId, question, 2);
@@ -458,6 +536,8 @@ function normalizeSummary(summary) {
   return {
     earnedPoints: Number.isFinite(summary.earnedPoints) ? summary.earnedPoints : 0,
     maxPoints: Number.isFinite(summary.maxPoints) ? summary.maxPoints : 0,
+    totalMarks: Number.isFinite(summary.totalMarks) ? summary.totalMarks : 0,
+    manualReviewMarks: Number.isFinite(summary.manualReviewMarks) ? summary.manualReviewMarks : 0,
     percentage: Number.isFinite(summary.percentage) ? summary.percentage : 0,
     submittedByTimer: Boolean(summary.submittedByTimer),
   };
@@ -465,4 +545,8 @@ function normalizeSummary(summary) {
 
 function asTimestamp(value) {
   return Number.isFinite(value) && value > 0 ? value : null;
+}
+
+function roundScore(value) {
+  return Math.round(value * 100) / 100;
 }

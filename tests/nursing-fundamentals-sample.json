@@ -14,13 +14,15 @@
         "Check the medication name against the bedside locker",
         "Confirm the dose with another student nurse"
       ],
-      "correctAnswer": "Compare two identifiers against the medication chart and wristband"
+      "correctAnswer": "Compare two identifiers against the medication chart and wristband",
+      "marks": 1
     },
     {
       "id": "q2-pressure-injury",
       "type": "true-false",
       "prompt": "A stage 1 pressure injury presents with non-blanchable redness over intact skin.",
-      "correctAnswer": "True"
+      "correctAnswer": "True",
+      "marks": 1
     },
     {
       "id": "q3-matching-isolation",
@@ -44,7 +46,8 @@
           "prompt": "Droplet precautions",
           "answer": "Surgical mask within 1 metre"
         }
-      ]
+      ],
+      "marks": 2
     },
     {
       "id": "q4-fluid-balance",
@@ -56,19 +59,22 @@
         "IV fluids running at the prescribed rate",
         "The patient asking for an extra blanket"
       ],
-      "correctAnswer": "Urine output of 20 mL over the last hour"
+      "correctAnswer": "Urine output of 20 mL over the last hour",
+      "marks": 1
     },
     {
       "id": "q5-therapeutic-communication",
       "type": "short-answer",
       "prompt": "A patient says, 'I'm scared about going home after surgery.' Write a short therapeutic response you could use.",
-      "sampleResponseGuide": "Responses should acknowledge the patient's concern and invite them to share more or ask questions."
+      "sampleResponseGuide": "Responses should acknowledge the patient's concern and invite them to share more or ask questions.",
+      "marks": 4
     },
     {
       "id": "q6-handover",
       "type": "true-false",
       "prompt": "During handover, critical information should be passed on using a structured framework such as ISBAR.",
-      "correctAnswer": "True"
+      "correctAnswer": "True",
+      "marks": 1
     }
   ]
 }

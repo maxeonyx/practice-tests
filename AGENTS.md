@@ -50,6 +50,7 @@ Landing page metadata lives in `tests/index.json`, which maps test ids to JSON f
 
 - top-level fields: `id`, `title`, `description`, `durationMinutes`, `questions`
 - every question needs `id`, `type`, and `prompt`
+- every question needs a positive `marks` value; current weighting is 1 mark for `multiple-choice`, 1 for `true-false`, 2 for `matching`, and 4 for `short-answer`
 - `multiple-choice`: add `options` array and `correctAnswer` matching one of the options
 - `true-false`: add `correctAnswer` with `True` or `False`
 - `matching`: add unique `options` plus `pairs`, where each pair has a unique `prompt` and an `answer` present in `options`

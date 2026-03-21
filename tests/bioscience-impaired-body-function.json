@@ -14,7 +14,8 @@
         "It measures blood flow through 12 cardiac chambers",
         "It continuously monitors rhythm for 24 hours"
       ],
-      "correctAnswer": "It records the heart's electrical activity from 12 views using 10 electrodes"
+      "correctAnswer": "It records the heart's electrical activity from 12 views using 10 electrodes",
+      "marks": 1
     },
     {
       "id": "t1-q2-conduction-order",
@@ -26,7 +27,8 @@
         "Purkinje fibres -> bundle branches -> AV node -> SA node",
         "SA node -> bundle branches -> atria -> AV node -> ventricles"
       ],
-      "correctAnswer": "SA node -> AV node -> bundle of His -> bundle branches -> Purkinje fibres"
+      "correctAnswer": "SA node -> AV node -> bundle of His -> bundle branches -> Purkinje fibres",
+      "marks": 1
     },
     {
       "id": "t1-q3-pacemaker-rate",
@@ -38,7 +40,8 @@
         "Bundle branches",
         "Purkinje network"
       ],
-      "correctAnswer": "AV junction"
+      "correctAnswer": "AV junction",
+      "marks": 1
     },
     {
       "id": "t1-q4-ecg-rate-calculation",
@@ -50,7 +53,8 @@
         "100 bpm",
         "150 bpm"
       ],
-      "correctAnswer": "75 bpm"
+      "correctAnswer": "75 bpm",
+      "marks": 1
     },
     {
       "id": "t1-q5-af-recognition",
@@ -62,19 +66,22 @@
         "Regular wide-complex rhythm at 30 bpm",
         "PR interval progressively lengthens until a beat is dropped"
       ],
-      "correctAnswer": "Irregularly irregular rhythm with no distinct P waves"
+      "correctAnswer": "Irregularly irregular rhythm with no distinct P waves",
+      "marks": 1
     },
     {
       "id": "t1-q6-st-elevation",
       "type": "true-false",
       "prompt": "ST-segment elevation in contiguous leads can indicate acute myocardial injury.",
-      "correctAnswer": "True"
+      "correctAnswer": "True",
+      "marks": 1
     },
     {
       "id": "t1-q7-vf-perfusing",
       "type": "true-false",
       "prompt": "Ventricular fibrillation is usually a perfusing rhythm.",
-      "correctAnswer": "False"
+      "correctAnswer": "False",
+      "marks": 1
     },
     {
       "id": "t1-q8-rhythm-matching",
@@ -108,13 +115,15 @@
           "prompt": "First-degree AV block",
           "answer": "PR interval longer than 0.20 seconds"
         }
-      ]
+      ],
+      "marks": 2
     },
     {
       "id": "t1-q9-ecg-approach",
       "type": "short-answer",
       "prompt": "Outline a systematic approach to interpreting an ECG strip. Include how you assess rate, rhythm, P waves, PR interval, QRS complex, and ST/T changes.",
-      "sampleResponseGuide": "Responses should describe a stepwise method such as checking calibration, calculating rate, deciding whether the rhythm is regular, identifying P waves, measuring PR interval and QRS duration, and then reviewing ST segments and T waves for ischaemia or other abnormalities."
+      "sampleResponseGuide": "Responses should describe a stepwise method such as checking calibration, calculating rate, deciding whether the rhythm is regular, identifying P waves, measuring PR interval and QRS duration, and then reviewing ST segments and T waves for ischaemia or other abnormalities.",
+      "marks": 4
     },
     {
       "id": "t1-q10-foramen-ovale",
@@ -126,7 +135,8 @@
         "Reduced systemic vascular resistance from cord clamping",
         "Immediate closure of the ductus venosus"
       ],
-      "correctAnswer": "Increased left atrial pressure as pulmonary blood flow rises"
+      "correctAnswer": "Increased left atrial pressure as pulmonary blood flow rises",
+      "marks": 1
     },
     {
       "id": "t1-q11-congenital-defect-matching",
@@ -155,13 +165,15 @@
           "prompt": "Coarctation of the aorta",
           "answer": "Narrowing of the aorta causing obstructive acyanotic disease"
         }
-      ]
+      ],
+      "marks": 2
     },
     {
       "id": "t1-q12-cyanotic-defect",
       "type": "true-false",
       "prompt": "Cyanotic congenital heart defects usually involve right-to-left shunting or mixing that lowers arterial oxygen saturation.",
-      "correctAnswer": "True"
+      "correctAnswer": "True",
+      "marks": 1
     },
     {
       "id": "t1-q13-compensated-shock",
@@ -173,19 +185,22 @@
         "Fixed hypotension with no compensatory response",
         "Pulmonary oedema from acute left ventricular failure"
       ],
-      "correctAnswer": "Tachycardia with cool clammy skin"
+      "correctAnswer": "Tachycardia with cool clammy skin",
+      "marks": 1
     },
     {
       "id": "t1-q14-shock-compensation",
       "type": "true-false",
       "prompt": "During compensated shock, vasoconstriction and increased heart rate help maintain blood pressure and perfusion to vital organs.",
-      "correctAnswer": "True"
+      "correctAnswer": "True",
+      "marks": 1
     },
     {
       "id": "t1-q15-shock-stages",
       "type": "short-answer",
       "prompt": "Define shock, name the major types, and describe the compensated, progressive, and irreversible stages with key symptoms and the body's responses in each stage.",
-      "sampleResponseGuide": "Responses should define shock as inadequate tissue perfusion, identify major types such as hypovolaemic, cardiogenic, distributive, and obstructive shock, and explain stage-specific responses including sympathetic activation early, worsening hypotension and cellular hypoxia in progressive shock, and refractory organ failure in irreversible shock."
+      "sampleResponseGuide": "Responses should define shock as inadequate tissue perfusion, identify major types such as hypovolaemic, cardiogenic, distributive, and obstructive shock, and explain stage-specific responses including sympathetic activation early, worsening hypotension and cellular hypoxia in progressive shock, and refractory organ failure in irreversible shock.",
+      "marks": 4
     },
     {
       "id": "t2-q16-malabsorption-definition",
@@ -197,19 +212,22 @@
         "Inflammation limited to the large bowel only",
         "Obstruction of the cystic duct by gallstones"
       ],
-      "correctAnswer": "Impaired digestion or absorption of nutrients leading to nutritional deficiency"
+      "correctAnswer": "Impaired digestion or absorption of nutrients leading to nutritional deficiency",
+      "marks": 1
     },
     {
       "id": "t2-q17-pancreatic-insufficiency",
       "type": "true-false",
       "prompt": "Pancreatic exocrine insufficiency can cause steatorrhoea and deficiency of fat-soluble vitamins.",
-      "correctAnswer": "True"
+      "correctAnswer": "True",
+      "marks": 1
     },
     {
       "id": "t2-q18-coeliac-short-answer",
       "type": "short-answer",
       "prompt": "Explain how coeliac disease can cause malabsorption and outline two important nutritional consequences for a patient.",
-      "sampleResponseGuide": "Responses should explain that gluten-triggered immune injury causes villous atrophy in the small intestine, reducing absorptive surface area. Nutritional consequences may include iron deficiency, folate deficiency, weight loss, diarrhoea, calcium or vitamin D deficiency, and poor growth or fatigue."
+      "sampleResponseGuide": "Responses should explain that gluten-triggered immune injury causes villous atrophy in the small intestine, reducing absorptive surface area. Nutritional consequences may include iron deficiency, folate deficiency, weight loss, diarrhoea, calcium or vitamin D deficiency, and poor growth or fatigue.",
+      "marks": 4
     },
     {
       "id": "t2-q19-gerd-pathophysiology",
@@ -221,7 +239,8 @@
         "Complete loss of pancreatic enzyme secretion",
         "Portal hypertension causing oesophageal varices"
       ],
-      "correctAnswer": "Lower oesophageal sphincter incompetence allowing reflux of gastric contents"
+      "correctAnswer": "Lower oesophageal sphincter incompetence allowing reflux of gastric contents",
+      "marks": 1
     },
     {
       "id": "t2-q20-nsaid-pud",
@@ -233,13 +252,15 @@
         "Directly block bile flow from the liver",
         "Cause autoimmune injury to the small bowel villi"
       ],
-      "correctAnswer": "Inhibit prostaglandin synthesis that normally protects the gastric mucosa"
+      "correctAnswer": "Inhibit prostaglandin synthesis that normally protects the gastric mucosa",
+      "marks": 1
     },
     {
       "id": "t2-q21-h-pylori",
       "type": "true-false",
       "prompt": "Eradication of Helicobacter pylori reduces recurrence of many peptic ulcers.",
-      "correctAnswer": "True"
+      "correctAnswer": "True",
+      "marks": 1
     },
     {
       "id": "t2-q22-digestive-disorders-matching",
@@ -273,7 +294,8 @@
           "prompt": "Ulcerative colitis",
           "answer": "Continuous mucosal inflammation beginning in the rectum"
         }
-      ]
+      ],
+      "marks": 2
     },
     {
       "id": "t2-q23-pancreatitis-mechanism",
@@ -285,7 +307,8 @@
         "The pancreas stops releasing insulin after viral infection",
         "The appendix ruptures and inflames the pancreas"
       ],
-      "correctAnswer": "Digestive enzymes activate prematurely within the pancreas and damage tissue"
+      "correctAnswer": "Digestive enzymes activate prematurely within the pancreas and damage tissue",
+      "marks": 1
     },
     {
       "id": "t2-q24-appendicitis-cause",
@@ -297,13 +320,15 @@
         "Loss of gastric acid secretion",
         "Autoimmune destruction of colonic smooth muscle"
       ],
-      "correctAnswer": "A faecalith or lymphoid hyperplasia"
+      "correctAnswer": "A faecalith or lymphoid hyperplasia",
+      "marks": 1
     },
     {
       "id": "t2-q25-crohns",
       "type": "true-false",
       "prompt": "Crohn disease may affect any part of the gastrointestinal tract, involves transmural inflammation, and may lead to complications such as fistulae or strictures.",
-      "correctAnswer": "True"
+      "correctAnswer": "True",
+      "marks": 1
     },
     {
       "id": "t2-q26-lower-gi-matching",
@@ -337,19 +362,22 @@
           "prompt": "Intestinal obstruction",
           "answer": "Mechanical blockage preventing passage of intestinal contents"
         }
-      ]
+      ],
+      "marks": 2
     },
     {
       "id": "t2-q27-intestinal-obstruction",
       "type": "short-answer",
       "prompt": "Describe two common causes of intestinal obstruction and explain the main pathophysiological consequences, how it is commonly diagnosed, and one serious complication.",
-      "sampleResponseGuide": "Responses should mention causes such as adhesions, hernia, tumour, volvulus, or impacted faeces, then explain fluid sequestration, vomiting, distension, electrolyte imbalance, reduced perfusion, and diagnosis using clinical assessment plus imaging such as abdominal X-ray or CT. Serious complications may include bowel ischaemia, perforation, sepsis, or peritonitis."
+      "sampleResponseGuide": "Responses should mention causes such as adhesions, hernia, tumour, volvulus, or impacted faeces, then explain fluid sequestration, vomiting, distension, electrolyte imbalance, reduced perfusion, and diagnosis using clinical assessment plus imaging such as abdominal X-ray or CT. Serious complications may include bowel ischaemia, perforation, sepsis, or peritonitis.",
+      "marks": 4
     },
     {
       "id": "t2-q28-bilirubin-jaundice",
       "type": "short-answer",
       "prompt": "Explain how bilirubin is used in assessing jaundice and describe what patterns may suggest pre-hepatic, hepatic, or post-hepatic disease.",
-      "sampleResponseGuide": "Responses should explain that bilirubin results help identify the cause of jaundice, with unconjugated hyperbilirubinaemia suggesting increased production or impaired conjugation, mixed or hepatocellular patterns occurring with liver injury, and conjugated hyperbilirubinaemia with dark urine and pale stools suggesting cholestasis or biliary obstruction."
+      "sampleResponseGuide": "Responses should explain that bilirubin results help identify the cause of jaundice, with unconjugated hyperbilirubinaemia suggesting increased production or impaired conjugation, mixed or hepatocellular patterns occurring with liver injury, and conjugated hyperbilirubinaemia with dark urine and pale stools suggesting cholestasis or biliary obstruction.",
+      "marks": 4
     },
     {
       "id": "t2-q29-liver-tests-matching",
@@ -383,13 +411,15 @@
           "prompt": "Bilirubin",
           "answer": "Pigment helpful in assessing jaundice"
         }
-      ]
+      ],
+      "marks": 2
     },
     {
       "id": "t2-q30-liver-blood-supply-cirrhosis",
       "type": "true-false",
       "prompt": "The liver receives blood from both the hepatic artery and the portal vein, performs functions such as bile production and synthesis of albumin and clotting factors, and cirrhosis can distort this architecture and contribute to portal hypertension.",
-      "correctAnswer": "True"
+      "correctAnswer": "True",
+      "marks": 1
     },
     {
       "id": "t3-q31-primary-secondary-ht",
@@ -401,13 +431,15 @@
         "Primary hypertension occurs only in older adults, whereas secondary hypertension occurs only in children",
         "Primary hypertension is always symptomatic, whereas secondary hypertension is always asymptomatic"
       ],
-      "correctAnswer": "Hypertension is persistently elevated arterial blood pressure; primary hypertension has no single identifiable cause, whereas secondary hypertension results from an underlying condition such as renal or endocrine disease"
+      "correctAnswer": "Hypertension is persistently elevated arterial blood pressure; primary hypertension has no single identifiable cause, whereas secondary hypertension results from an underlying condition such as renal or endocrine disease",
+      "marks": 1
     },
     {
       "id": "t3-q32-cvd-nz",
       "type": "true-false",
       "prompt": "Cardiovascular disease remains a leading cause of death and illness in New Zealand and contributes to important health inequities.",
-      "correctAnswer": "True"
+      "correctAnswer": "True",
+      "marks": 1
     },
     {
       "id": "t3-q33-cardiovascular-drugs-matching",
@@ -441,13 +473,15 @@
           "prompt": "Glyceryl trinitrate",
           "answer": "Nitric oxide-mediated venous and coronary dilation"
         }
-      ]
+      ],
+      "marks": 2
     },
     {
       "id": "t3-q34-hypertension-damage",
       "type": "short-answer",
       "prompt": "Explain how long-standing hypertension can damage target organs. Include at least three outcomes affecting the heart, brain, kidneys, or blood vessels.",
-      "sampleResponseGuide": "Responses should explain persistent pressure load and endothelial injury leading to problems such as left ventricular hypertrophy, heart failure, coronary disease, stroke, chronic kidney disease, retinopathy, and accelerated atherosclerosis."
+      "sampleResponseGuide": "Responses should explain persistent pressure load and endothelial injury leading to problems such as left ventricular hypertrophy, heart failure, coronary disease, stroke, chronic kidney disease, retinopathy, and accelerated atherosclerosis.",
+      "marks": 4
     },
     {
       "id": "t3-q35-atherosclerosis",
@@ -459,13 +493,15 @@
         "Complete coronary artery thrombosis in a healthy artery",
         "Destruction of cardiac valves by infection"
       ],
-      "correctAnswer": "Endothelial injury or dysfunction with lipid entry into the vessel wall"
+      "correctAnswer": "Endothelial injury or dysfunction with lipid entry into the vessel wall",
+      "marks": 1
     },
     {
       "id": "t3-q36-stable-angina",
       "type": "true-false",
       "prompt": "Stable angina usually occurs with exertion and often improves with rest or glyceryl trinitrate.",
-      "correctAnswer": "True"
+      "correctAnswer": "True",
+      "marks": 1
     },
     {
       "id": "t3-q37-angina-vs-mi",
@@ -477,7 +513,8 @@
         "Angina always produces ST elevation and MI never does",
         "MI pain is always relieved immediately by rest"
       ],
-      "correctAnswer": "MI involves prolonged ischaemia causing myocardial necrosis and raised cardiac biomarkers"
+      "correctAnswer": "MI involves prolonged ischaemia causing myocardial necrosis and raised cardiac biomarkers",
+      "marks": 1
     },
     {
       "id": "t3-q38-cvd-category-matching",
@@ -511,7 +548,8 @@
           "prompt": "Transient ischaemic attack",
           "answer": "Temporary focal neurological deficit that fully resolves"
         }
-      ]
+      ],
+      "marks": 2
     },
     {
       "id": "t3-q39-right-heart-failure-cause",
@@ -523,13 +561,15 @@
         "Acute pancreatitis",
         "Hyperthyroidism alone"
       ],
-      "correctAnswer": "Long-standing left-sided heart failure or pulmonary hypertension"
+      "correctAnswer": "Long-standing left-sided heart failure or pulmonary hypertension",
+      "marks": 1
     },
     {
       "id": "t3-q40-right-heart-failure-signs",
       "type": "true-false",
       "prompt": "Right-sided heart failure commonly causes peripheral oedema, hepatomegaly, and raised jugular venous pressure.",
-      "correctAnswer": "True"
+      "correctAnswer": "True",
+      "marks": 1
     },
     {
       "id": "t3-q41-hfref-hfpef",
@@ -541,13 +581,15 @@
         "HFpEF always results from myocardial infarction, whereas HFrEF never does",
         "There is no difference in ventricular pumping or filling between them"
       ],
-      "correctAnswer": "HFrEF has reduced ejection fraction from impaired contractility, whereas HFpEF has preserved ejection fraction but impaired ventricular relaxation and filling"
+      "correctAnswer": "HFrEF has reduced ejection fraction from impaired contractility, whereas HFpEF has preserved ejection fraction but impaired ventricular relaxation and filling",
+      "marks": 1
     },
     {
       "id": "t3-q42-treatment-comparison",
       "type": "short-answer",
       "prompt": "Compare treatment priorities for stable angina, acute myocardial infarction, and chronic heart failure.",
-      "sampleResponseGuide": "Responses should contrast symptom relief and risk reduction for angina, urgent reperfusion and antiplatelet or anticoagulant therapy for acute MI, and long-term management of heart failure with medicines such as ACE inhibitors, beta blockers, diuretics, plus fluid, salt, and lifestyle management as appropriate."
+      "sampleResponseGuide": "Responses should contrast symptom relief and risk reduction for angina, urgent reperfusion and antiplatelet or anticoagulant therapy for acute MI, and long-term management of heart failure with medicines such as ACE inhibitors, beta blockers, diuretics, plus fluid, salt, and lifestyle management as appropriate.",
+      "marks": 4
     },
     {
       "id": "t3-q43-lipoproteins",
@@ -559,13 +601,15 @@
         "VLDL removes cholesterol from plaques and strongly protects against CVD",
         "Hyperlipidaemia means abnormally low levels of plasma lipids"
       ],
-      "correctAnswer": "LDL transports cholesterol to tissues and, when elevated, contributes to atherosclerosis"
+      "correctAnswer": "LDL transports cholesterol to tissues and, when elevated, contributes to atherosclerosis",
+      "marks": 1
     },
     {
       "id": "t3-q44-troponin",
       "type": "true-false",
       "prompt": "Cardiac troponin is a plasma biomarker used to support diagnosis of myocardial infarction because it rises with myocardial cell injury.",
-      "correctAnswer": "True"
+      "correctAnswer": "True",
+      "marks": 1
     },
     {
       "id": "t3-q45-cvd-risk-reduction",
@@ -577,7 +621,8 @@
         "Stopping all exercise to reduce cardiac workload permanently",
         "Using antibiotics whenever chest pain occurs"
       ],
-      "correctAnswer": "Smoking cessation, regular physical activity, blood pressure and lipid control, and a diet lower in saturated fat and salt"
+      "correctAnswer": "Smoking cessation, regular physical activity, blood pressure and lipid control, and a diet lower in saturated fat and salt",
+      "marks": 1
     },
     {
       "id": "t4-q46-endocrine-function",
@@ -589,13 +634,15 @@
         "To digest nutrients within the intestinal lumen",
         "To produce antibodies against all pathogens"
       ],
-      "correctAnswer": "To secrete hormones into the bloodstream to regulate body processes"
+      "correctAnswer": "To secrete hormones into the bloodstream to regulate body processes",
+      "marks": 1
     },
     {
       "id": "t4-q47-negative-feedback",
       "type": "true-false",
       "prompt": "Negative feedback is a common mechanism that controls hormone production and secretion.",
-      "correctAnswer": "True"
+      "correctAnswer": "True",
+      "marks": 1
     },
     {
       "id": "t4-q48-endocrine-gland-matching",
@@ -629,7 +676,8 @@
           "prompt": "Parathyroid hormone",
           "answer": "Parathyroid chief cells"
         }
-      ]
+      ],
+      "marks": 2
     },
     {
       "id": "t4-q49-stimulation-suppression-tests",
@@ -641,7 +689,8 @@
         "They permanently replace a missing hormone",
         "They are used only to diagnose diabetes"
       ],
-      "correctAnswer": "They assess whether a gland or feedback axis appropriately increases or decreases hormone secretion after a controlled challenge"
+      "correctAnswer": "They assess whether a gland or feedback axis appropriately increases or decreases hormone secretion after a controlled challenge",
+      "marks": 1
     },
     {
       "id": "t4-q50-cushings-feature",
@@ -653,7 +702,8 @@
         "Bradycardia, cold intolerance, and constipation only",
         "Tetany caused by severe hypocalcaemia"
       ],
-      "correctAnswer": "Central weight gain, proximal muscle weakness, and thin fragile skin"
+      "correctAnswer": "Central weight gain, proximal muscle weakness, and thin fragile skin",
+      "marks": 1
     },
     {
       "id": "t4-q51-thyroid-matching",
@@ -687,19 +737,22 @@
           "prompt": "Usual treatment for hypothyroidism",
           "answer": "Levothyroxine replacement"
         }
-      ]
+      ],
+      "marks": 2
     },
     {
       "id": "t4-q52-primary-hypothyroid",
       "type": "true-false",
       "prompt": "Primary hypothyroidism usually produces a raised TSH and a low free T4.",
-      "correctAnswer": "True"
+      "correctAnswer": "True",
+      "marks": 1
     },
     {
       "id": "t4-q53-insulin-deficiency",
       "type": "short-answer",
       "prompt": "Explain how absolute insulin deficiency in type 1 diabetes and relative insulin deficiency with insulin resistance in type 2 diabetes produce hyperglycaemia, polyuria, polydipsia, and common acute complications.",
-      "sampleResponseGuide": "Responses should explain reduced glucose uptake and increased hepatic glucose output causing hyperglycaemia, osmotic diuresis causing polyuria and polydipsia, and how marked insulin deficiency in type 1 diabetes promotes lipolysis, ketogenesis, and diabetic ketoacidosis, while severe hyperglycaemia in type 2 diabetes may lead to hyperosmolar hyperglycaemic state."
+      "sampleResponseGuide": "Responses should explain reduced glucose uptake and increased hepatic glucose output causing hyperglycaemia, osmotic diuresis causing polyuria and polydipsia, and how marked insulin deficiency in type 1 diabetes promotes lipolysis, ketogenesis, and diabetic ketoacidosis, while severe hyperglycaemia in type 2 diabetes may lead to hyperosmolar hyperglycaemic state.",
+      "marks": 4
     },
     {
       "id": "t4-q54-t1dm-vs-t2dm",
@@ -711,7 +764,8 @@
         "T1DM never causes ketoacidosis, whereas T2DM always does",
         "T2DM occurs only in older adults and cannot occur in younger people"
       ],
-      "correctAnswer": "T1DM often has rapid onset with autoimmune beta-cell destruction and absolute insulin deficiency, whereas T2DM usually develops more gradually and is strongly associated with insulin resistance, excess weight, and family history"
+      "correctAnswer": "T1DM often has rapid onset with autoimmune beta-cell destruction and absolute insulin deficiency, whereas T2DM usually develops more gradually and is strongly associated with insulin resistance, excess weight, and family history",
+      "marks": 1
     },
     {
       "id": "t4-q55-hba1c",
@@ -723,13 +777,15 @@
         "Serum sodium",
         "Capillary glucose at a single time point"
       ],
-      "correctAnswer": "HbA1c"
+      "correctAnswer": "HbA1c",
+      "marks": 1
     },
     {
       "id": "t4-q56-dka-hhs",
       "type": "true-false",
       "prompt": "Diabetic ketoacidosis is more common in type 1 diabetes, whereas hyperosmolar hyperglycaemic state is more typical of type 2 diabetes.",
-      "correctAnswer": "True"
+      "correctAnswer": "True",
+      "marks": 1
     },
     {
       "id": "t4-q57-metabolic-syndrome-matching",
@@ -763,19 +819,22 @@
           "prompt": "Impaired glucose regulation",
           "answer": "Raised fasting glucose"
         }
-      ]
+      ],
+      "marks": 2
     },
     {
       "id": "t4-q58-diabetes-management",
       "type": "short-answer",
       "prompt": "Compare key management priorities for type 1 and type 2 diabetes, including pharmacological treatment, monitoring, education, lifestyle measures, and prevention of chronic complications.",
-      "sampleResponseGuide": "Responses should note that type 1 diabetes requires insulin replacement and regular glucose monitoring, while type 2 diabetes management often begins with lifestyle change and may include oral agents and later insulin. Both require education, monitoring for complications, nutrition and activity support, and risk-factor reduction to prevent chronic microvascular and macrovascular complications."
+      "sampleResponseGuide": "Responses should note that type 1 diabetes requires insulin replacement and regular glucose monitoring, while type 2 diabetes management often begins with lifestyle change and may include oral agents and later insulin. Both require education, monitoring for complications, nutrition and activity support, and risk-factor reduction to prevent chronic microvascular and macrovascular complications.",
+      "marks": 4
     },
     {
       "id": "t4-q59-visceral-fat",
       "type": "short-answer",
       "prompt": "Describe where visceral fat is located and explain why it carries greater health risk than peripheral fat.",
-      "sampleResponseGuide": "Responses should state that visceral fat is stored within the abdominal cavity around internal organs and is associated with greater inflammatory activity, insulin resistance, dyslipidaemia, and higher risk of metabolic syndrome, type 2 diabetes, and cardiovascular disease."
+      "sampleResponseGuide": "Responses should state that visceral fat is stored within the abdominal cavity around internal organs and is associated with greater inflammatory activity, insulin resistance, dyslipidaemia, and higher risk of metabolic syndrome, type 2 diabetes, and cardiovascular disease.",
+      "marks": 4
     },
     {
       "id": "t4-q60-obesity-risk-factors",
@@ -787,7 +846,8 @@
         "Height, sex assigned at birth, and eye colour",
         "Appendicitis, coeliac disease, and iron deficiency"
       ],
-      "correctAnswer": "Energy-dense diet, physical inactivity, and excess sugary drink intake"
+      "correctAnswer": "Energy-dense diet, physical inactivity, and excess sugary drink intake",
+      "marks": 1
     }
   ]
 }

@@ -1,4 +1,4 @@
-import { clearAttempt, loadTest, questionTypesLabel, scoreTest, testParam, getAttempt } from './common.js';
+import { clearAttempt, formatMarks, getAttempt, loadTest, questionTypesLabel, scoreTest, testParam } from './common.js';
 
 const { createApp } = Vue;
 
@@ -38,12 +38,17 @@ createApp({
     }
   },
   methods: {
+    formatMarks,
     typeLabel(type) {
       return questionTypesLabel(type);
     },
     resultLabel(item) {
       if (item.status === 'short-answer') {
         return 'Self-review';
+      }
+
+      if (item.status === 'partial') {
+        return 'Partially Correct';
       }
 
       if (item.status === 'not-answered') {
@@ -57,11 +62,22 @@ createApp({
         return 'status-short-answer';
       }
 
+      if (item.status === 'partial') {
+        return 'status-partial';
+      }
+
       if (item.status === 'not-answered') {
         return 'status-unanswered';
       }
 
       return item.status === 'correct' ? 'status-correct' : 'status-incorrect';
+    },
+    marksSummary(item) {
+      if (item.status === 'short-answer') {
+        return `${formatMarks(item.availableMarks)} marks self-review`;
+      }
+
+      return `${formatMarks(item.earnedPoints)} / ${formatMarks(item.maxPoints)} marks`;
     },
     retakeTest() {
       const confirmed = window.confirm('This will remove the saved results for this attempt and start a new attempt. Continue?');
