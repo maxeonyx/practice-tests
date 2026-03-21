@@ -1,7 +1,7 @@
 {
   "id": "bioscience-impaired-body-function",
   "title": "Human Bioscience: Impaired Body Function Practice Test",
-  "description": "A 60-question nursing practice exam for Massey University 214.201 covering ECG and shock, digestive and liver disorders, cardiovascular disorders, and endocrine, diabetes, and body mass concepts.",
+  "description": "A 72-question nursing practice exam for Massey University 214.201 covering ECG and shock, digestive and liver disorders, cardiovascular disorders, and endocrine, diabetes, and body mass concepts.",
   "durationMinutes": 90,
   "questions": [
     {
@@ -847,6 +847,184 @@
         "Appendicitis, coeliac disease, and iron deficiency"
       ],
       "correctAnswer": "Energy-dense diet, physical inactivity, and excess sugary drink intake",
+      "marks": 1
+    },
+    {
+      "id": "t1-q61-heart-great-vessels-development",
+      "type": "short-answer",
+      "prompt": "Describe the embryological development of the heart and great vessels. Include formation and looping of the primitive heart tube, septation, and how abnormal neural crest or conotruncal development can produce major congenital defects.",
+      "sampleResponseGuide": "Responses should explain that paired endocardial tubes fuse into a primitive heart tube, which elongates and loops to establish the future cardiac chambers. Septation divides the atria, ventricles, and outflow tract, while neural crest-dependent conotruncal septation helps form the aorta and pulmonary trunk. The aortic arch arteries remodel into the great vessels. Abnormal looping or septation may lead to defects such as septal defects, transposition of the great arteries, persistent truncus arteriosus, or tetralogy of Fallot.",
+      "marks": 4
+    },
+    {
+      "id": "t1-q62-cyanotic-vs-acyanotic",
+      "type": "short-answer",
+      "prompt": "Explain the difference between cyanotic and acyanotic congenital heart defects. In your answer, describe the direction of shunting or blood flow problem involved and give one example of each.",
+      "sampleResponseGuide": "Responses should explain that cyanotic defects reduce arterial oxygen saturation, commonly because deoxygenated blood enters the systemic circulation through right-to-left shunting or mixing, producing cyanosis; examples include tetralogy of Fallot or transposition of the great arteries. Acyanotic defects usually do not initially cause systemic desaturation and often involve left-to-right shunting or obstructive lesions; examples include ventricular septal defect, atrial septal defect, patent ductus arteriosus, or coarctation of the aorta.",
+      "marks": 4
+    },
+    {
+      "id": "t2-q63-pud-management",
+      "type": "multiple-choice",
+      "prompt": "Which management plan is most appropriate for a patient with Helicobacter pylori-positive peptic ulcer disease?",
+      "options": [
+        "Long-term NSAID therapy alone because it reduces gastric inflammation",
+        "A proton pump inhibitor-based eradication regimen with appropriate antibiotics according to local guidance",
+        "An antacid taken only when pain occurs, with no further treatment needed",
+        "Immediate colectomy to prevent perforation"
+      ],
+      "correctAnswer": "A proton pump inhibitor-based eradication regimen with appropriate antibiotics according to local guidance",
+      "marks": 1
+    },
+    {
+      "id": "t2-q64-ibd-management",
+      "type": "multiple-choice",
+      "prompt": "Which statement best compares ulcerative colitis and Crohn disease management and complications?",
+      "options": [
+        "Ulcerative colitis often responds to 5-aminosalicylates and colectomy can be curative, whereas Crohn disease may recur after surgery and is more associated with fistulae and strictures",
+        "Crohn disease is cured by colectomy, whereas ulcerative colitis usually causes transmural skip lesions and fistulae",
+        "Both conditions are managed only with antibiotics and neither increases cancer risk",
+        "Ulcerative colitis affects the whole gastrointestinal tract, whereas Crohn disease is confined to the rectum"
+      ],
+      "correctAnswer": "Ulcerative colitis often responds to 5-aminosalicylates and colectomy can be curative, whereas Crohn disease may recur after surgery and is more associated with fistulae and strictures",
+      "marks": 1
+    },
+    {
+      "id": "t2-q65-hepatic-syndromes",
+      "type": "matching",
+      "prompt": "Match each hepatobiliary syndrome or complication to the best description.",
+      "options": [
+        "Raised portal venous pressure causing varices and splenomegaly",
+        "Accumulation of fluid within the peritoneal cavity",
+        "Neuropsychiatric dysfunction related to liver failure and ammonia accumulation",
+        "Functional renal failure that develops in advanced cirrhosis"
+      ],
+      "pairs": [
+        {
+          "prompt": "Portal hypertension",
+          "answer": "Raised portal venous pressure causing varices and splenomegaly"
+        },
+        {
+          "prompt": "Ascites",
+          "answer": "Accumulation of fluid within the peritoneal cavity"
+        },
+        {
+          "prompt": "Hepatic encephalopathy",
+          "answer": "Neuropsychiatric dysfunction related to liver failure and ammonia accumulation"
+        },
+        {
+          "prompt": "Hepatorenal syndrome",
+          "answer": "Functional renal failure that develops in advanced cirrhosis"
+        }
+      ],
+      "marks": 2
+    },
+    {
+      "id": "t3-q66-hypertension-risk-factors",
+      "type": "multiple-choice",
+      "prompt": "Which combination lists established risk factors for developing primary hypertension?",
+      "options": [
+        "High sodium intake, obesity, physical inactivity, excess alcohol use, and family history",
+        "Low salt intake, underweight, and regular aerobic exercise",
+        "Appendicitis, coeliac disease, and iron deficiency",
+        "Young age with no family history and a low-energy diet"
+      ],
+      "correctAnswer": "High sodium intake, obesity, physical inactivity, excess alcohol use, and family history",
+      "marks": 1
+    },
+    {
+      "id": "t3-q67-left-sided-heart-failure",
+      "type": "multiple-choice",
+      "prompt": "Which statement is most consistent with left-sided heart failure?",
+      "options": [
+        "It is commonly caused by hypertension or ischaemic heart disease and typically produces dyspnoea, orthopnoea, and pulmonary crackles",
+        "It is usually caused by appendicitis and typically produces jaundice and melaena",
+        "It mainly causes isolated ankle oedema without pulmonary symptoms and is never related to myocardial infarction",
+        "It is defined by increased pancreatic enzyme release into the bloodstream"
+      ],
+      "correctAnswer": "It is commonly caused by hypertension or ischaemic heart disease and typically produces dyspnoea, orthopnoea, and pulmonary crackles",
+      "marks": 1
+    },
+    {
+      "id": "t3-q68-lipoprotein-matching",
+      "type": "matching",
+      "prompt": "Match each lipoprotein term to the best description.",
+      "options": [
+        "Removes cholesterol from peripheral tissues and returns it to the liver",
+        "Delivers cholesterol to peripheral tissues and promotes atherosclerosis when elevated",
+        "Carries triglycerides made by the liver to peripheral tissues",
+        "Abnormally raised levels of cholesterol, triglycerides, or both in the blood"
+      ],
+      "pairs": [
+        {
+          "prompt": "HDL",
+          "answer": "Removes cholesterol from peripheral tissues and returns it to the liver"
+        },
+        {
+          "prompt": "LDL",
+          "answer": "Delivers cholesterol to peripheral tissues and promotes atherosclerosis when elevated"
+        },
+        {
+          "prompt": "VLDL",
+          "answer": "Carries triglycerides made by the liver to peripheral tissues"
+        },
+        {
+          "prompt": "Hyperlipidaemia",
+          "answer": "Abnormally raised levels of cholesterol, triglycerides, or both in the blood"
+        }
+      ],
+      "marks": 2
+    },
+    {
+      "id": "t4-q69-endocrine-disorder-mechanisms",
+      "type": "multiple-choice",
+      "prompt": "Which statement best describes general mechanisms by which endocrine disorders develop?",
+      "options": [
+        "They occur only when a gland becomes infected and always cause hormone excess",
+        "They may result from hormone hypersecretion, hyposecretion from gland destruction, impaired hormone transport, or target-cell receptor resistance",
+        "They are caused only by failure of the nervous system and never by problems in endocrine glands or receptors",
+        "They always produce normal hormone concentrations but abnormal blood pressure only"
+      ],
+      "correctAnswer": "They may result from hormone hypersecretion, hyposecretion from gland destruction, impaired hormone transport, or target-cell receptor resistance",
+      "marks": 1
+    },
+    {
+      "id": "t4-q70-glucose-homeostasis",
+      "type": "multiple-choice",
+      "prompt": "Which statement best explains normal glucose homeostasis in the fasting and fed states?",
+      "options": [
+        "Insulin raises blood glucose during fasting, whereas glucagon lowers it after a meal",
+        "Insulin promotes glucose uptake and glycogen synthesis after meals, whereas glucagon helps maintain blood glucose during fasting by stimulating glycogenolysis and gluconeogenesis",
+        "Both insulin and glucagon are secreted only when blood glucose is dangerously low",
+        "Glucagon is released after meals to store glucose in skeletal muscle"
+      ],
+      "correctAnswer": "Insulin promotes glucose uptake and glycogen synthesis after meals, whereas glucagon helps maintain blood glucose during fasting by stimulating glycogenolysis and gluconeogenesis",
+      "marks": 1
+    },
+    {
+      "id": "t4-q71-diabetes-diagnostic-tests",
+      "type": "multiple-choice",
+      "prompt": "Which statement about diagnostic testing for diabetes is most accurate?",
+      "options": [
+        "Only HbA1c can diagnose diabetes; fasting glucose, random glucose, and oral glucose tolerance testing have no diagnostic role",
+        "Diabetes may be diagnosed using abnormal fasting plasma glucose, a 2-hour oral glucose tolerance test result, or a random plasma glucose in a symptomatic patient, as well as HbA1c in appropriate settings",
+        "A single urine dipstick for glucose is the definitive diagnostic test for diabetes",
+        "An oral glucose tolerance test is used only after diabetes has already been excluded"
+      ],
+      "correctAnswer": "Diabetes may be diagnosed using abnormal fasting plasma glucose, a 2-hour oral glucose tolerance test result, or a random plasma glucose in a symptomatic patient, as well as HbA1c in appropriate settings",
+      "marks": 1
+    },
+    {
+      "id": "t4-q72-diabetes-complications",
+      "type": "multiple-choice",
+      "prompt": "Which option correctly groups chronic complications of diabetes into microvascular and macrovascular disease?",
+      "options": [
+        "Microvascular: retinopathy, nephropathy, neuropathy; Macrovascular: coronary artery disease, stroke, peripheral arterial disease",
+        "Microvascular: myocardial infarction, stroke, peripheral arterial disease; Macrovascular: retinopathy, nephropathy, neuropathy",
+        "Microvascular: appendicitis and pancreatitis; Macrovascular: asthma and pneumonia",
+        "Microvascular complications occur only in type 1 diabetes, whereas macrovascular complications occur only in type 2 diabetes"
+      ],
+      "correctAnswer": "Microvascular: retinopathy, nephropathy, neuropathy; Macrovascular: coronary artery disease, stroke, peripheral arterial disease",
       "marks": 1
     }
   ]

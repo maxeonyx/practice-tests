@@ -3,9 +3,9 @@
     {
       "id": "bioscience-impaired-body-function",
       "title": "Human Bioscience: Impaired Body Function Practice Test",
-      "description": "A 60-question nursing practice exam for Massey University 214.201 covering ECG and shock, digestive and liver disorders, cardiovascular disorders, and endocrine, diabetes, and body mass concepts.",
+      "description": "A 72-question nursing practice exam for Massey University 214.201 covering ECG and shock, digestive and liver disorders, cardiovascular disorders, and endocrine, diabetes, and body mass concepts.",
       "durationMinutes": 90,
-      "questionCount": 60,
+      "questionCount": 72,
       "questionTypes": [
         "Multiple Choice",
         "True/False",
