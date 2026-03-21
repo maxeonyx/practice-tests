@@ -1,4 +1,4 @@
-import { clearAttempt, getAttempt, loadCatalog } from './common.js';
+import { clearAttempt, getAttempt, loadCatalog } from './common.js?v=20260321-1';
 
 const { createApp } = Vue;
 

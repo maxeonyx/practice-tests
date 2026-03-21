@@ -9,7 +9,7 @@ import {
   saveAttempt,
   scoreTest,
   testParam,
-} from './common.js';
+} from './common.js?v=20260321-1';
 
 const { createApp } = Vue;
 

@@ -1,4 +1,4 @@
-import { clearAttempt, formatMarks, getAttempt, loadTest, questionTypesLabel, scoreTest, testParam } from './common.js';
+import { clearAttempt, formatMarks, getAttempt, loadTest, questionTypesLabel, scoreTest, testParam } from './common.js?v=20260321-1';
 
 const { createApp } = Vue;
 
