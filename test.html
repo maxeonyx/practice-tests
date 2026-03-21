@@ -51,6 +51,7 @@
           <div class="progress-bar" aria-hidden="true">
             <div class="progress-bar-fill" :style="{ width: `${progressPercent}%` }"></div>
           </div>
+          <p class="helper-text autosave-note">Answers, flags, and remaining time save automatically on this device.</p>
         </section>
 
         <section v-if="!reviewMode" class="panel question-panel">
@@ -80,9 +81,10 @@
               <label :for="`match-${currentQuestion.id}-${pair.prompt}`">{{ pair.prompt }}</label>
               <select :id="`match-${currentQuestion.id}-${pair.prompt}`" :value="matchingAnswerValue(pair.prompt)" @change="updateMatchingAnswer(currentQuestion.id, pair.prompt, $event.target.value)">
                 <option value="">Select an answer</option>
-                <option v-for="option in currentQuestion.options" :key="option" :value="option">{{ option }}</option>
+                <option v-for="option in currentQuestion.options" :key="option" :value="option" :disabled="isMatchingOptionDisabled(option, pair.prompt)">{{ option }}</option>
               </select>
             </div>
+            <p class="helper-text">Each answer can only be used once.</p>
           </div>
 
           <div v-else-if="currentQuestion.type === 'short-answer'" class="short-answer-block">

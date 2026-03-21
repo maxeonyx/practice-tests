@@ -27,7 +27,7 @@ practice-tests/
 
 ## Commands
 
-- No build step — open HTML files directly or serve with any static server
+- No build step — serve the site over HTTP for local preview because the app fetches JSON files
 - Local preview: `python -m http.server 4173`
 - Deploy: push to `main`, GitHub Pages serves automatically
 
@@ -35,6 +35,30 @@ practice-tests/
 
 Tests are JSON files in `tests/`. Each test file contains metadata and an array of questions. See REQUIREMENTS.md for the four question types.
 Landing page metadata lives in `tests/index.json`, which maps test ids to JSON files.
+
+### Catalog entry schema (`tests/index.json`)
+
+- `id` — unique test id string
+- `title` — landing page title
+- `description` — landing page summary
+- `durationMinutes` — whole-number duration
+- `questionCount` — whole-number count kept in sync with the test file
+- `questionTypes` — display labels shown on the landing page
+- `file` — path to the test JSON file
+
+### Test file schema (`tests/<name>.json`)
+
+- top-level fields: `id`, `title`, `description`, `durationMinutes`, `questions`
+- every question needs `id`, `type`, and `prompt`
+- `multiple-choice`: add `options` array and `correctAnswer` matching one of the options
+- `true-false`: add `correctAnswer` with `True` or `False`
+- `matching`: add unique `options` plus `pairs`, where each pair has a unique `prompt` and an `answer` present in `options`
+- `short-answer`: no `correctAnswer`; optional `sampleResponseGuide` can help future authors review expected responses
+
+### Notes
+
+- Matching answers are treated as one-to-one, so each correct answer should be unique within a question
+- Keep placeholder or schema-reference tests out of `tests/index.json` so they are not shown to students
 
 ## Key Decisions
 

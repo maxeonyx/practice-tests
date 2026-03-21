@@ -58,8 +58,7 @@
 
             <div class="button-row">
               <a class="button button-primary" :href="primaryLink(test.id)">{{ primaryLabel(test.id) }}</a>
-              <a v-if="hasSubmitted(test.id)" class="button button-secondary" :href="`results.html?test=${encodeURIComponent(test.id)}`">View Results</a>
-              <button v-if="canReset(test.id)" class="button button-secondary" type="button" @click="resetAttempt(test.id)">Reset Attempt</button>
+              <button v-if="canReset(test.id)" class="button button-secondary" type="button" @click="resetAttempt(test.id)">{{ secondaryLabel(test.id) }}</button>
             </div>
           </article>
         </div>

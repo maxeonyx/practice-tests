@@ -65,7 +65,7 @@ createApp({
       }
 
       this.test = await loadTest(testId);
-      this.attempt = getAttempt(testId) || createAttempt(this.test);
+      this.attempt = getAttempt(this.test) || createAttempt(this.test);
       this.reviewMode = Boolean(this.attempt.reviewMode);
       this.remainingMs = remainingMs(this.attempt);
       saveAttempt(this.test.id, this.attempt);
@@ -128,6 +128,10 @@ createApp({
     matchingAnswerValue(prompt) {
       return this.attempt.answers[this.currentQuestion.id]?.[prompt] || '';
     },
+    isMatchingOptionDisabled(option, prompt) {
+      const answers = this.attempt.answers[this.currentQuestion.id] || {};
+      return Object.entries(answers).some(([currentPrompt, selectedOption]) => currentPrompt !== prompt && selectedOption === option);
+    },
     goPrevious() {
       if (this.attempt.currentIndex > 0) {
         this.attempt.currentIndex -= 1;
@@ -172,7 +176,7 @@ createApp({
     },
     statusClass(questionId) {
       const question = this.test.questions.find((item) => item.id === questionId);
-      return isQuestionAnswered(question, this.attempt.answers[questionId]) ? 'status-correct' : 'status-unanswered';
+      return isQuestionAnswered(question, this.attempt.answers[questionId]) ? 'status-answered' : 'status-unanswered';
     },
     submitTest(fromTimer) {
       if (this.submitting || !this.test || !this.attempt || this.attempt.submitted) {

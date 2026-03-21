@@ -175,6 +175,10 @@ h3 {
   color: var(--text-muted);
 }
 
+.autosave-note {
+  margin-top: 12px;
+}
+
 .progress-bar {
   margin-top: 16px;
   width: 100%;
@@ -381,6 +385,7 @@ textarea {
 }
 
 .status-pill,
+.status-answered,
 .status-correct,
 .status-incorrect,
 .status-unanswered,
@@ -394,6 +399,7 @@ textarea {
 }
 
 .status-pill,
+.status-answered,
 .status-short-answer {
   background: var(--accent-soft);
   color: var(--accent-strong);

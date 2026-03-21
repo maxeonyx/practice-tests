@@ -16,7 +16,7 @@ createApp({
       const catalog = await loadCatalog();
       this.tests = catalog.tests;
       this.tests.forEach((test) => {
-        this.attemptStates[test.id] = getAttempt(test.id);
+        this.attemptStates[test.id] = getAttempt(test);
       });
     } catch (error) {
       this.error = error.message;
@@ -63,15 +63,24 @@ createApp({
         return 'Start Test';
       }
 
-      return attempt.submitted ? 'Review Results' : 'Resume Test';
-    },
-    hasSubmitted(testId) {
-      return Boolean(this.attemptStates[testId]?.submitted);
+      return attempt.submitted ? 'View Results' : 'Resume Test';
     },
     canReset(testId) {
       return Boolean(this.attemptStates[testId]);
     },
+    secondaryLabel(testId) {
+      return this.attemptStates[testId]?.submitted ? 'Retake' : 'Reset Attempt';
+    },
     resetAttempt(testId) {
+      const submitted = Boolean(this.attemptStates[testId]?.submitted);
+      const confirmed = window.confirm(submitted
+        ? 'This will remove the saved results for this attempt and start again. Continue?'
+        : 'This will delete your saved progress for this attempt. Continue?');
+
+      if (!confirmed) {
+        return;
+      }
+
       clearAttempt(testId);
       this.attemptStates[testId] = null;
     },

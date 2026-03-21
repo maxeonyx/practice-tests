@@ -22,7 +22,7 @@ createApp({
       }
 
       this.test = await loadTest(testId);
-      this.attempt = getAttempt(testId);
+      this.attempt = getAttempt(this.test);
 
       if (!this.attempt?.submitted) {
         throw new Error('No submitted attempt was found for this test yet.');
@@ -64,6 +64,12 @@ createApp({
       return item.status === 'correct' ? 'status-correct' : 'status-incorrect';
     },
     retakeTest() {
+      const confirmed = window.confirm('This will remove the saved results for this attempt and start a new attempt. Continue?');
+
+      if (!confirmed) {
+        return;
+      }
+
       clearAttempt(this.test.id);
       window.location.href = `test.html?test=${encodeURIComponent(this.test.id)}`;
     },

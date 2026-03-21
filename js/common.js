@@ -12,7 +12,9 @@ export async function loadCatalog() {
     throw new Error('Could not load the test catalog.');
   }
 
-  return response.json();
+  const catalog = await response.json();
+  validateCatalog(catalog);
+  return catalog;
 }
 
 export async function loadTest(testId) {
@@ -52,14 +54,28 @@ export function getAttemptKey(testId) {
   return `${STORAGE_PREFIX}:attempt:${testId}`;
 }
 
-export function getAttempt(testId) {
-  const raw = window.localStorage.getItem(getAttemptKey(testId));
+export function getAttempt(testOrMeta) {
+  const raw = window.localStorage.getItem(getAttemptKey(testOrMeta.id));
 
   if (!raw) {
     return null;
   }
 
-  return JSON.parse(raw);
+  const parsed = safeParseJson(raw);
+
+  if (!parsed) {
+    clearAttempt(testOrMeta.id);
+    return null;
+  }
+
+  const normalized = normalizeAttempt(testOrMeta, parsed);
+
+  if (!normalized) {
+    clearAttempt(testOrMeta.id);
+    return null;
+  }
+
+  return normalized;
 }
 
 export function saveAttempt(testId, attempt) {
@@ -215,14 +231,238 @@ function formatCorrectAnswer(question) {
   return question.correctAnswer;
 }
 
+function validateCatalog(catalog) {
+  if (!catalog || !Array.isArray(catalog.tests)) {
+    throw new Error('The test catalog is missing a tests array.');
+  }
+
+  const seenIds = new Set();
+
+  catalog.tests.forEach((entry) => {
+    if (!entry?.id || !entry.title || !entry.description || !entry.file) {
+      throw new Error('Each catalog entry must include id, title, description, and file.');
+    }
+
+    if (seenIds.has(entry.id)) {
+      throw new Error(`The catalog contains a duplicate test id: "${entry.id}".`);
+    }
+
+    seenIds.add(entry.id);
+
+    if (!Number.isInteger(entry.durationMinutes) || entry.durationMinutes <= 0) {
+      throw new Error(`Catalog entry "${entry.id}" has an invalid duration.`);
+    }
+
+    if (!Number.isInteger(entry.questionCount) || entry.questionCount <= 0) {
+      throw new Error(`Catalog entry "${entry.id}" has an invalid questionCount.`);
+    }
+
+    if (!Array.isArray(entry.questionTypes) || entry.questionTypes.length === 0) {
+      throw new Error(`Catalog entry "${entry.id}" must list its question types.`);
+    }
+  });
+}
+
 function validateTest(test) {
   if (!test?.id || !Array.isArray(test.questions) || !test.title) {
     throw new Error('Test data is missing required fields.');
   }
 
+  if (!Number.isInteger(test.durationMinutes) || test.durationMinutes <= 0) {
+    throw new Error(`Test "${test.id}" has an invalid duration.`);
+  }
+
+  const seenIds = new Set();
+
   test.questions.forEach((question) => {
     if (!question.id || !question.type || !question.prompt) {
       throw new Error(`Question data is incomplete in test "${test.id}".`);
     }
+
+    if (seenIds.has(question.id)) {
+      throw new Error(`Test "${test.id}" contains a duplicate question id: "${question.id}".`);
+    }
+
+    seenIds.add(question.id);
+    validateQuestion(test.id, question);
   });
+}
+
+function validateQuestion(testId, question) {
+  switch (question.type) {
+    case 'multiple-choice':
+      validateOptionsQuestion(testId, question, 2);
+      if (!question.options.includes(question.correctAnswer)) {
+        throw new Error(`Question "${question.id}" in test "${testId}" has a correctAnswer that is not in options.`);
+      }
+      break;
+    case 'true-false':
+      if (!['True', 'False'].includes(question.correctAnswer)) {
+        throw new Error(`Question "${question.id}" in test "${testId}" must use "True" or "False" as its correctAnswer.`);
+      }
+      break;
+    case 'matching':
+      validateMatchingQuestion(testId, question);
+      break;
+    case 'short-answer':
+      if (question.sampleResponseGuide && typeof question.sampleResponseGuide !== 'string') {
+        throw new Error(`Question "${question.id}" in test "${testId}" has an invalid sampleResponseGuide.`);
+      }
+      break;
+    default:
+      throw new Error(`Question "${question.id}" in test "${testId}" uses unsupported type "${question.type}".`);
+  }
+}
+
+function validateOptionsQuestion(testId, question, minOptions) {
+  if (!Array.isArray(question.options) || question.options.length < minOptions) {
+    throw new Error(`Question "${question.id}" in test "${testId}" must define at least ${minOptions} options.`);
+  }
+
+  const optionSet = new Set(question.options);
+
+  if (optionSet.size !== question.options.length) {
+    throw new Error(`Question "${question.id}" in test "${testId}" contains duplicate options.`);
+  }
+
+  if (question.options.some((option) => typeof option !== 'string' || !option.trim())) {
+    throw new Error(`Question "${question.id}" in test "${testId}" contains an invalid option.`);
+  }
+}
+
+function validateMatchingQuestion(testId, question) {
+  validateOptionsQuestion(testId, question, 1);
+
+  if (!Array.isArray(question.pairs) || question.pairs.length === 0) {
+    throw new Error(`Question "${question.id}" in test "${testId}" must define at least one pair.`);
+  }
+
+  const prompts = new Set();
+  const answers = new Set();
+
+  question.pairs.forEach((pair) => {
+    if (!pair?.prompt || !pair.answer) {
+      throw new Error(`Question "${question.id}" in test "${testId}" contains an incomplete matching pair.`);
+    }
+
+    if (prompts.has(pair.prompt)) {
+      throw new Error(`Question "${question.id}" in test "${testId}" contains a duplicate matching prompt.`);
+    }
+
+    if (answers.has(pair.answer)) {
+      throw new Error(`Question "${question.id}" in test "${testId}" contains a duplicate matching answer.`);
+    }
+
+    if (!question.options.includes(pair.answer)) {
+      throw new Error(`Question "${question.id}" in test "${testId}" contains a matching answer that is not in options.`);
+    }
+
+    prompts.add(pair.prompt);
+    answers.add(pair.answer);
+  });
+}
+
+function safeParseJson(raw) {
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+function normalizeAttempt(testOrMeta, attempt) {
+  if (!attempt || typeof attempt !== 'object' || Array.isArray(attempt)) {
+    return null;
+  }
+
+  const questionCount = questionTotal(testOrMeta);
+  const questionIds = Array.isArray(testOrMeta.questions) ? new Set(testOrMeta.questions.map((question) => question.id)) : null;
+
+  if (attempt.testId !== testOrMeta.id) {
+    return null;
+  }
+
+  return {
+    testId: testOrMeta.id,
+    startedAt: asTimestamp(attempt.startedAt) ?? Date.now(),
+    endTime: asTimestamp(attempt.endTime) ?? (Date.now() + ((testOrMeta.durationMinutes ?? 90) * 60 * 1000)),
+    currentIndex: clampIndex(attempt.currentIndex, questionCount),
+    reviewMode: Boolean(attempt.reviewMode),
+    submitted: Boolean(attempt.submitted),
+    submittedAt: asTimestamp(attempt.submittedAt),
+    answers: normalizeAnswers(questionIds, attempt.answers),
+    flags: normalizeFlags(questionIds, attempt.flags),
+    summary: normalizeSummary(attempt.summary),
+  };
+}
+
+function questionTotal(testOrMeta) {
+  if (Array.isArray(testOrMeta.questions)) {
+    return testOrMeta.questions.length;
+  }
+
+  return Number.isInteger(testOrMeta.questionCount) ? testOrMeta.questionCount : 1;
+}
+
+function clampIndex(index, questionCount) {
+  if (questionCount <= 0) {
+    return 0;
+  }
+
+  if (!Number.isInteger(index)) {
+    return 0;
+  }
+
+  return Math.min(Math.max(index, 0), questionCount - 1);
+}
+
+function normalizeAnswers(questionIds, answers) {
+  if (!answers || typeof answers !== 'object' || Array.isArray(answers)) {
+    return {};
+  }
+
+  const entries = Object.entries(answers).filter(([questionId]) => !questionIds || questionIds.has(questionId));
+  return Object.fromEntries(entries.map(([questionId, answer]) => [questionId, normalizeAnswerValue(answer)]).filter(([, answer]) => answer !== undefined));
+}
+
+function normalizeAnswerValue(answer) {
+  if (typeof answer === 'string') {
+    return answer;
+  }
+
+  if (!answer || typeof answer !== 'object' || Array.isArray(answer)) {
+    return undefined;
+  }
+
+  const entries = Object.entries(answer).filter(([, value]) => typeof value === 'string');
+  return Object.fromEntries(entries);
+}
+
+function normalizeFlags(questionIds, flags) {
+  if (!flags || typeof flags !== 'object' || Array.isArray(flags)) {
+    return {};
+  }
+
+  const entries = Object.entries(flags)
+    .filter(([questionId]) => !questionIds || questionIds.has(questionId))
+    .map(([questionId, value]) => [questionId, Boolean(value)]);
+
+  return Object.fromEntries(entries);
+}
+
+function normalizeSummary(summary) {
+  if (!summary || typeof summary !== 'object' || Array.isArray(summary)) {
+    return null;
+  }
+
+  return {
+    earnedPoints: Number.isFinite(summary.earnedPoints) ? summary.earnedPoints : 0,
+    maxPoints: Number.isFinite(summary.maxPoints) ? summary.maxPoints : 0,
+    percentage: Number.isFinite(summary.percentage) ? summary.percentage : 0,
+    submittedByTimer: Boolean(summary.submittedByTimer),
+  };
+}
+
+function asTimestamp(value) {
+  return Number.isFinite(value) && value > 0 ? value : null;
 }
