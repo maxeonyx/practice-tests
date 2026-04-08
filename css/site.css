@@ -625,6 +625,25 @@ textarea {
     padding: 16px 12px 36px;
   }
 
+  .site-header {
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .site-header h1 {
+    margin-bottom: 8px;
+    font-size: clamp(1.6rem, 7vw, 2.25rem);
+    line-height: 1.1;
+  }
+
+  .site-header-tight {
+    margin-bottom: 16px;
+  }
+
+  .site-header-test .page-intro {
+    display: none;
+  }
+
   .section-heading,
   .progress-row,
   .question-meta-row,
@@ -636,6 +655,32 @@ textarea {
 
   .progress-panel {
     position: static;
+    padding: 16px;
+  }
+
+  .progress-row {
+    gap: 10px;
+  }
+
+  .progress-copy {
+    gap: 2px;
+  }
+
+  .progress-copy strong {
+    font-size: 1rem;
+  }
+
+  .progress-copy span {
+    font-size: 0.95rem;
+  }
+
+  .progress-bar {
+    margin-top: 12px;
+  }
+
+  .autosave-note {
+    margin-top: 8px;
+    font-size: 0.95rem;
   }
 
   .question-nav-panel {
@@ -665,7 +710,29 @@ textarea {
     width: 100%;
   }
 
+  .status-strip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 8px;
+  }
+
   .status-card {
-    width: 100%;
+    min-width: 0;
+    width: auto;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .status-card strong {
+    display: block;
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  .status-label {
+    margin-bottom: 2px;
+    font-size: 0.75rem;
+    line-height: 1.2;
   }
 }
