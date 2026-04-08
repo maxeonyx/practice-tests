@@ -11,29 +11,30 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap&v=20260321-1" rel="stylesheet">
-  <link rel="stylesheet" href="css/site.css?v=20260409-1">
+  <link rel="stylesheet" href="css/site.css?v=20260409-2">
 </head>
 <body>
   <div id="app" class="site-shell">
+    <p class="visually-hidden" aria-live="polite" aria-atomic="true">{{ liveMessage }}</p>
     <header class="site-header">
       <div>
         <p class="eyebrow">Practice Test Platform</p>
-        <h1>Nursing Practice Tests</h1>
+        <h1 id="page-title">Nursing Practice Tests</h1>
         <p class="page-intro">Focused, exam-style practice with automatic saving, timing, and results review.</p>
       </div>
     </header>
 
-    <main class="page page-home">
-      <section class="panel panel-spacious">
+    <main class="page page-home" aria-labelledby="page-title">
+      <section class="panel panel-spacious" aria-labelledby="available-tests-heading">
         <div class="section-heading">
           <div>
-            <h2>Available Tests</h2>
+            <h2 id="available-tests-heading">Available Tests</h2>
             <p>Choose a test to begin or resume where you left off.</p>
           </div>
         </div>
 
-        <p v-if="loading" class="empty-state">Loading tests...</p>
-        <p v-else-if="error" class="error-banner">{{ error }}</p>
+        <p v-if="loading" class="empty-state" role="status">Loading tests...</p>
+        <p v-else-if="error" class="error-banner" role="alert">{{ error }}</p>
         <div v-else class="test-grid">
           <article v-for="test in tests" :key="test.id" class="test-card">
             <div class="test-card-header">
@@ -71,6 +72,6 @@
   </div>
 
   <script src="https://unpkg.com/vue@3.5.13/dist/vue.global.prod.js?v=20260321-1"></script>
-  <script type="module" src="js/index.js?v=20260321-1"></script>
+  <script type="module" src="js/index.js?v=20260409-2"></script>
 </body>
 </html>

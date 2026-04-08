@@ -1,4 +1,6 @@
 import {
+  announceLive,
+  clearLiveAnnouncement,
   createAttempt,
   formatDuration,
   getAttempt,
@@ -8,8 +10,9 @@ import {
   remainingMs,
   saveAttempt,
   scoreTest,
+  setTransientMessage,
   testParam,
-} from './common.js?v=20260321-1';
+} from './common.js?v=20260409-2';
 
 const { createApp } = Vue;
 
@@ -18,11 +21,13 @@ createApp({
     return {
       loading: true,
       error: '',
+      liveMessage: '',
       test: null,
       attempt: null,
       remainingMs: 0,
       reviewMode: false,
       navOpen: false,
+      announceTimerId: null,
       timerId: null,
       submitting: false,
     };
@@ -56,6 +61,37 @@ createApp({
     unansweredCount() {
       return this.test.questions.length - this.answeredCount;
     },
+    questionHeadingId() {
+      return this.currentQuestion ? `question-heading-${this.currentQuestion.id}` : 'question-heading';
+    },
+    questionHelpId() {
+      return this.currentQuestion ? `question-help-${this.currentQuestion.id}` : 'question-help';
+    },
+    questionMapHeadingId() {
+      return 'question-map-heading';
+    },
+  },
+  watch: {
+    reviewMode(isReviewMode) {
+      this.$nextTick(() => {
+        if (isReviewMode) {
+          this.focusReviewHeading();
+        } else {
+          this.focusQuestionHeading();
+        }
+      });
+    },
+    'attempt.currentIndex'() {
+      this.announce(`Question ${this.currentQuestionNumber} loaded.`);
+
+      if (this.reviewMode) {
+        return;
+      }
+
+      this.$nextTick(() => {
+        this.focusQuestionHeading();
+      });
+    },
   },
   async mounted() {
     try {
@@ -71,6 +107,7 @@ createApp({
       this.navOpen = window.innerWidth >= 960;
       this.remainingMs = remainingMs(this.attempt);
       saveAttempt(this.test.id, this.attempt);
+      this.announce(`Loaded ${this.test.title}.`);
 
       if (this.attempt.submitted) {
         this.redirectToResults();
@@ -89,19 +126,44 @@ createApp({
           this.submitTest(true);
         }
       }, 1000);
+
     } catch (error) {
       this.error = error.message;
     } finally {
       this.loading = false;
+
+      if (!this.error) {
+        this.$nextTick(() => {
+          if (this.reviewMode) {
+            this.focusReviewHeading();
+            return;
+          }
+
+          this.focusQuestionHeading();
+        });
+      }
     }
   },
   beforeUnmount() {
+    clearLiveAnnouncement(this);
     if (this.timerId) {
       window.clearInterval(this.timerId);
     }
   },
   methods: {
     formatDuration,
+    announce(message) {
+      announceLive(this, message);
+    },
+    focusQuestionHeading() {
+      this.$refs.questionHeading?.focus();
+    },
+    focusReviewHeading() {
+      this.$refs.reviewHeading?.focus();
+    },
+    focusQuestionMapHeading() {
+      this.$refs.questionMapHeading?.focus();
+    },
     typeLabel(type) {
       return questionTypesLabel(type);
     },
@@ -150,11 +212,13 @@ createApp({
       this.persistAttempt();
     },
     toggleFlag(questionId) {
+      const nextFlagged = !this.attempt.flags[questionId];
       this.attempt.flags = {
         ...this.attempt.flags,
-        [questionId]: !this.attempt.flags[questionId],
+        [questionId]: nextFlagged,
       };
       this.persistAttempt();
+      this.announce(nextFlagged ? `Question ${this.currentQuestionNumber} flagged.` : `Question ${this.currentQuestionNumber} unflagged.`);
     },
     isFlagged(questionId) {
       return Boolean(this.attempt.flags[questionId]);
@@ -163,13 +227,22 @@ createApp({
       this.reviewMode = true;
       this.navOpen = true;
       this.persistAttempt();
+      this.announce('Review mode opened.');
     },
     closeReview() {
       this.reviewMode = false;
       this.persistAttempt();
+      this.announce(`Returned to question ${this.currentQuestionNumber}.`);
     },
     toggleNavPanel() {
       this.navOpen = !this.navOpen;
+      this.announce(this.navOpen ? 'Question map opened.' : 'Question map closed.');
+
+      if (this.navOpen) {
+        this.$nextTick(() => {
+          this.focusQuestionMapHeading();
+        });
+      }
     },
     jumpToQuestion(index) {
       this.attempt.currentIndex = index;
@@ -220,6 +293,7 @@ createApp({
         submittedByTimer: fromTimer,
       };
       saveAttempt(this.test.id, this.attempt);
+      this.setTransientMessage(fromTimer ? 'Your test was submitted automatically when the timer expired.' : 'Your test was submitted. Results are ready to review.');
 
       if (this.timerId) {
         window.clearInterval(this.timerId);

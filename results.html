@@ -11,27 +11,28 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap&v=20260321-1" rel="stylesheet">
-  <link rel="stylesheet" href="css/site.css?v=20260409-1">
+  <link rel="stylesheet" href="css/site.css?v=20260409-2">
 </head>
 <body>
   <div id="app" class="site-shell">
+    <p class="visually-hidden" aria-live="polite" aria-atomic="true">{{ liveMessage }}</p>
     <header class="site-header site-header-tight">
       <div>
         <p class="eyebrow">Results</p>
-        <h1>{{ test?.title || 'Practice Test Results' }}</h1>
+        <h1 id="page-title">{{ test?.title || 'Practice Test Results' }}</h1>
         <p class="page-intro">Review your score, question outcomes, and any short answers that need self-assessment.</p>
       </div>
     </header>
 
-    <main class="page page-results">
-      <p v-if="loading" class="empty-state">Loading results...</p>
-      <p v-else-if="error" class="error-banner">{{ error }}</p>
+    <main class="page page-results" aria-labelledby="page-title">
+      <p v-if="loading" class="empty-state" role="status">Loading results...</p>
+      <p v-else-if="error" class="error-banner" role="alert">{{ error }}</p>
 
       <template v-else-if="test && summary">
-        <section class="panel score-panel">
+        <section class="panel score-panel" aria-labelledby="score-heading">
           <div>
             <p class="eyebrow">Auto-marked Score</p>
-            <h2>{{ formatMarks(summary.earnedPoints) }} / {{ formatMarks(summary.maxPoints) }}</h2>
+            <h2 id="score-heading" ref="resultsHeading" tabindex="-1">{{ formatMarks(summary.earnedPoints) }} / {{ formatMarks(summary.maxPoints) }}</h2>
             <p>{{ summary.percentage }}% across automatically marked questions.</p>
           </div>
           <div class="score-meta">
@@ -60,10 +61,10 @@
           </div>
         </section>
 
-        <section class="panel panel-spacious">
+        <section class="panel panel-spacious" aria-labelledby="breakdown-heading">
           <div class="section-heading">
             <div>
-              <h2>Question Breakdown</h2>
+              <h2 id="breakdown-heading">Question Breakdown</h2>
               <p>Each auto-marked question shows your response and the correct answer. Short answers remain for self-assessment.</p>
             </div>
           </div>
@@ -100,6 +101,6 @@
   </div>
 
   <script src="https://unpkg.com/vue@3.5.13/dist/vue.global.prod.js?v=20260321-1"></script>
-  <script type="module" src="js/results.js?v=20260321-1"></script>
+  <script type="module" src="js/results.js?v=20260409-2"></script>
 </body>
 </html>

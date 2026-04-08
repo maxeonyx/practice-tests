@@ -1,4 +1,6 @@
 const STORAGE_PREFIX = 'practice-tests';
+const LIVE_ANNOUNCE_DELAY_MS = 20;
+const TRANSIENT_MESSAGE_KEY = `${STORAGE_PREFIX}:transient-message`;
 
 export function testParam() {
   const params = new URLSearchParams(window.location.search);
@@ -52,6 +54,39 @@ export function createAttempt(test) {
 
 export function getAttemptKey(testId) {
   return `${STORAGE_PREFIX}:attempt:${testId}`;
+}
+
+export function announceLive(app, message) {
+  clearLiveAnnouncement(app);
+  app.liveMessage = '';
+  app.announceTimerId = window.setTimeout(() => {
+    app.liveMessage = message;
+    app.announceTimerId = null;
+  }, LIVE_ANNOUNCE_DELAY_MS);
+}
+
+export function clearLiveAnnouncement(app) {
+  if (!app.announceTimerId) {
+    return;
+  }
+
+  window.clearTimeout(app.announceTimerId);
+  app.announceTimerId = null;
+}
+
+export function setTransientMessage(message) {
+  window.sessionStorage.setItem(TRANSIENT_MESSAGE_KEY, message);
+}
+
+export function consumeTransientMessage() {
+  const message = window.sessionStorage.getItem(TRANSIENT_MESSAGE_KEY);
+
+  if (!message) {
+    return null;
+  }
+
+  window.sessionStorage.removeItem(TRANSIENT_MESSAGE_KEY);
+  return message;
 }
 
 export function getAttempt(testOrMeta) {

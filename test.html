@@ -11,14 +11,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap&v=20260321-1" rel="stylesheet">
-  <link rel="stylesheet" href="css/site.css?v=20260409-1">
+  <link rel="stylesheet" href="css/site.css?v=20260409-2">
 </head>
 <body>
   <div id="app" class="site-shell">
+    <p class="visually-hidden" aria-live="polite" aria-atomic="true">{{ liveMessage }}</p>
     <header class="site-header site-header-tight site-header-test">
       <div>
         <p class="eyebrow">Practice Test</p>
-        <h1>{{ test?.title || 'Loading test...' }}</h1>
+        <h1 id="page-title">{{ test?.title || 'Loading test...' }}</h1>
         <p class="page-intro">One question at a time, with auto-save and a timed exam-style flow.</p>
       </div>
       <div v-if="test && attempt" class="status-strip">
@@ -37,19 +38,19 @@
       </div>
     </header>
 
-    <main class="page page-test">
-      <p v-if="loading" class="empty-state">Loading test...</p>
-      <p v-else-if="error" class="error-banner">{{ error }}</p>
+    <main class="page page-test" aria-labelledby="page-title">
+      <p v-if="loading" class="empty-state" role="status">Loading test...</p>
+      <p v-else-if="error" class="error-banner" role="alert">{{ error }}</p>
 
       <template v-else-if="test && attempt">
-        <section class="panel progress-panel">
+        <section class="panel progress-panel" aria-labelledby="progress-heading">
           <div class="progress-row">
             <div class="progress-copy">
-              <strong>{{ reviewMode ? 'Review your responses' : `Question ${currentQuestionNumber} of ${test.questions.length}` }}</strong>
+              <strong id="progress-heading">{{ reviewMode ? 'Review your responses' : `Question ${currentQuestionNumber} of ${test.questions.length}` }}</strong>
               <span>{{ answeredCount }} answered, {{ unansweredCount }} unanswered, {{ flaggedCount }} flagged</span>
             </div>
             <div class="button-row progress-actions">
-              <button class="button button-secondary nav-toggle" type="button" @click="toggleNavPanel" :aria-expanded="String(navOpen)">
+              <button class="button button-secondary nav-toggle" type="button" @click="toggleNavPanel" :aria-expanded="String(navOpen)" aria-controls="question-map">
                 {{ navOpen ? 'Hide Question Map' : 'Show Question Map' }}
               </button>
               <button v-if="!reviewMode" class="button button-secondary" type="button" @click="toggleFlag(currentQuestion.id)">
@@ -64,7 +65,7 @@
         </section>
 
         <div class="test-layout">
-          <section class="panel question-panel">
+          <section class="panel question-panel" :aria-labelledby="reviewMode ? 'review-heading' : questionHeadingId">
             <template v-if="!reviewMode">
               <div class="question-meta-row">
                 <span class="question-type">{{ typeLabel(currentQuestion.type) }}</span>
@@ -74,23 +75,25 @@
                 </div>
               </div>
 
-              <h2>{{ currentQuestion.prompt }}</h2>
+              <h2 :id="questionHeadingId" ref="questionHeading" tabindex="-1">{{ currentQuestion.prompt }}</h2>
 
-              <div v-if="currentQuestion.type === 'multiple-choice'" class="option-list">
+              <fieldset v-if="currentQuestion.type === 'multiple-choice'" class="question-group option-list">
+                <legend class="visually-hidden">{{ currentQuestion.prompt }}</legend>
                 <label v-for="option in currentQuestion.options" :key="option" class="option-card">
                   <input type="radio" :name="currentQuestion.id" :value="option" :checked="currentAnswer === option" @change="updateAnswer(currentQuestion.id, option)">
                   <span>{{ option }}</span>
                 </label>
-              </div>
+              </fieldset>
 
-              <div v-else-if="currentQuestion.type === 'true-false'" class="option-list option-list-inline">
+              <fieldset v-else-if="currentQuestion.type === 'true-false'" class="question-group option-list option-list-inline">
+                <legend class="visually-hidden">{{ currentQuestion.prompt }}</legend>
                 <label v-for="option in ['True', 'False']" :key="option" class="option-card">
                   <input type="radio" :name="currentQuestion.id" :value="option" :checked="currentAnswer === option" @change="updateAnswer(currentQuestion.id, option)">
                   <span>{{ option }}</span>
                 </label>
-              </div>
+              </fieldset>
 
-              <div v-else-if="currentQuestion.type === 'matching'" class="matching-grid">
+              <div v-else-if="currentQuestion.type === 'matching'" class="matching-grid" :aria-describedby="questionHelpId">
                 <div v-for="pair in currentQuestion.pairs" :key="pair.prompt" class="matching-row">
                   <label :for="`match-${currentQuestion.id}-${pair.prompt}`">{{ pair.prompt }}</label>
                   <select :id="`match-${currentQuestion.id}-${pair.prompt}`" :value="matchingAnswerValue(pair.prompt)" @change="updateMatchingAnswer(currentQuestion.id, pair.prompt, $event.target.value)">
@@ -98,13 +101,13 @@
                     <option v-for="option in currentQuestion.options" :key="option" :value="option" :disabled="isMatchingOptionDisabled(option, pair.prompt)">{{ option }}</option>
                   </select>
                 </div>
-                <p class="helper-text">Each answer can only be used once.</p>
+                <p :id="questionHelpId" class="helper-text">Each answer can only be used once.</p>
               </div>
 
               <div v-else-if="currentQuestion.type === 'short-answer'" class="short-answer-block">
-                <label :for="currentQuestion.id" class="visually-hidden">Answer</label>
-                <textarea :id="currentQuestion.id" rows="6" :value="currentAnswer || ''" @input="updateAnswer(currentQuestion.id, $event.target.value)" placeholder="Write your response here."></textarea>
-                <p class="helper-text">Short answers are shown on the results page for self-review and are not auto-marked.</p>
+                <label :for="currentQuestion.id" class="visually-hidden">Response for: {{ currentQuestion.prompt }}</label>
+                <textarea :id="currentQuestion.id" ref="questionInput" rows="6" :value="currentAnswer || ''" @input="updateAnswer(currentQuestion.id, $event.target.value)" :aria-labelledby="questionHeadingId" :aria-describedby="questionHelpId" placeholder="Write your response here."></textarea>
+                <p :id="questionHelpId" class="helper-text">Short answers are shown on the results page for self-review and are not auto-marked.</p>
               </div>
 
               <div class="button-row button-row-spread">
@@ -119,7 +122,7 @@
             <template v-else>
               <div class="section-heading">
                 <div>
-                  <h2>Review Before Submission</h2>
+                  <h2 id="review-heading" ref="reviewHeading" tabindex="-1">Review Before Submission</h2>
                   <p>Check your answered and flagged questions before submitting the test.</p>
                 </div>
               </div>
@@ -142,15 +145,15 @@
             </template>
           </section>
 
-          <aside :class="['panel', 'question-nav-panel', { 'question-nav-panel-open': navOpen }]">
+          <aside :class="['panel', 'question-nav-panel', { 'question-nav-panel-open': navOpen }]" :aria-labelledby="questionMapHeadingId">
             <div class="section-heading question-nav-heading">
               <div>
-                <h2>Question Map</h2>
+                <h2 :id="questionMapHeadingId" ref="questionMapHeading" tabindex="-1">Question Map</h2>
                 <p>Jump to any question. Buttons show answered, unanswered, and flagged status.</p>
               </div>
             </div>
 
-            <div class="question-nav-grid" role="navigation" aria-label="Question navigation">
+            <nav id="question-map" class="question-nav-grid" aria-label="Question navigation">
               <button
                 v-for="(question, index) in test.questions"
                 :key="question.id"
@@ -163,7 +166,7 @@
                 <span class="question-nav-label">{{ questionNavLabel(question.id) }}</span>
                 <span v-if="isFlagged(question.id)" class="question-nav-flag">Flagged</span>
               </button>
-            </div>
+            </nav>
 
             <div class="question-nav-legend">
               <span class="question-nav-legend-item"><span class="question-nav-swatch question-nav-swatch-current"></span>Current</span>
@@ -178,6 +181,6 @@
   </div>
 
   <script src="https://unpkg.com/vue@3.5.13/dist/vue.global.prod.js?v=20260321-1"></script>
-  <script type="module" src="js/test.js?v=20260321-1"></script>
+  <script type="module" src="js/test.js?v=20260409-2"></script>
 </body>
 </html>

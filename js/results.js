@@ -1,4 +1,4 @@
-import { clearAttempt, formatMarks, getAttempt, loadTest, questionTypesLabel, scoreTest, testParam } from './common.js?v=20260321-1';
+import { announceLive, clearAttempt, clearLiveAnnouncement, consumeTransientMessage, formatMarks, getAttempt, loadTest, questionTypesLabel, scoreTest, testParam } from './common.js?v=20260409-2';
 
 const { createApp } = Vue;
 
@@ -7,11 +7,13 @@ createApp({
     return {
       loading: true,
       error: '',
+      liveMessage: '',
       test: null,
       attempt: null,
       summary: null,
       detailedResults: [],
       pendingRetakeConfirmation: false,
+      announceTimerId: null,
       retakeConfirmTimerId: null,
     };
   },
@@ -33,6 +35,16 @@ createApp({
       const summary = scoreTest(this.test, this.attempt);
       this.summary = summary;
       this.detailedResults = summary.detailedResults;
+      const transientMessage = consumeTransientMessage();
+      if (transientMessage) {
+        this.announce(transientMessage);
+      } else {
+        this.announce(`Loaded results for ${this.test.title}.`);
+      }
+
+      this.$nextTick(() => {
+        this.$refs.resultsHeading?.focus();
+      });
     } catch (error) {
       this.error = error.message;
     } finally {
@@ -40,9 +52,13 @@ createApp({
     }
   },
   beforeUnmount() {
+    clearLiveAnnouncement(this);
     this.clearRetakeConfirmation();
   },
   methods: {
+    announce(message) {
+      announceLive(this, message);
+    },
     formatMarks,
     typeLabel(type) {
       return questionTypesLabel(type);
@@ -96,6 +112,7 @@ createApp({
       }
 
       this.pendingRetakeConfirmation = true;
+      this.announce(`Retake confirmation enabled for ${this.test.title}. Activate again within 3 seconds to confirm.`);
       this.retakeConfirmTimerId = window.setTimeout(() => {
         this.pendingRetakeConfirmation = false;
         this.retakeConfirmTimerId = null;
@@ -117,6 +134,7 @@ createApp({
 
       this.clearRetakeConfirmation();
       clearAttempt(this.test.id);
+      this.announce(`Saved attempt cleared for ${this.test.title}. Starting a new attempt.`);
       window.location.href = `test.html?test=${encodeURIComponent(this.test.id)}`;
     },
   },

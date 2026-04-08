@@ -1,4 +1,4 @@
-import { clearAttempt, getAttempt, loadCatalog } from './common.js?v=20260321-1';
+import { announceLive, clearAttempt, clearLiveAnnouncement, getAttempt, loadCatalog } from './common.js?v=20260409-2';
 
 const { createApp } = Vue;
 
@@ -7,8 +7,10 @@ createApp({
     return {
       loading: true,
       error: '',
+      liveMessage: '',
       tests: [],
       attemptStates: {},
+      announceTimerId: null,
       pendingResetTestId: null,
       resetConfirmTimerId: null,
     };
@@ -27,9 +29,16 @@ createApp({
     }
   },
   beforeUnmount() {
+    clearLiveAnnouncement(this);
     this.clearResetConfirmation();
   },
   methods: {
+    announce(message) {
+      announceLive(this, message);
+    },
+    testTitle(testId) {
+      return this.tests.find((test) => test.id === testId)?.title || 'this test';
+    },
     formatTypes(types) {
       return types.join(', ');
     },
@@ -92,6 +101,7 @@ createApp({
       }
 
       this.pendingResetTestId = testId;
+      this.announce(`Reset confirmation enabled for ${this.testTitle(testId)}. Activate again within 3 seconds to confirm.`);
       this.resetConfirmTimerId = window.setTimeout(() => {
         if (this.pendingResetTestId === testId) {
           this.pendingResetTestId = null;
@@ -117,6 +127,7 @@ createApp({
       this.clearResetConfirmation();
       clearAttempt(testId);
       this.attemptStates[testId] = null;
+      this.announce(`Cleared saved attempt for ${this.testTitle(testId)}.`);
     },
   },
 }).mount('#app');

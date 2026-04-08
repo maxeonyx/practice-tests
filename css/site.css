@@ -49,6 +49,16 @@ textarea {
   font: inherit;
 }
 
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex="-1"]:focus-visible {
+  outline: 3px solid rgba(15, 92, 122, 0.35);
+  outline-offset: 3px;
+}
+
 .site-shell {
   max-width: 1080px;
   margin: 0 auto;
@@ -350,6 +360,13 @@ h3 {
   gap: 12px;
 }
 
+.question-group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
 .option-list-inline {
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
 }
@@ -379,6 +396,12 @@ h3 {
 
 .option-card input {
   margin-top: 4px;
+}
+
+select:focus-visible,
+textarea:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(15, 92, 122, 0.12);
 }
 
 .matching-row {
