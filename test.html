@@ -93,16 +93,17 @@
                 </label>
               </fieldset>
 
-              <div v-else-if="currentQuestion.type === 'matching'" class="matching-grid" :aria-describedby="questionHelpId">
+              <fieldset v-else-if="currentQuestion.type === 'matching'" class="question-group matching-grid">
+                <legend class="visually-hidden">{{ currentQuestion.prompt }}</legend>
                 <div v-for="pair in currentQuestion.pairs" :key="pair.prompt" class="matching-row">
                   <label :for="`match-${currentQuestion.id}-${pair.prompt}`">{{ pair.prompt }}</label>
-                  <select :id="`match-${currentQuestion.id}-${pair.prompt}`" :value="matchingAnswerValue(pair.prompt)" @change="updateMatchingAnswer(currentQuestion.id, pair.prompt, $event.target.value)">
+                  <select :id="`match-${currentQuestion.id}-${pair.prompt}`" :value="matchingAnswerValue(pair.prompt)" :aria-describedby="questionHelpId" @change="updateMatchingAnswer(currentQuestion.id, pair.prompt, $event.target.value)">
                     <option value="">Select an answer</option>
                     <option v-for="option in currentQuestion.options" :key="option" :value="option" :disabled="isMatchingOptionDisabled(option, pair.prompt)">{{ option }}</option>
                   </select>
                 </div>
                 <p :id="questionHelpId" class="helper-text">Each answer can only be used once.</p>
-              </div>
+              </fieldset>
 
               <div v-else-if="currentQuestion.type === 'short-answer'" class="short-answer-block">
                 <label :for="currentQuestion.id" class="visually-hidden">Response for: {{ currentQuestion.prompt }}</label>
