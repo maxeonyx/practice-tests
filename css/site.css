@@ -465,6 +465,10 @@ textarea {
   gap: 16px;
 }
 
+.question-nav-panel[hidden] {
+  display: none !important;
+}
+
 .question-nav-heading h2 {
   margin-bottom: 6px;
   font-size: 1.25rem;
@@ -704,11 +708,6 @@ textarea {
 
   .question-nav-panel {
     position: static;
-    display: none;
-  }
-
-  .question-nav-panel.question-nav-panel-open {
-    display: grid;
   }
 
   .question-nav-grid {

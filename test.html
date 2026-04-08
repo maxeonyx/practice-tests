@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap&v=20260321-1" rel="stylesheet">
-  <link rel="stylesheet" href="css/site.css?v=20260409-2">
+  <link rel="stylesheet" href="css/site.css?v=20260409-3">
 </head>
 <body>
   <div id="app" class="site-shell">
@@ -50,7 +50,7 @@
               <span>{{ answeredCount }} answered, {{ unansweredCount }} unanswered, {{ flaggedCount }} flagged</span>
             </div>
             <div class="button-row progress-actions">
-              <button class="button button-secondary nav-toggle" type="button" @click="toggleNavPanel" :aria-expanded="String(navOpen)" aria-controls="question-map">
+              <button class="button button-secondary nav-toggle" type="button" @click="toggleNavPanel" :aria-expanded="navOpen ? 'true' : 'false'" aria-controls="question-map-panel">
                 {{ navOpen ? 'Hide Question Map' : 'Show Question Map' }}
               </button>
               <button v-if="!reviewMode" class="button button-secondary" type="button" @click="toggleFlag(currentQuestion.id)">
@@ -145,7 +145,7 @@
             </template>
           </section>
 
-          <aside :class="['panel', 'question-nav-panel', { 'question-nav-panel-open': navOpen }]" :aria-labelledby="questionMapHeadingId">
+          <aside id="question-map-panel" class="panel question-nav-panel" :hidden="!navOpen" :aria-labelledby="questionMapHeadingId">
             <div class="section-heading question-nav-heading">
               <div>
                 <h2 :id="questionMapHeadingId" ref="questionMapHeading" tabindex="-1">Question Map</h2>
@@ -181,6 +181,6 @@
   </div>
 
   <script src="https://unpkg.com/vue@3.5.13/dist/vue.global.prod.js?v=20260321-1"></script>
-  <script type="module" src="js/test.js?v=20260409-2"></script>
+  <script type="module" src="js/test.js?v=20260409-3"></script>
 </body>
 </html>
