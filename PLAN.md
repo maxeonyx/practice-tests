@@ -1,6 +1,6 @@
 # Practice Tests — PLAN.md
 
-## Current State (2026-03-21)
+## Current State (2026-04-09)
 
 **Site is live at https://practice-tests.maxeonyx.com**
 
@@ -31,6 +31,7 @@
 
 ### Browser testing done
 
+Initial testing (2026-03-21):
 - Landing page renders correctly, shows test card with metadata
 - Question navigation map works (click number → jumps to question)
 - All four question types render and accept input
@@ -38,14 +39,14 @@
 - Timer counts down
 - Auto-save message visible
 
-### Browser testing NOT done (no CDP was available earlier)
-
-- Full submit → results flow
-- Results page with marking criteria display
-- Retake flow
-- Timer expiry auto-submit
-- Mobile viewport
-- Page refresh mid-test (localStorage recovery)
+Full flow testing (2026-04-09):
+- Full submit → results flow ✅ — score, per-question breakdown, correct/incorrect/unanswered all display correctly
+- Results page with marking criteria ✅ — short-answer cards show "What to include in your answer:" from sampleResponseGuide
+- Retake flow ✅ — confirmation pattern works, clears state, fresh test with reset timer
+- Timer expiry auto-submit ✅ — timer reaches 0:00, auto-submits, results show "submitted automatically" message
+- Page refresh mid-test ✅ — answers, flags, timer, current question all restored from localStorage
+- Mobile viewport (375×812) ✅ — all pages functional, no overflow or horizontal scroll
+  - **UX issue:** header + status strip stack to ~457px on mobile, pushing question content below the fold — students must scroll a full screen to see the question
 
 ## Future Work
 
@@ -53,6 +54,7 @@
 - **Question generation tooling** — currently questions are hand-authored as JSON. Could build a workflow from learning objectives → questions.
 - ~~**HTTPS enforcement**~~ — done: `https_enforced` is enabled on GitHub Pages
 - ~~**Favicon**~~ — done: SVG clipboard+checkmark icon, deployed
+- **Mobile header compactness** — on phone viewports, the header/status strip pushes question content below the fold; consider making the status bar horizontal or collapsible on mobile
 - **Test content schema docs** — AGENTS.md has the schema but could be more detailed for non-technical test authors
 - **Accessibility audit** — keyboard navigation, screen reader testing
 - **Print-friendly results** — students might want to print their results
