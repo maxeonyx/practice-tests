@@ -771,3 +771,125 @@ textarea {
     line-height: 1.2;
   }
 }
+
+@media print {
+  @page {
+    margin: 12mm;
+  }
+
+  body.results-page {
+    min-height: auto;
+    background: #fff;
+    color: #000;
+  }
+
+  body.results-page .site-shell {
+    max-width: none;
+    padding: 0;
+  }
+
+  body.results-page .skip-link,
+  body.results-page .visually-hidden,
+  body.results-page .page-results .button-row {
+    display: none !important;
+  }
+
+  body.results-page .site-header,
+  body.results-page .site-header-tight {
+    margin-bottom: 12pt;
+  }
+
+  body.results-page .page-results {
+    display: block;
+  }
+
+  body.results-page .page-results .panel,
+  body.results-page .page-results .result-card,
+  body.results-page .page-results .status-card,
+  body.results-page .page-results .marking-guide {
+    box-shadow: none;
+    background: #fff;
+  }
+
+  body.results-page .page-results .panel,
+  body.results-page .page-results .result-card,
+  body.results-page .page-results .status-card,
+  body.results-page .page-results .marking-guide,
+  body.results-page .page-results .pill,
+  body.results-page .page-results .status-correct,
+  body.results-page .page-results .status-incorrect,
+  body.results-page .page-results .status-partial,
+  body.results-page .page-results .status-unanswered,
+  body.results-page .page-results .status-short-answer {
+    border-color: #999;
+    color: #000;
+  }
+
+  body.results-page .page-results .panel {
+    margin-bottom: 12pt;
+    padding: 14pt;
+  }
+
+  body.results-page .page-results .panel-spacious,
+  body.results-page .page-results .result-card {
+    padding: 12pt;
+  }
+
+  body.results-page .page-results .score-panel {
+    gap: 10pt;
+    break-inside: avoid-page;
+    page-break-inside: avoid;
+  }
+
+  body.results-page .page-results .score-meta {
+    justify-content: flex-start;
+    gap: 8pt;
+  }
+
+  body.results-page .page-results .status-card {
+    min-width: 90pt;
+    padding: 8pt 10pt;
+  }
+
+  body.results-page .page-results .result-card,
+  body.results-page .page-results .marking-guide {
+    break-inside: avoid-page;
+    page-break-inside: avoid;
+  }
+
+  body.results-page .page-results .question-meta-row,
+  body.results-page .page-results .section-heading {
+    align-items: flex-start;
+  }
+
+  body.results-page .page-results .question-meta-badges {
+    justify-content: flex-start;
+  }
+
+  body.results-page h1,
+  body.results-page .page-results #score-heading {
+    color: #000;
+  }
+
+  body.results-page h1 {
+    margin-bottom: 6pt;
+    font-size: 24pt;
+  }
+
+  body.results-page .page-results #score-heading {
+    font-size: 21pt;
+  }
+
+  body.results-page .eyebrow,
+  body.results-page .page-intro,
+  body.results-page .page-results .section-heading p,
+  body.results-page .page-results .helper-text,
+  body.results-page .page-results .question-type,
+  body.results-page .page-results .status-label {
+    color: #333;
+  }
+
+  body.results-page a {
+    text-decoration: none;
+  }
+}
