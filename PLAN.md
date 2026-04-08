@@ -51,7 +51,7 @@
 
 - **More tests** — the platform supports multiple tests via `tests/index.json`. Drop in new JSON files.
 - **Question generation tooling** — currently questions are hand-authored as JSON. Could build a workflow from learning objectives → questions.
-- **HTTPS enforcement** — enable `https_enforced` on GitHub Pages once the cert provisions (Cloudflare handles it for now)
+- ~~**HTTPS enforcement**~~ — done: `https_enforced` is enabled on GitHub Pages
 - **Favicon** — currently missing (404 in console)
 - **Test content schema docs** — AGENTS.md has the schema but could be more detailed for non-technical test authors
 - **Accessibility audit** — keyboard navigation, screen reader testing
