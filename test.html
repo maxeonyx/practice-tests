@@ -160,6 +160,7 @@
                 :key="question.id"
                 :class="questionNavClass(question.id, index)"
                 type="button"
+                :aria-label="questionNavAriaLabel(question, index)"
                 :aria-current="!reviewMode && attempt.currentIndex === index ? 'step' : null"
                 @click="jumpToQuestion(index)"
               >

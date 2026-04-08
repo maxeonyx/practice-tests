@@ -15,6 +15,7 @@ import {
 } from './common.js?v=20260409-2';
 
 const { createApp } = Vue;
+const QUESTION_NAV_LABEL_MAX_LENGTH = 80;
 
 createApp({
   data() {
@@ -264,6 +265,38 @@ createApp({
     },
     questionNavLabel(questionId) {
       return this.isFlagged(questionId) ? `${this.answeredLabel(questionId)} - Flagged` : this.answeredLabel(questionId);
+    },
+    questionPromptSummary(question) {
+      const prompt = typeof question?.prompt === 'string' ? question.prompt.trim().replace(/\s+/g, ' ') : '';
+
+      if (!prompt) {
+        return 'Question prompt unavailable';
+      }
+
+      const firstSentence = prompt.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim() || prompt;
+
+      if (firstSentence.length <= QUESTION_NAV_LABEL_MAX_LENGTH) {
+        return firstSentence;
+      }
+
+      return `${firstSentence.slice(0, QUESTION_NAV_LABEL_MAX_LENGTH - 1).trimEnd()}…`;
+    },
+    questionNavAriaLabel(question, index) {
+      const parts = [
+        `Question ${index + 1}`,
+        this.questionPromptSummary(question),
+        this.answeredLabel(question.id),
+      ];
+
+      if (this.isFlagged(question.id)) {
+        parts.push('Flagged');
+      }
+
+      if (!this.reviewMode && this.attempt.currentIndex === index) {
+        parts.push('Current question');
+      }
+
+      return parts.join('. ');
     },
     questionNavClass(questionId, index) {
       return [
