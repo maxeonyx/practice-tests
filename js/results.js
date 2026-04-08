@@ -17,6 +17,23 @@ createApp({
       retakeConfirmTimerId: null,
     };
   },
+  computed: {
+    documentTitle() {
+      if (!this.test) {
+        return 'Practice Test Results';
+      }
+
+      return `Results — ${this.test.title}`;
+    },
+  },
+  watch: {
+    documentTitle: {
+      immediate: true,
+      handler(title) {
+        document.title = title;
+      },
+    },
+  },
   async mounted() {
     try {
       const testId = testParam();

@@ -35,6 +35,17 @@ createApp({
     };
   },
   computed: {
+    documentTitle() {
+      if (!this.test || !this.attempt) {
+        return 'Practice Test';
+      }
+
+      if (this.reviewMode) {
+        return `Review — ${this.test.title}`;
+      }
+
+      return `Q${this.currentQuestionNumber}/${this.test.questions.length} — ${this.test.title}`;
+    },
     currentQuestion() {
       return this.test.questions[this.attempt.currentIndex];
     },
@@ -74,6 +85,12 @@ createApp({
     },
   },
   watch: {
+    documentTitle: {
+      immediate: true,
+      handler(title) {
+        document.title = title;
+      },
+    },
     reviewMode(isReviewMode) {
       this.$nextTick(() => {
         if (isReviewMode) {
