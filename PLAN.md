@@ -68,4 +68,4 @@ Accessibility audit + implementation (2026-04-09):
 - **Test content schema docs** — AGENTS.md has the schema but could be more detailed for non-technical test authors
 - ~~**Dynamic document titles**~~ — done: test page shows "Q5/72 — Test Name", review mode shows "Review — Test Name", results page shows "Results — Test Name"
 - **Accessibility follow-up** — improve timer accessibility and do a full screen reader pass (e.g. NVDA/VoiceOver)
-- **Print-friendly results** — students might want to print their results
+- ~~**Print-friendly results**~~ — done: `@media print` styles hide navigation/chrome, show score summary and per-question breakdown cleanly
