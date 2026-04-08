@@ -52,7 +52,7 @@
 - **More tests** — the platform supports multiple tests via `tests/index.json`. Drop in new JSON files.
 - **Question generation tooling** — currently questions are hand-authored as JSON. Could build a workflow from learning objectives → questions.
 - ~~**HTTPS enforcement**~~ — done: `https_enforced` is enabled on GitHub Pages
-- **Favicon** — currently missing (404 in console)
+- ~~**Favicon**~~ — done: SVG clipboard+checkmark icon, deployed
 - **Test content schema docs** — AGENTS.md has the schema but could be more detailed for non-technical test authors
 - **Accessibility audit** — keyboard navigation, screen reader testing
 - **Print-friendly results** — students might want to print their results
