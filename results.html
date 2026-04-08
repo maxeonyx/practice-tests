@@ -11,96 +11,99 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap&v=20260321-1" rel="stylesheet">
-  <link rel="stylesheet" href="css/site.css?v=20260409-2">
+  <link rel="stylesheet" href="css/site.css?v=20260409-9">
 </head>
 <body>
-  <div id="app" class="site-shell">
-    <p class="visually-hidden" aria-live="polite" aria-atomic="true">{{ liveMessage }}</p>
-    <header class="site-header site-header-tight">
-      <div>
-        <p class="eyebrow">Results</p>
-        <h1 id="page-title">{{ test?.title || 'Practice Test Results' }}</h1>
-        <p class="page-intro">Review your score, question outcomes, and any short answers that need self-assessment.</p>
-      </div>
-    </header>
+  <div id="app">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <div class="site-shell">
+      <p class="visually-hidden" aria-live="polite" aria-atomic="true">{{ liveMessage }}</p>
+      <header class="site-header site-header-tight">
+        <div>
+          <p class="eyebrow">Results</p>
+          <h1 id="page-title">{{ test?.title || 'Practice Test Results' }}</h1>
+          <p class="page-intro">Review your score, question outcomes, and any short answers that need self-assessment.</p>
+        </div>
+      </header>
 
-    <main class="page page-results" aria-labelledby="page-title">
-      <p v-if="loading" class="empty-state" role="status">Loading results...</p>
-      <p v-else-if="error" class="error-banner" role="alert">{{ error }}</p>
+      <main id="main-content" class="page page-results" aria-labelledby="page-title" tabindex="-1">
+        <p v-if="loading" class="empty-state" role="status">Loading results...</p>
+        <p v-else-if="error" class="error-banner" role="alert">{{ error }}</p>
 
-      <template v-else-if="test && summary">
-        <section class="panel score-panel" aria-labelledby="score-heading">
-          <div>
-            <p class="eyebrow">Auto-marked Score</p>
-            <h2 id="score-heading" ref="resultsHeading" tabindex="-1">{{ formatMarks(summary.earnedPoints) }} / {{ formatMarks(summary.maxPoints) }}</h2>
-            <p>{{ summary.percentage }}% across automatically marked questions.</p>
-          </div>
-          <div class="score-meta">
-            <div class="status-card">
-              <span class="status-label">Correct</span>
-              <strong>{{ summary.correctCount }}</strong>
-            </div>
-            <div class="status-card">
-              <span class="status-label">Incorrect</span>
-              <strong>{{ summary.incorrectCount }}</strong>
-            </div>
-            <div class="status-card" v-if="summary.partialCount">
-              <span class="status-label">Partially Correct</span>
-              <strong>{{ summary.partialCount }}</strong>
-            </div>
-            <div class="status-card">
-              <span class="status-label">Not Answered</span>
-              <strong>{{ summary.notAnsweredCount }}</strong>
-            </div>
-          </div>
-          <p v-if="attempt.summary?.submittedByTimer" class="status-unanswered">This attempt was submitted automatically when the timer expired.</p>
-          <p class="helper-text">This test totals {{ formatMarks(summary.totalMarks) }} marks. {{ formatMarks(summary.manualReviewMarks) }} marks come from short answers for self-review.</p>
-          <div class="button-row">
-            <button :class="['button', retakeButtonClass()]" type="button" @click="retakeTest">{{ retakeLabel() }}</button>
-            <a class="button button-secondary" href="index.html">Back to Tests</a>
-          </div>
-        </section>
-
-        <section class="panel panel-spacious" aria-labelledby="breakdown-heading">
-          <div class="section-heading">
+        <template v-else-if="test && summary">
+          <section class="panel score-panel" aria-labelledby="score-heading">
             <div>
-              <h2 id="breakdown-heading">Question Breakdown</h2>
-              <p>Each auto-marked question shows your response and the correct answer. Short answers remain for self-assessment.</p>
+              <p class="eyebrow">Auto-marked Score</p>
+              <h2 id="score-heading" ref="resultsHeading" tabindex="-1">{{ formatMarks(summary.earnedPoints) }} / {{ formatMarks(summary.maxPoints) }}</h2>
+              <p>{{ summary.percentage }}% across automatically marked questions.</p>
             </div>
-          </div>
+            <div class="score-meta">
+              <div class="status-card">
+                <span class="status-label">Correct</span>
+                <strong>{{ summary.correctCount }}</strong>
+              </div>
+              <div class="status-card">
+                <span class="status-label">Incorrect</span>
+                <strong>{{ summary.incorrectCount }}</strong>
+              </div>
+              <div class="status-card" v-if="summary.partialCount">
+                <span class="status-label">Partially Correct</span>
+                <strong>{{ summary.partialCount }}</strong>
+              </div>
+              <div class="status-card">
+                <span class="status-label">Not Answered</span>
+                <strong>{{ summary.notAnsweredCount }}</strong>
+              </div>
+            </div>
+            <p v-if="attempt.summary?.submittedByTimer" class="status-unanswered">This attempt was submitted automatically when the timer expired.</p>
+            <p class="helper-text">This test totals {{ formatMarks(summary.totalMarks) }} marks. {{ formatMarks(summary.manualReviewMarks) }} marks come from short answers for self-review.</p>
+            <div class="button-row">
+              <button :class="['button', retakeButtonClass()]" type="button" @click="retakeTest">{{ retakeLabel() }}</button>
+              <a class="button button-secondary" href="index.html">Back to Tests</a>
+            </div>
+          </section>
 
-          <article v-for="item in detailedResults" :key="item.question.id" class="result-card">
-            <div class="question-meta-row">
-              <span class="question-type">{{ typeLabel(item.question.type) }}</span>
-              <div class="question-meta-badges">
-                <span class="pill pill-marks">{{ marksSummary(item) }}</span>
-                <span :class="resultPillClass(item)">{{ resultLabel(item) }}</span>
+          <section class="panel panel-spacious" aria-labelledby="breakdown-heading">
+            <div class="section-heading">
+              <div>
+                <h2 id="breakdown-heading">Question Breakdown</h2>
+                <p>Each auto-marked question shows your response and the correct answer. Short answers remain for self-assessment.</p>
               </div>
             </div>
 
-            <h3>{{ item.question.prompt }}</h3>
+            <article v-for="item in detailedResults" :key="item.question.id" class="result-card">
+              <div class="question-meta-row">
+                <span class="question-type">{{ typeLabel(item.question.type) }}</span>
+                <div class="question-meta-badges">
+                  <span class="pill pill-marks">{{ marksSummary(item) }}</span>
+                  <span :class="resultPillClass(item)">{{ resultLabel(item) }}</span>
+                </div>
+              </div>
 
-            <div v-if="item.question.type === 'short-answer'" class="result-detail-block">
-              <p><strong>Your response:</strong></p>
-              <p>{{ item.display.response || 'No response provided.' }}</p>
-              <section v-if="item.question.sampleResponseGuide" class="marking-guide">
-                <h4>What to include in your answer:</h4>
-                <p>{{ item.question.sampleResponseGuide }}</p>
-              </section>
-            </div>
+              <h3>{{ item.question.prompt }}</h3>
 
-            <div v-else class="result-detail-block">
-              <p><strong>Your response:</strong> {{ item.display.response || 'Not answered' }}</p>
-              <p><strong>Correct answer:</strong> {{ item.display.correct }}</p>
-              <p v-if="item.display.pairSummary"><strong>Matching score:</strong> {{ item.display.pairSummary }}</p>
-            </div>
-          </article>
-        </section>
-      </template>
-    </main>
+              <div v-if="item.question.type === 'short-answer'" class="result-detail-block">
+                <p><strong>Your response:</strong></p>
+                <p>{{ item.display.response || 'No response provided.' }}</p>
+                <section v-if="item.question.sampleResponseGuide" class="marking-guide">
+                  <h4>What to include in your answer:</h4>
+                  <p>{{ item.question.sampleResponseGuide }}</p>
+                </section>
+              </div>
+
+              <div v-else class="result-detail-block">
+                <p><strong>Your response:</strong> {{ item.display.response || 'Not answered' }}</p>
+                <p><strong>Correct answer:</strong> {{ item.display.correct }}</p>
+                <p v-if="item.display.pairSummary"><strong>Matching score:</strong> {{ item.display.pairSummary }}</p>
+              </div>
+            </article>
+          </section>
+        </template>
+      </main>
+    </div>
   </div>
 
   <script src="https://unpkg.com/vue@3.5.13/dist/vue.global.prod.js?v=20260321-1"></script>
-  <script type="module" src="js/results.js?v=20260409-2"></script>
+  <script type="module" src="js/results.js?v=20260409-9"></script>
 </body>
 </html>

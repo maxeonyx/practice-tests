@@ -11,8 +11,9 @@ import {
   saveAttempt,
   scoreTest,
   setTransientMessage,
+  shouldPreserveSkipLinkFocus,
   testParam,
-} from './common.js?v=20260409-2';
+} from './common.js?v=20260409-9';
 
 const { createApp } = Vue;
 const QUESTION_NAV_LABEL_MAX_LENGTH = 80;
@@ -135,6 +136,10 @@ createApp({
 
       if (!this.error) {
         this.$nextTick(() => {
+          if (shouldPreserveSkipLinkFocus()) {
+            return;
+          }
+
           if (this.reviewMode) {
             this.focusReviewHeading();
             return;

@@ -1,4 +1,4 @@
-import { announceLive, clearAttempt, clearLiveAnnouncement, consumeTransientMessage, formatMarks, getAttempt, loadTest, questionTypesLabel, scoreTest, testParam } from './common.js?v=20260409-2';
+import { announceLive, clearAttempt, clearLiveAnnouncement, consumeTransientMessage, formatMarks, getAttempt, loadTest, questionTypesLabel, scoreTest, shouldPreserveSkipLinkFocus, testParam } from './common.js?v=20260409-9';
 
 const { createApp } = Vue;
 
@@ -43,6 +43,10 @@ createApp({
       }
 
       this.$nextTick(() => {
+        if (shouldPreserveSkipLinkFocus()) {
+          return;
+        }
+
         this.$refs.resultsHeading?.focus();
       });
     } catch (error) {

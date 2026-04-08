@@ -89,6 +89,16 @@ export function consumeTransientMessage() {
   return message;
 }
 
+export function shouldPreserveSkipLinkFocus() {
+  const activeElement = document.activeElement;
+
+  if (!activeElement || activeElement === document.body) {
+    return false;
+  }
+
+  return activeElement.classList?.contains('skip-link');
+}
+
 export function getAttempt(testOrMeta) {
   const raw = window.localStorage.getItem(getAttemptKey(testOrMeta.id));
 

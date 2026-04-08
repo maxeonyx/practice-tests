@@ -55,6 +55,7 @@ Accessibility audit + implementation (2026-04-09):
 - Status/error/live announcements ✅ — loading uses `role="status"`, errors use `role="alert"`, key UI transitions announce via live regions
 - Control associations ✅ — question map toggle uses `aria-controls`; short-answer and matching helper text are associated to controls
 - Visible focus styling ✅ — consistent `:focus-visible` treatment added for interactive controls and programmatically focused headings
+- Skip links ✅ — all pages now expose a keyboard-accessible skip link to the main content without breaking initial heading focus
 - Keyboard verification ✅ — full landing → test → review → submit → results → retake flow exercised locally after the accessibility changes
 
 ## Future Work
@@ -65,5 +66,5 @@ Accessibility audit + implementation (2026-04-09):
 - ~~**Favicon**~~ — done: SVG clipboard+checkmark icon, deployed
 - ~~**Mobile header compactness**~~ — done: compact 3-column status strip on mobile, question visible without scrolling
 - **Test content schema docs** — AGENTS.md has the schema but could be more detailed for non-technical test authors
-- **Accessibility follow-up** — add a skip link, improve timer accessibility, consider dynamic document titles, and do a full screen reader pass (e.g. NVDA/VoiceOver)
+- **Accessibility follow-up** — improve timer accessibility, consider dynamic document titles, and do a full screen reader pass (e.g. NVDA/VoiceOver)
 - **Print-friendly results** — students might want to print their results
