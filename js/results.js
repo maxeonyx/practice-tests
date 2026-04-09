@@ -1,4 +1,4 @@
-import { announceLive, clearAttempt, clearLiveAnnouncement, consumeTransientMessage, formatMarks, getAttempt, loadTest, questionTypesLabel, scoreTest, shouldPreserveSkipLinkFocus, testParam } from './common.js?v=20260409-10';
+import { announceLive, clearAttempt, clearLiveAnnouncement, consumeTransientMessage, formatMarks, getAttempt, loadTest, questionTypesLabel, scoreTest, shouldPreserveSkipLinkFocus, testParam } from './common.js?v=20260410-01';
 
 const { createApp } = Vue;
 

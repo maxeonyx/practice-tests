@@ -177,20 +177,27 @@ export function formatMarks(value) {
   return value.toFixed(2).replace(/\.?0+$/, '');
 }
 
-export function isQuestionAnswered(question, answer) {
+export function questionAnswerState(question, answer) {
+  if (!question?.type) {
+    throw new Error('Question status could not be determined because the question data is missing a type.');
+  }
+
   if (question.type === 'matching') {
-    if (!answer || typeof answer !== 'object') {
-      return false;
+    const answers = answer && typeof answer === 'object' && !Array.isArray(answer) ? answer : {};
+    const selectedCount = question.pairs.filter((pair) => hasAnswerText(answers[pair.prompt])).length;
+
+    if (selectedCount === 0) {
+      return 'unanswered';
     }
 
-    return question.pairs.every((pair) => Boolean(answer[pair.prompt]));
+    return selectedCount === question.pairs.length ? 'answered' : 'partial';
   }
 
   if (question.type === 'short-answer') {
-    return typeof answer === 'string' && answer.trim().length > 0;
+    return hasAnswerText(answer) ? 'answered' : 'unanswered';
   }
 
-  return typeof answer === 'string' && answer.length > 0;
+  return hasAnswerText(answer) ? 'answered' : 'unanswered';
 }
 
 export function scoreTest(test, attempt) {
@@ -242,7 +249,7 @@ export function scoreQuestion(question, answer) {
     return scoreMatchingQuestion(question, answer, marks);
   }
 
-  if (!isQuestionAnswered(question, answer)) {
+  if (questionAnswerState(question, answer) === 'unanswered') {
     return {
       question,
       answer,
@@ -594,4 +601,8 @@ function asTimestamp(value) {
 
 function roundScore(value) {
   return Math.round(value * 100) / 100;
+}
+
+function hasAnswerText(value) {
+  return typeof value === 'string' && value.trim().length > 0;
 }

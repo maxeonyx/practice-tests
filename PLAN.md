@@ -10,7 +10,7 @@
 - GitHub Actions workflow auto-deploys on push to `main`
 - Full Moodle-style test flow: landing → test (one question at a time) → review → submit → results
 - All four question types: multiple choice, true/false, word matching (dropdowns), short answer
-- Question map navigation (numbered jump buttons showing answered/unanswered/flagged)
+- Question map navigation (numbered jump buttons showing answered/in-progress/unanswered/flagged)
 - Countdown timer with auto-submit on expiry
 - Flag toggle per question
 - localStorage persistence (answers, flags, timer, current question survive refresh)
@@ -57,6 +57,15 @@ Accessibility audit + implementation (2026-04-09):
 - Visible focus styling ✅ — consistent `:focus-visible` treatment added for interactive controls and programmatically focused headings
 - Skip links ✅ — all pages now expose a keyboard-accessible skip link to the main content without breaking initial heading focus
 - Keyboard verification ✅ — full landing → test → review → submit → results → retake flow exercised locally after the accessibility changes
+
+Partial answer status testing (2026-04-10):
+- Matching question partial state ✅ — filling some but not all pairs shows "In progress" in map and review
+- Matching question complete state ✅ — filling all pairs shows "Answered"
+- MC/TF/short answer unaffected ✅ — still binary answered/unanswered
+- Short answer whitespace handling ✅ — whitespace-only stays unanswered
+- Summary counts ✅ — "X answered, Y need attention (N in progress, M unanswered)" when partial exists
+- Persistence ✅ — statuses survive page refresh from localStorage
+- Scoring unchanged ✅ — partial matching still gets partial credit on results
 
 ## Future Work
 

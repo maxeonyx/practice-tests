@@ -530,6 +530,10 @@ textarea {
   background: linear-gradient(180deg, #f8fcfe 0%, var(--accent-soft) 100%);
 }
 
+.question-nav-partial {
+  background: linear-gradient(180deg, #f9fbff 0%, #e7eef9 100%);
+}
+
 .question-nav-unanswered {
   background: linear-gradient(180deg, #fffdfa 0%, var(--warning-soft) 100%);
 }
@@ -571,6 +575,10 @@ textarea {
 
 .question-nav-swatch-answered {
   background: var(--accent-soft);
+}
+
+.question-nav-swatch-partial {
+  background: #e7eef9;
 }
 
 .question-nav-swatch-unanswered {
