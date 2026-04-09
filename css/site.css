@@ -642,13 +642,6 @@ textarea {
   margin-bottom: 0;
 }
 
-.error-banner {
-  padding: 14px 16px;
-  border-radius: 12px;
-  background: var(--danger-soft);
-  color: var(--danger);
-}
-
 .error-panel {
   display: grid;
   gap: 16px;

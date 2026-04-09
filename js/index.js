@@ -1,4 +1,4 @@
-import { announceLive, attemptRecoveryNotice, clearAttempt, clearLiveAnnouncement, homeUrl, loadCatalog, readAttemptState, resultsUrl, testUrl } from './common.js?v=20260410-1';
+import { announceLive, attemptRecoveryNotice, clearAttempt, clearLiveAnnouncement, loadCatalog, readAttemptState, resolvePageError, resultsUrl, testUrl } from './common.js?v=20260410-4';
 
 const { createApp } = Vue;
 
@@ -34,8 +34,9 @@ createApp({
         this.announce('Some saved progress on this device could not be restored and was cleared.');
       }
     } catch (error) {
-      this.errorTitle = 'Test list unavailable';
-      this.error = error.message;
+      const errorState = resolvePageError('index', error);
+      this.errorTitle = errorState.title;
+      this.error = errorState.message;
     } finally {
       this.loading = false;
     }
@@ -81,9 +82,6 @@ createApp({
       }
 
       return testUrl(testId);
-    },
-    homeLink() {
-      return homeUrl();
     },
     primaryLabel(testId) {
       const attempt = this.attemptStates[testId];

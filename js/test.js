@@ -7,17 +7,17 @@ import {
   formatDuration,
   navigateToResults,
   readAttemptState,
-  homeUrl,
   isQuestionAnswered,
   loadTest,
   questionTypesLabel,
   remainingMs,
+  resolvePageError,
   saveAttempt,
   scoreTest,
   setTransientMessage,
   shouldPreserveSkipLinkFocus,
   testParam,
-} from './common.js?v=20260410-1';
+} from './common.js?v=20260410-4';
 
 const { createApp } = Vue;
 const QUESTION_NAV_LABEL_MAX_LENGTH = 80;
@@ -213,48 +213,11 @@ createApp({
       return questionTypesLabel(type);
     },
     setErrorState(error) {
-      const config = this.errorConfig(error);
+      const config = resolvePageError('test', error, this.test);
       this.errorTitle = config.title;
       this.error = config.message;
       this.errorActions = config.actions;
       this.announce(`${config.title}. ${config.message}`);
-    },
-    errorConfig(error) {
-      const baseActions = [
-        {
-          href: homeUrl(),
-          label: 'Back to Tests',
-          variant: 'button-primary',
-        },
-      ];
-
-      switch (error?.code) {
-        case 'missing-test-id':
-          return {
-            title: 'Choose a test first',
-            message: error.message,
-            actions: baseActions,
-          };
-        case 'test-not-found':
-          return {
-            title: 'Test not found',
-            message: 'That link no longer points to an available test. Choose a test from the list to continue.',
-            actions: baseActions,
-          };
-        case 'test-unavailable':
-        case 'catalog-unavailable':
-          return {
-            title: 'We couldn’t open this test',
-            message: error.message,
-            actions: baseActions,
-          };
-        default:
-          return {
-            title: 'Something went wrong',
-            message: 'We couldn’t open this page. Go back to the test list and try again.',
-            actions: baseActions,
-          };
-      }
     },
     persistAttempt() {
       this.attempt.reviewMode = this.reviewMode;

@@ -1,4 +1,4 @@
-import { attemptRecoveryNotice, announceLive, clearAttempt, clearLiveAnnouncement, consumeTransientMessage, createAppError, formatMarks, homeUrl, loadTest, navigateToTest, questionTypesLabel, readAttemptState, scoreTest, shouldPreserveSkipLinkFocus, testParam, testUrl } from './common.js?v=20260410-1';
+import { attemptRecoveryNotice, announceLive, clearAttempt, clearLiveAnnouncement, consumeTransientMessage, createAppError, formatMarks, loadTest, navigateToTest, questionTypesLabel, readAttemptState, resolvePageError, scoreTest, secondaryHomeAction, shouldPreserveSkipLinkFocus, testParam } from './common.js?v=20260410-4';
 
 const { createApp } = Vue;
 
@@ -94,6 +94,9 @@ createApp({
     this.clearRetakeConfirmation();
   },
   methods: {
+    homeAction() {
+      return secondaryHomeAction();
+    },
     announce(message) {
       announceLive(this, message);
     },
@@ -179,68 +182,11 @@ createApp({
       navigateToTest(this.test.id);
     },
     setErrorState(error) {
-      const config = this.errorConfig(error);
+      const config = resolvePageError('results', error, this.test);
       this.errorTitle = config.title;
       this.error = config.message;
       this.errorActions = config.actions;
       this.announce(`${config.title}. ${config.message}`);
-    },
-    errorConfig(error) {
-      const actions = [
-        {
-          href: homeUrl(),
-          label: 'Back to Tests',
-          variant: 'button-primary',
-        },
-      ];
-
-      if (this.test) {
-        actions.push({
-          href: testUrl(this.test.id),
-          label: 'Start or Resume Test',
-          variant: 'button-secondary',
-        });
-      }
-
-      switch (error?.code) {
-        case 'missing-test-id':
-          return {
-            title: 'Choose a test first',
-            message: error.message,
-            actions,
-          };
-        case 'test-not-found':
-          return {
-            title: 'Test not found',
-            message: 'That results link no longer points to an available test. Choose a test from the list to continue.',
-            actions: [actions[0]],
-          };
-        case 'no-submitted-attempt':
-          return {
-            title: 'No results saved yet',
-            message: 'You do not have submitted results for this test on this device yet. You can go back to the test list or start the test now.',
-            actions,
-          };
-        case 'invalid-saved-results':
-          return {
-            title: 'Saved results could not be restored',
-            message: `${error.message} You can start the test again from the test list.`,
-            actions,
-          };
-        case 'test-unavailable':
-        case 'catalog-unavailable':
-          return {
-            title: 'We couldn’t load these results',
-            message: error.message,
-            actions,
-          };
-        default:
-          return {
-            title: 'Something went wrong',
-            message: 'We couldn’t load this results page. Go back to the test list and try again.',
-            actions,
-          };
-      }
     },
   },
 }).mount('#app');

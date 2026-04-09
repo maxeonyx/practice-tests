@@ -1,6 +1,10 @@
 const STORAGE_PREFIX = 'practice-tests';
 const LIVE_ANNOUNCE_DELAY_MS = 20;
 const TRANSIENT_MESSAGE_KEY = `${STORAGE_PREFIX}:transient-message`;
+const BUTTON_VARIANTS = {
+  primary: 'button-primary',
+  secondary: 'button-secondary',
+};
 const PAGE_PATHS = {
   home: 'index.html',
   test: 'test.html',
@@ -36,6 +40,53 @@ export function navigateToTest(testId) {
 
 export function navigateToResults(testId) {
   navigateTo(resultsUrl(testId));
+}
+
+export function homeAction(variant = BUTTON_VARIANTS.primary) {
+  return {
+    href: homeUrl(),
+    label: 'Back to Tests',
+    variant,
+  };
+}
+
+export function secondaryHomeAction() {
+  return homeAction(BUTTON_VARIANTS.secondary);
+}
+
+export function testAction(testId, label = 'Start or Resume Test', variant = BUTTON_VARIANTS.secondary) {
+  return {
+    href: testUrl(testId),
+    label,
+    variant,
+  };
+}
+
+export function resolvePageError(page, error, test = null) {
+  const actions = [homeAction()];
+
+  if (page === 'results' && test) {
+    actions.push(testAction(test.id));
+  }
+
+  switch (page) {
+    case 'index':
+      return {
+        title: 'Test list unavailable',
+        message: error?.message || 'We couldn’t load the test list right now. Refresh the page and try again.',
+        actions,
+      };
+    case 'test':
+      return resolveTestPageError(error, actions);
+    case 'results':
+      return resolveResultsPageError(error, actions);
+    default:
+      return {
+        title: 'Something went wrong',
+        message: 'We couldn’t load this page. Go back to the test list and try again.',
+        actions,
+      };
+  }
 }
 
 export function testParam() {
@@ -151,10 +202,6 @@ export function shouldPreserveSkipLinkFocus() {
   return activeElement.classList?.contains('skip-link');
 }
 
-export function getAttempt(testOrMeta) {
-  return readAttemptState(testOrMeta).attempt;
-}
-
 export function readAttemptState(testOrMeta) {
   const raw = window.localStorage.getItem(getAttemptKey(testOrMeta.id));
 
@@ -194,6 +241,78 @@ export function readAttemptState(testOrMeta) {
 export function attemptRecoveryNotice(testOrMeta, subject) {
   const title = testOrMeta?.title || 'this test';
   return `We couldn’t restore your ${subject} for ${title}, so it was cleared on this device.`;
+}
+
+function resolveTestPageError(error, actions) {
+  switch (error?.code) {
+    case 'missing-test-id':
+      return {
+        title: 'Choose a test first',
+        message: error.message,
+        actions,
+      };
+    case 'test-not-found':
+      return {
+        title: 'Test not found',
+        message: 'That link no longer points to an available test. Choose a test from the list to continue.',
+        actions,
+      };
+    case 'test-unavailable':
+    case 'catalog-unavailable':
+      return {
+        title: 'We couldn’t open this test',
+        message: error.message,
+        actions,
+      };
+    default:
+      return {
+        title: 'Something went wrong',
+        message: 'We couldn’t open this page. Go back to the test list and try again.',
+        actions,
+      };
+  }
+}
+
+function resolveResultsPageError(error, actions) {
+  switch (error?.code) {
+    case 'missing-test-id':
+      return {
+        title: 'Choose a test first',
+        message: error.message,
+        actions,
+      };
+    case 'test-not-found':
+      return {
+        title: 'Test not found',
+        message: 'That results link no longer points to an available test. Choose a test from the list to continue.',
+        actions: [actions[0]],
+      };
+    case 'no-submitted-attempt':
+      return {
+        title: 'No results saved yet',
+        message: 'You do not have submitted results for this test on this device yet. You can go back to the test list or start the test now.',
+        actions,
+      };
+    case 'invalid-saved-results':
+      return {
+        title: 'Saved results could not be restored',
+        message: `${error.message} You can start the test again from the test list.`,
+        actions,
+      };
+    case 'test-unavailable':
+    case 'catalog-unavailable':
+      return {
+        title: 'We couldn’t load these results',
+        message: error.message,
+        actions,
+      };
+    default:
+      return {
+        title: 'Something went wrong',
+        message: 'We couldn’t load this results page. Go back to the test list and try again.',
+        actions,
+      };
+  }
 }
 
 export function saveAttempt(testId, attempt) {
