@@ -4,8 +4,8 @@ import {
   createAttempt,
   formatDuration,
   getAttempt,
-  isQuestionAnswered,
   loadTest,
+  questionAnswerState,
   questionTypesLabel,
   remainingMs,
   saveAttempt,
@@ -13,7 +13,7 @@ import {
   setTransientMessage,
   shouldPreserveSkipLinkFocus,
   testParam,
-} from './common.js?v=20260409-10';
+} from './common.js?v=20260410-01';
 
 const { createApp } = Vue;
 const QUESTION_NAV_LABEL_MAX_LENGTH = 80;
@@ -69,10 +69,16 @@ createApp({
       return Object.values(this.attempt.flags).filter(Boolean).length;
     },
     answeredCount() {
-      return this.test.questions.filter((question) => isQuestionAnswered(question, this.attempt.answers[question.id])).length;
+      return this.questionStatuses.filter((status) => status.state === 'answered').length;
+    },
+    partialCount() {
+      return this.questionStatuses.filter((status) => status.state === 'partial').length;
     },
     unansweredCount() {
-      return this.test.questions.length - this.answeredCount;
+      return this.questionStatuses.filter((status) => status.state === 'unanswered').length;
+    },
+    attentionCount() {
+      return this.partialCount + this.unansweredCount;
     },
     questionHeadingId() {
       return this.currentQuestion ? `question-heading-${this.currentQuestion.id}` : 'question-heading';
@@ -82,6 +88,19 @@ createApp({
     },
     questionMapHeadingId() {
       return 'question-map-heading';
+    },
+    questionStatuses() {
+      if (!this.test || !this.attempt) {
+        return [];
+      }
+
+      return this.test.questions.map((question) => ({
+        questionId: question.id,
+        state: questionAnswerState(question, this.attempt.answers[question.id]),
+      }));
+    },
+    questionStatusById() {
+      return Object.fromEntries(this.questionStatuses.map((status) => [status.questionId, status.state]));
     },
   },
   watch: {
@@ -277,13 +296,28 @@ createApp({
 
       this.persistAttempt();
     },
+    questionStatus(questionId) {
+      const status = this.questionStatusById[questionId];
+
+      if (!status) {
+        throw new Error(`Question status could not be found for question "${questionId}".`);
+      }
+
+      return status;
+    },
     answeredLabel(questionId) {
-      const question = this.test.questions.find((item) => item.id === questionId);
-      return isQuestionAnswered(question, this.attempt.answers[questionId]) ? 'Answered' : 'Unanswered';
+      return {
+        answered: 'Answered',
+        partial: 'In progress',
+        unanswered: 'Unanswered',
+      }[this.questionStatus(questionId)];
     },
     statusClass(questionId) {
-      const question = this.test.questions.find((item) => item.id === questionId);
-      return isQuestionAnswered(question, this.attempt.answers[questionId]) ? 'status-answered' : 'status-unanswered';
+      return {
+        answered: 'status-answered',
+        partial: 'status-partial',
+        unanswered: 'status-unanswered',
+      }[this.questionStatus(questionId)];
     },
     questionNavLabel(questionId) {
       return this.isFlagged(questionId) ? `${this.answeredLabel(questionId)} - Flagged` : this.answeredLabel(questionId);
@@ -321,9 +355,15 @@ createApp({
       return parts.join('. ');
     },
     questionNavClass(questionId, index) {
+      const status = this.questionStatus(questionId);
+
       return [
         'question-nav-button',
-        isQuestionAnswered(this.test.questions[index], this.attempt.answers[questionId]) ? 'question-nav-answered' : 'question-nav-unanswered',
+        {
+          'question-nav-answered': status === 'answered',
+          'question-nav-partial': status === 'partial',
+          'question-nav-unanswered': status === 'unanswered',
+        },
         { 'question-nav-current': !this.reviewMode && this.attempt.currentIndex === index },
         { 'question-nav-flagged': this.isFlagged(questionId) },
       ];
