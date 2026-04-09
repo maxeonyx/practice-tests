@@ -17,6 +17,23 @@ import {
 
 const { createApp } = Vue;
 const QUESTION_NAV_LABEL_MAX_LENGTH = 80;
+const QUESTION_STATUS_UI = {
+  answered: {
+    label: 'Answered',
+    className: 'status-answered',
+    navClassName: 'question-nav-answered',
+  },
+  partial: {
+    label: 'In progress',
+    className: 'status-partial',
+    navClassName: 'question-nav-partial',
+  },
+  unanswered: {
+    label: 'Unanswered',
+    className: 'status-unanswered',
+    navClassName: 'question-nav-unanswered',
+  },
+};
 
 createApp({
   data() {
@@ -305,19 +322,14 @@ createApp({
 
       return status;
     },
+    questionStatusUi(questionId) {
+      return QUESTION_STATUS_UI[this.questionStatus(questionId)];
+    },
     answeredLabel(questionId) {
-      return {
-        answered: 'Answered',
-        partial: 'In progress',
-        unanswered: 'Unanswered',
-      }[this.questionStatus(questionId)];
+      return this.questionStatusUi(questionId).label;
     },
     statusClass(questionId) {
-      return {
-        answered: 'status-answered',
-        partial: 'status-partial',
-        unanswered: 'status-unanswered',
-      }[this.questionStatus(questionId)];
+      return this.questionStatusUi(questionId).className;
     },
     questionNavLabel(questionId) {
       return this.isFlagged(questionId) ? `${this.answeredLabel(questionId)} - Flagged` : this.answeredLabel(questionId);
@@ -355,15 +367,11 @@ createApp({
       return parts.join('. ');
     },
     questionNavClass(questionId, index) {
-      const status = this.questionStatus(questionId);
+      const statusUi = this.questionStatusUi(questionId);
 
       return [
         'question-nav-button',
-        {
-          'question-nav-answered': status === 'answered',
-          'question-nav-partial': status === 'partial',
-          'question-nav-unanswered': status === 'unanswered',
-        },
+        statusUi.navClassName,
         { 'question-nav-current': !this.reviewMode && this.attempt.currentIndex === index },
         { 'question-nav-flagged': this.isFlagged(questionId) },
       ];

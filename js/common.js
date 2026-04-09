@@ -177,10 +177,6 @@ export function formatMarks(value) {
   return value.toFixed(2).replace(/\.?0+$/, '');
 }
 
-export function isQuestionAnswered(question, answer) {
-  return questionAnswerState(question, answer) === 'answered';
-}
-
 export function questionAnswerState(question, answer) {
   if (!question?.type) {
     throw new Error('Question status could not be determined because the question data is missing a type.');
@@ -253,7 +249,7 @@ export function scoreQuestion(question, answer) {
     return scoreMatchingQuestion(question, answer, marks);
   }
 
-  if (!isQuestionAnswered(question, answer)) {
+  if (questionAnswerState(question, answer) === 'unanswered') {
     return {
       question,
       answer,
