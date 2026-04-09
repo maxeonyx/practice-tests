@@ -1,4 +1,4 @@
-import { announceLive, clearAttempt, clearLiveAnnouncement, getAttempt, loadCatalog } from './common.js?v=20260409-10';
+import { announceLive, attemptRecoveryNotice, clearAttempt, clearLiveAnnouncement, homeUrl, loadCatalog, readAttemptState, resultsUrl, testUrl } from './common.js?v=20260410-1';
 
 const { createApp } = Vue;
 
@@ -7,9 +7,11 @@ createApp({
     return {
       loading: true,
       error: '',
+      errorTitle: '',
       liveMessage: '',
       tests: [],
       attemptStates: {},
+      recoveryNotices: [],
       announceTimerId: null,
       pendingResetTestId: null,
       resetConfirmTimerId: null,
@@ -20,9 +22,19 @@ createApp({
       const catalog = await loadCatalog();
       this.tests = catalog.tests;
       this.tests.forEach((test) => {
-        this.attemptStates[test.id] = getAttempt(test);
+        const attemptState = readAttemptState(test);
+        this.attemptStates[test.id] = attemptState.attempt;
+
+        if (attemptState.issue) {
+          this.recoveryNotices.push(attemptRecoveryNotice(test, 'saved progress'));
+        }
       });
+
+      if (this.recoveryNotices.length > 0) {
+        this.announce('Some saved progress on this device could not be restored and was cleared.');
+      }
     } catch (error) {
+      this.errorTitle = 'Test list unavailable';
       this.error = error.message;
     } finally {
       this.loading = false;
@@ -65,10 +77,13 @@ createApp({
       const attempt = this.attemptStates[testId];
 
       if (attempt?.submitted) {
-        return `results.html?test=${encodeURIComponent(testId)}`;
+        return resultsUrl(testId);
       }
 
-      return `test.html?test=${encodeURIComponent(testId)}`;
+      return testUrl(testId);
+    },
+    homeLink() {
+      return homeUrl();
     },
     primaryLabel(testId) {
       const attempt = this.attemptStates[testId];

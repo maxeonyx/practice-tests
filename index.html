@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap&v=20260321-1" rel="stylesheet">
-  <link rel="stylesheet" href="css/site.css?v=20260409-11">
+  <link rel="stylesheet" href="css/site.css?v=20260410-1">
 </head>
 <body>
   <div id="app">
@@ -36,7 +36,17 @@
           </div>
 
           <p v-if="loading" class="empty-state" role="status">Loading tests...</p>
-          <p v-else-if="error" class="error-banner" role="alert">{{ error }}</p>
+          <section v-else-if="error" class="panel error-panel" aria-labelledby="error-heading" role="alert">
+            <div class="section-heading error-panel-heading">
+              <div>
+                <h3 id="error-heading">{{ errorTitle || 'Something went wrong' }}</h3>
+                <p>{{ error }}</p>
+              </div>
+            </div>
+            <div class="button-row">
+              <a class="button button-primary" :href="homeLink()">Back to Tests</a>
+            </div>
+          </section>
           <div v-else class="test-grid">
             <article v-for="test in tests" :key="test.id" class="test-card">
               <div class="test-card-header">
@@ -69,12 +79,24 @@
               </div>
             </article>
           </div>
-        </section>
-      </main>
-    </div>
+          </section>
+
+          <section v-if="recoveryNotices.length" class="panel recovery-panel" aria-labelledby="recovery-notices-heading">
+            <div class="section-heading error-panel-heading">
+              <div>
+                <h3 id="recovery-notices-heading">Saved progress was cleared</h3>
+                <p>Some saved progress on this device could not be restored.</p>
+              </div>
+            </div>
+            <ul class="recovery-list">
+              <li v-for="notice in recoveryNotices" :key="notice">{{ notice }}</li>
+            </ul>
+          </section>
+        </main>
+      </div>
   </div>
 
   <script src="https://unpkg.com/vue@3.5.13/dist/vue.global.prod.js?v=20260321-1"></script>
-  <script type="module" src="js/index.js?v=20260409-10"></script>
+  <script type="module" src="js/index.js?v=20260410-1"></script>
 </body>
 </html>

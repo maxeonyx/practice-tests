@@ -1,6 +1,42 @@
 const STORAGE_PREFIX = 'practice-tests';
 const LIVE_ANNOUNCE_DELAY_MS = 20;
 const TRANSIENT_MESSAGE_KEY = `${STORAGE_PREFIX}:transient-message`;
+const PAGE_PATHS = {
+  home: 'index.html',
+  test: 'test.html',
+  results: 'results.html',
+};
+
+export function createAppError(code, message, details = {}) {
+  const error = new Error(message);
+  error.name = 'AppError';
+  error.code = code;
+  return Object.assign(error, details);
+}
+
+export function homeUrl() {
+  return PAGE_PATHS.home;
+}
+
+export function testUrl(testId) {
+  return `${PAGE_PATHS.test}?test=${encodeURIComponent(testId)}`;
+}
+
+export function resultsUrl(testId) {
+  return `${PAGE_PATHS.results}?test=${encodeURIComponent(testId)}`;
+}
+
+export function navigateTo(url) {
+  window.location.assign(url);
+}
+
+export function navigateToTest(testId) {
+  navigateTo(testUrl(testId));
+}
+
+export function navigateToResults(testId) {
+  navigateTo(resultsUrl(testId));
+}
 
 export function testParam() {
   const params = new URLSearchParams(window.location.search);
@@ -8,15 +44,23 @@ export function testParam() {
 }
 
 export async function loadCatalog() {
-  const response = await fetch('tests/index.json', { cache: 'no-store' });
+  try {
+    const response = await fetch('tests/index.json', { cache: 'no-store' });
 
-  if (!response.ok) {
-    throw new Error('Could not load the test catalog.');
+    if (!response.ok) {
+      throw createAppError('catalog-unavailable', 'We couldn’t load the test list right now. Refresh the page and try again.');
+    }
+
+    const catalog = await response.json();
+    validateCatalog(catalog);
+    return catalog;
+  } catch (error) {
+    if (error?.code === 'catalog-unavailable') {
+      throw error;
+    }
+
+    throw createAppError('catalog-unavailable', 'We couldn’t load the test list right now. Refresh the page and try again.');
   }
-
-  const catalog = await response.json();
-  validateCatalog(catalog);
-  return catalog;
 }
 
 export async function loadTest(testId) {
@@ -24,18 +68,26 @@ export async function loadTest(testId) {
   const entry = catalog.tests.find((item) => item.id === testId);
 
   if (!entry) {
-    throw new Error(`No test was found for id "${testId}".`);
+    throw createAppError('test-not-found', 'That test is not available anymore.');
   }
 
-  const response = await fetch(entry.file, { cache: 'no-store' });
+  try {
+    const response = await fetch(entry.file, { cache: 'no-store' });
 
-  if (!response.ok) {
-    throw new Error(`Could not load the test file for "${testId}".`);
+    if (!response.ok) {
+      throw createAppError('test-unavailable', 'We couldn’t open that test right now. Go back to the test list and try again.');
+    }
+
+    const test = await response.json();
+    validateTest(test);
+    return test;
+  } catch (error) {
+    if (error?.code === 'test-unavailable') {
+      throw error;
+    }
+
+    throw createAppError('test-unavailable', 'We couldn’t open that test right now. Go back to the test list and try again.');
   }
-
-  const test = await response.json();
-  validateTest(test);
-  return test;
 }
 
 export function createAttempt(test) {
@@ -100,27 +152,48 @@ export function shouldPreserveSkipLinkFocus() {
 }
 
 export function getAttempt(testOrMeta) {
+  return readAttemptState(testOrMeta).attempt;
+}
+
+export function readAttemptState(testOrMeta) {
   const raw = window.localStorage.getItem(getAttemptKey(testOrMeta.id));
 
   if (!raw) {
-    return null;
+    return {
+      attempt: null,
+      issue: null,
+    };
   }
 
   const parsed = safeParseJson(raw);
 
   if (!parsed) {
     clearAttempt(testOrMeta.id);
-    return null;
+    return {
+      attempt: null,
+      issue: 'invalid-saved-attempt',
+    };
   }
 
   const normalized = normalizeAttempt(testOrMeta, parsed);
 
   if (!normalized) {
     clearAttempt(testOrMeta.id);
-    return null;
+    return {
+      attempt: null,
+      issue: 'invalid-saved-attempt',
+    };
   }
 
-  return normalized;
+  return {
+    attempt: normalized,
+    issue: null,
+  };
+}
+
+export function attemptRecoveryNotice(testOrMeta, subject) {
+  const title = testOrMeta?.title || 'this test';
+  return `We couldn’t restore your ${subject} for ${title}, so it was cleared on this device.`;
 }
 
 export function saveAttempt(testId, attempt) {
