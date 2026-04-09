@@ -87,14 +87,14 @@ createApp({
     questionMapHeadingId() {
       return 'question-map-heading';
     },
-    isSubmitPending() {
+    isSubmitConfirmationPending() {
       return this.pendingSubmitConfirmation === this.test?.id;
     },
-    submitLabel() {
-      return this.isSubmitPending ? 'Tap Submit Again to Confirm' : 'Submit Test';
+    submitButtonLabel() {
+      return this.isSubmitConfirmationPending ? 'Tap Submit Again to Confirm' : 'Submit Test';
     },
-    submitButtonClass() {
-      return this.isSubmitPending ? 'button-danger' : 'button-primary';
+    submitButtonClassName() {
+      return this.isSubmitConfirmationPending ? 'button-danger' : 'button-primary';
     },
   },
   watch: {
@@ -368,7 +368,7 @@ createApp({
         return;
       }
 
-      if (!fromTimer && !this.isSubmitPending) {
+      if (!fromTimer && !this.isSubmitConfirmationPending) {
         this.startSubmitConfirmation();
         return;
       }

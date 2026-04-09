@@ -141,12 +141,12 @@
                 </button>
               </div>
 
-              <div class="review-submit-panel" :class="{ 'review-submit-panel-pending': isSubmitPending }">
+              <div class="review-submit-panel" :class="{ 'review-submit-panel-pending': isSubmitConfirmationPending }">
                 <p class="review-submit-note">Submitting ends this practice attempt and takes you straight to your results. Use this when you are finished, or wait for the timer to auto-submit.</p>
-                <p v-if="isSubmitPending" class="review-submit-warning" role="status">Submit confirmation is active for 3 seconds. Tap the button again to finish this attempt.</p>
+                <p v-if="isSubmitConfirmationPending" class="review-submit-warning" role="status">Submit confirmation is active for 3 seconds. Tap the button again to finish this attempt.</p>
                 <div class="button-row button-row-spread">
                   <button class="button button-secondary" type="button" @click="closeReview">Back to Questions</button>
-                  <button :class="['button', submitButtonClass]" type="button" @click="submitTest()">{{ submitLabel }}</button>
+                  <button :class="['button', submitButtonClassName]" type="button" @click="submitTest()">{{ submitButtonLabel }}</button>
                 </div>
               </div>
               </template>
