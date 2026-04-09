@@ -1,6 +1,7 @@
 const STORAGE_PREFIX = 'practice-tests';
 const LIVE_ANNOUNCE_DELAY_MS = 20;
 const TRANSIENT_MESSAGE_KEY = `${STORAGE_PREFIX}:transient-message`;
+const CONFIRMATION_TIMEOUT_MS = 3000;
 
 export function testParam() {
   const params = new URLSearchParams(window.location.search);
@@ -72,6 +73,28 @@ export function clearLiveAnnouncement(app) {
 
   window.clearTimeout(app.announceTimerId);
   app.announceTimerId = null;
+}
+
+export function startTimedConfirmation(app, { pendingKey, timerKey, value, message, timeoutMs = CONFIRMATION_TIMEOUT_MS }) {
+  clearTimedConfirmation(app, { pendingKey, timerKey });
+  app[pendingKey] = value;
+  announceLive(app, message);
+  app[timerKey] = window.setTimeout(() => {
+    if (app[pendingKey] === value) {
+      app[pendingKey] = null;
+    }
+
+    app[timerKey] = null;
+  }, timeoutMs);
+}
+
+export function clearTimedConfirmation(app, { pendingKey, timerKey }) {
+  if (app[timerKey]) {
+    window.clearTimeout(app[timerKey]);
+  }
+
+  app[pendingKey] = null;
+  app[timerKey] = null;
 }
 
 export function setTransientMessage(message) {
