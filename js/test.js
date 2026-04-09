@@ -13,7 +13,7 @@ import {
   setTransientMessage,
   shouldPreserveSkipLinkFocus,
   testParam,
-} from './common.js?v=20260409-9';
+} from './common.js?v=20260409-10';
 
 const { createApp } = Vue;
 const QUESTION_NAV_LABEL_MAX_LENGTH = 80;
@@ -348,7 +348,7 @@ createApp({
         submittedByTimer: fromTimer,
       };
       saveAttempt(this.test.id, this.attempt);
-      this.setTransientMessage(fromTimer ? 'Your test was submitted automatically when the timer expired.' : 'Your test was submitted. Results are ready to review.');
+      setTransientMessage(fromTimer ? 'Your test was submitted automatically when the timer expired.' : 'Your test was submitted. Results are ready to review.');
 
       if (this.timerId) {
         window.clearInterval(this.timerId);

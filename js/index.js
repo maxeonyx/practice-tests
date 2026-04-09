@@ -1,4 +1,4 @@
-import { announceLive, clearAttempt, clearLiveAnnouncement, getAttempt, loadCatalog } from './common.js?v=20260409-9';
+import { announceLive, clearAttempt, clearLiveAnnouncement, getAttempt, loadCatalog } from './common.js?v=20260409-10';
 
 const { createApp } = Vue;
 
