@@ -1,6 +1,7 @@
 import {
   announceLive,
   clearLiveAnnouncement,
+  clearTimedConfirmation,
   createAttempt,
   formatDuration,
   getAttempt,
@@ -10,10 +11,11 @@ import {
   remainingMs,
   saveAttempt,
   scoreTest,
+  startTimedConfirmation,
   setTransientMessage,
   shouldPreserveSkipLinkFocus,
   testParam,
-} from './common.js?v=20260409-10';
+} from './common.js?v=20260410-1';
 
 const { createApp } = Vue;
 const QUESTION_NAV_LABEL_MAX_LENGTH = 80;
@@ -29,7 +31,9 @@ createApp({
       remainingMs: 0,
       reviewMode: false,
       navOpen: false,
+      pendingSubmitConfirmation: null,
       announceTimerId: null,
+      submitConfirmTimerId: null,
       timerId: null,
       submitting: false,
     };
@@ -83,6 +87,15 @@ createApp({
     questionMapHeadingId() {
       return 'question-map-heading';
     },
+    isSubmitPending() {
+      return this.pendingSubmitConfirmation === this.test?.id;
+    },
+    submitLabel() {
+      return this.isSubmitPending ? 'Tap Submit Again to Confirm' : 'Submit Test';
+    },
+    submitButtonClass() {
+      return this.isSubmitPending ? 'button-danger' : 'button-primary';
+    },
   },
   watch: {
     documentTitle: {
@@ -101,6 +114,7 @@ createApp({
       });
     },
     'attempt.currentIndex'() {
+      this.clearSubmitConfirmation();
       this.announce(`Question ${this.currentQuestionNumber} loaded.`);
 
       if (this.reviewMode) {
@@ -169,6 +183,7 @@ createApp({
   },
   beforeUnmount() {
     clearLiveAnnouncement(this);
+    this.clearSubmitConfirmation();
     if (this.timerId) {
       window.clearInterval(this.timerId);
     }
@@ -253,6 +268,7 @@ createApp({
       this.announce('Review mode opened.');
     },
     closeReview() {
+      this.clearSubmitConfirmation();
       this.reviewMode = false;
       this.persistAttempt();
       this.announce(`Returned to question ${this.currentQuestionNumber}.`);
@@ -268,6 +284,7 @@ createApp({
       }
     },
     jumpToQuestion(index) {
+      this.clearSubmitConfirmation();
       this.attempt.currentIndex = index;
       this.reviewMode = false;
 
@@ -328,10 +345,38 @@ createApp({
         { 'question-nav-flagged': this.isFlagged(questionId) },
       ];
     },
-    submitTest(fromTimer) {
+    startSubmitConfirmation() {
+      startTimedConfirmation(this, {
+        pendingKey: 'pendingSubmitConfirmation',
+        timerKey: 'submitConfirmTimerId',
+        value: this.test.id,
+        message: `Submission confirmation enabled for ${this.test.title}. Activate Submit Test again within 3 seconds to finish your attempt and view results.`,
+      });
+    },
+    clearSubmitConfirmation() {
+      clearTimedConfirmation(this, {
+        pendingKey: 'pendingSubmitConfirmation',
+        timerKey: 'submitConfirmTimerId',
+      });
+    },
+    submitTest(fromTimer = false) {
       if (this.submitting || !this.test || !this.attempt || this.attempt.submitted) {
         return;
       }
+
+      if (!fromTimer && !this.reviewMode) {
+        return;
+      }
+
+      if (!fromTimer && !this.isSubmitPending) {
+        this.startSubmitConfirmation();
+        return;
+      }
+
+      this.finalizeSubmission(fromTimer);
+    },
+    finalizeSubmission(fromTimer) {
+      this.clearSubmitConfirmation();
 
       this.submitting = true;
       this.attempt.submitted = true;
