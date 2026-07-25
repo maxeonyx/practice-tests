@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap&v=20260321-1" rel="stylesheet">
-  <link rel="stylesheet" href="css/site.css?v=20260409-11">
+  <link rel="stylesheet" href="css/site.css?v=20260410-1">
 </head>
 <body>
   <div id="app">
@@ -141,9 +141,13 @@
                 </button>
               </div>
 
-              <div class="button-row button-row-spread">
-                <button class="button button-secondary" type="button" @click="closeReview">Back to Questions</button>
-                <button class="button button-primary" type="button" @click="submitTest(false)">Submit Test</button>
+              <div class="review-submit-panel" :class="{ 'review-submit-panel-pending': isSubmitConfirmationPending }">
+                <p class="review-submit-note">Submitting ends this practice attempt and takes you straight to your results. Use this when you are finished, or wait for the timer to auto-submit.</p>
+                <p v-if="isSubmitConfirmationPending" class="review-submit-warning" role="status">Submit confirmation is active for 3 seconds. Tap the button again to finish this attempt.</p>
+                <div class="button-row button-row-spread">
+                  <button class="button button-secondary" type="button" @click="closeReview">Back to Questions</button>
+                  <button :class="['button', submitButtonClassName]" type="button" @click="submitTest()">{{ submitButtonLabel }}</button>
+                </div>
               </div>
               </template>
             </section>
@@ -186,6 +190,6 @@
   </div>
 
   <script src="https://unpkg.com/vue@3.5.13/dist/vue.global.prod.js?v=20260321-1"></script>
-  <script type="module" src="js/test.js?v=20260409-10"></script>
+  <script type="module" src="js/test.js?v=20260410-1"></script>
 </body>
 </html>

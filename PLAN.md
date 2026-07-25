@@ -16,7 +16,7 @@
 - localStorage persistence (answers, flags, timer, current question survive refresh)
 - Weighted marks (MC: 1, T/F: 1, Matching: 2, Short Answer: 4)
 - Auto-marking for MC/TF/matching with partial credit on matching; short answers shown for self-review with marking criteria
-- Confirmation dialogs before destructive actions (reset/retake)
+- Confirmation dialogs before destructive actions (reset/retake/submit)
 - Hardened localStorage handling (safe parse, stale data recovery)
 - 72-question nursing bioscience test covering all 58 learning objectives across 4 topics
 - Learning objective coverage audited — 2 gaps filled, ~23 weak areas strengthened with 12 additional questions
@@ -57,6 +57,15 @@ Accessibility audit + implementation (2026-04-09):
 - Visible focus styling ✅ — consistent `:focus-visible` treatment added for interactive controls and programmatically focused headings
 - Skip links ✅ — all pages now expose a keyboard-accessible skip link to the main content without breaking initial heading focus
 - Keyboard verification ✅ — full landing → test → review → submit → results → retake flow exercised locally after the accessibility changes
+
+Submit confirmation testing (2026-04-10):
+- Manual submit confirmation ✅ — first click shows warning + "Tap Submit Again to Confirm", second click within 3s submits
+- Confirmation timeout ✅ — waiting >3s resets button to normal, warning disappears
+- Navigation away clears confirmation ✅ — clicking "Back to Questions" then returning to review resets state
+- Page refresh during pending confirmation ✅ — refreshing review page does not preserve stale confirmation
+- Timer-expiry auto-submit unchanged ✅ — still submits directly without confirmation dialog
+- Retake/reset flows unchanged ✅ — existing two-step confirmation still works after shared helper refactor
+- Mobile viewport (375×812) ✅ — confirmation UI fits and remains actionable
 
 ## Future Work
 

@@ -1,4 +1,4 @@
-import { announceLive, clearAttempt, clearLiveAnnouncement, consumeTransientMessage, formatMarks, getAttempt, loadTest, questionTypesLabel, scoreTest, shouldPreserveSkipLinkFocus, testParam } from './common.js?v=20260409-10';
+import { announceLive, clearAttempt, clearLiveAnnouncement, clearTimedConfirmation, consumeTransientMessage, formatMarks, getAttempt, loadTest, questionTypesLabel, scoreTest, shouldPreserveSkipLinkFocus, startTimedConfirmation, testParam } from './common.js?v=20260410-1';
 
 const { createApp } = Vue;
 
@@ -12,7 +12,7 @@ createApp({
       attempt: null,
       summary: null,
       detailedResults: [],
-      pendingRetakeConfirmation: false,
+      pendingRetakeConfirmation: null,
       announceTimerId: null,
       retakeConfirmTimerId: null,
     };
@@ -122,33 +122,27 @@ createApp({
       return `${formatMarks(item.earnedPoints)} / ${formatMarks(item.maxPoints)} marks`;
     },
     retakeLabel() {
-      return this.pendingRetakeConfirmation ? 'Are you sure?' : 'Retake Test';
+      return this.pendingRetakeConfirmation === this.test?.id ? 'Are you sure?' : 'Retake Test';
     },
     retakeButtonClass() {
-      return this.pendingRetakeConfirmation ? 'button-danger' : 'button-primary';
+      return this.pendingRetakeConfirmation === this.test?.id ? 'button-danger' : 'button-primary';
     },
     startRetakeConfirmation() {
-      if (this.retakeConfirmTimerId) {
-        window.clearTimeout(this.retakeConfirmTimerId);
-      }
-
-      this.pendingRetakeConfirmation = true;
-      this.announce(`Retake confirmation enabled for ${this.test.title}. Activate again within 3 seconds to confirm.`);
-      this.retakeConfirmTimerId = window.setTimeout(() => {
-        this.pendingRetakeConfirmation = false;
-        this.retakeConfirmTimerId = null;
-      }, 3000);
+      startTimedConfirmation(this, {
+        pendingKey: 'pendingRetakeConfirmation',
+        timerKey: 'retakeConfirmTimerId',
+        value: this.test.id,
+        message: `Retake confirmation enabled for ${this.test.title}. Activate again within 3 seconds to confirm.`,
+      });
     },
     clearRetakeConfirmation() {
-      if (this.retakeConfirmTimerId) {
-        window.clearTimeout(this.retakeConfirmTimerId);
-      }
-
-      this.pendingRetakeConfirmation = false;
-      this.retakeConfirmTimerId = null;
+      clearTimedConfirmation(this, {
+        pendingKey: 'pendingRetakeConfirmation',
+        timerKey: 'retakeConfirmTimerId',
+      });
     },
     retakeTest() {
-      if (!this.pendingRetakeConfirmation) {
+      if (this.pendingRetakeConfirmation !== this.test.id) {
         this.startRetakeConfirmation();
         return;
       }

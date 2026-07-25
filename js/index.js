@@ -1,4 +1,4 @@
-import { announceLive, clearAttempt, clearLiveAnnouncement, getAttempt, loadCatalog } from './common.js?v=20260409-10';
+import { announceLive, clearAttempt, clearLiveAnnouncement, clearTimedConfirmation, getAttempt, loadCatalog, startTimedConfirmation } from './common.js?v=20260410-1';
 
 const { createApp } = Vue;
 
@@ -96,27 +96,18 @@ createApp({
       return this.isResetPending(testId) ? 'button-danger' : 'button-secondary';
     },
     startResetConfirmation(testId) {
-      if (this.resetConfirmTimerId) {
-        window.clearTimeout(this.resetConfirmTimerId);
-      }
-
-      this.pendingResetTestId = testId;
-      this.announce(`Reset confirmation enabled for ${this.testTitle(testId)}. Activate again within 3 seconds to confirm.`);
-      this.resetConfirmTimerId = window.setTimeout(() => {
-        if (this.pendingResetTestId === testId) {
-          this.pendingResetTestId = null;
-        }
-
-        this.resetConfirmTimerId = null;
-      }, 3000);
+      startTimedConfirmation(this, {
+        pendingKey: 'pendingResetTestId',
+        timerKey: 'resetConfirmTimerId',
+        value: testId,
+        message: `Reset confirmation enabled for ${this.testTitle(testId)}. Activate again within 3 seconds to confirm.`,
+      });
     },
     clearResetConfirmation() {
-      if (this.resetConfirmTimerId) {
-        window.clearTimeout(this.resetConfirmTimerId);
-      }
-
-      this.pendingResetTestId = null;
-      this.resetConfirmTimerId = null;
+      clearTimedConfirmation(this, {
+        pendingKey: 'pendingResetTestId',
+        timerKey: 'resetConfirmTimerId',
+      });
     },
     resetAttempt(testId) {
       if (!this.isResetPending(testId)) {

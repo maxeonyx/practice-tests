@@ -234,6 +234,33 @@ h3 {
   gap: 16px;
 }
 
+.review-submit-panel {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #fff 0%, #fbfdff 100%);
+}
+
+.review-submit-panel-pending {
+  border-color: rgba(139, 46, 46, 0.45);
+  background: linear-gradient(180deg, #fff8f8 0%, #fff1f1 100%);
+}
+
+.review-submit-note,
+.review-submit-warning {
+  margin-bottom: 0;
+}
+
+.review-submit-warning {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
 .test-card,
 .result-card {
   display: grid;
