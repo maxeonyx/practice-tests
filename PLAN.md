@@ -58,6 +58,16 @@ Accessibility audit + implementation (2026-04-09):
 - Skip links ✅ — all pages now expose a keyboard-accessible skip link to the main content without breaking initial heading focus
 - Keyboard verification ✅ — full landing → test → review → submit → results → retake flow exercised locally after the accessibility changes
 
+Error navigation + recovery UX (2026-04-10):
+- Every error/empty state now has a "Back to Tests" link ✅ — no more dead-end pages
+- Student-friendly error messages ✅ — errors display in a structured panel with heading, explanation, and actions instead of raw strings
+- Results page missing-attempt recovery ✅ — offers both "Back to Tests" and "Start or Resume Test" when no results saved
+- Corrupt localStorage surfacing ✅ — if saved progress can't be restored, students get an explanation instead of silent data loss
+- Shared error-state handling ✅ — duplicated error mapping in test.js/results.js extracted to common.js
+- Navigation helpers ✅ — canonical URL helpers and shared action builders replace hardcoded page URLs
+- Error state accessibility ✅ — focus and live-region announcements now consistent between error and success states
+- Verified: all four Issue #2 error paths, happy path (full test flow), and corrupt localStorage recovery
+
 ## Future Work
 
 - **More tests** — the platform supports multiple tests via `tests/index.json`. Drop in new JSON files.

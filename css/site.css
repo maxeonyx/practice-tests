@@ -642,11 +642,38 @@ textarea {
   margin-bottom: 0;
 }
 
-.error-banner {
-  padding: 14px 16px;
-  border-radius: 12px;
-  background: var(--danger-soft);
-  color: var(--danger);
+.error-panel {
+  display: grid;
+  gap: 16px;
+  border-color: rgba(139, 46, 46, 0.28);
+  background: linear-gradient(180deg, #fff 0%, var(--danger-soft) 100%);
+}
+
+.recovery-panel {
+  display: grid;
+  gap: 16px;
+  border-color: rgba(154, 90, 0, 0.25);
+  background: linear-gradient(180deg, #fff 0%, var(--warning-soft) 100%);
+}
+
+.error-panel-heading {
+  align-items: flex-start;
+}
+
+.error-panel h2,
+.error-panel h3,
+.error-panel p {
+  margin-bottom: 0;
+}
+
+.recovery-list {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--text-muted);
+}
+
+.recovery-list li + li {
+  margin-top: 8px;
 }
 
 .visually-hidden {

@@ -1,4 +1,4 @@
-import { announceLive, clearAttempt, clearLiveAnnouncement, consumeTransientMessage, formatMarks, getAttempt, loadTest, questionTypesLabel, scoreTest, shouldPreserveSkipLinkFocus, testParam } from './common.js?v=20260409-10';
+import { attemptRecoveryNotice, announceLive, clearAttempt, clearLiveAnnouncement, consumeTransientMessage, createAppError, formatMarks, loadTest, navigateToTest, questionTypesLabel, readAttemptState, resolvePageError, scoreTest, secondaryHomeAction, shouldPreserveSkipLinkFocus, testParam } from './common.js?v=20260410-4';
 
 const { createApp } = Vue;
 
@@ -7,6 +7,8 @@ createApp({
     return {
       loading: true,
       error: '',
+      errorTitle: '',
+      errorActions: [],
       liveMessage: '',
       test: null,
       attempt: null,
@@ -39,14 +41,19 @@ createApp({
       const testId = testParam();
 
       if (!testId) {
-        throw new Error('No test id was provided. Start from the landing page.');
+        throw createAppError('missing-test-id', 'Choose a test from the test list to view results.');
       }
 
       this.test = await loadTest(testId);
-      this.attempt = getAttempt(this.test);
+      const attemptState = readAttemptState(this.test);
+      this.attempt = attemptState.attempt;
+
+      if (attemptState.issue) {
+        throw createAppError('invalid-saved-results', attemptRecoveryNotice(this.test, 'saved results'));
+      }
 
       if (!this.attempt?.submitted) {
-        throw new Error('No submitted attempt was found for this test yet.');
+        throw createAppError('no-submitted-attempt', 'You do not have submitted results for this test on this device yet.');
       }
 
       const summary = scoreTest(this.test, this.attempt);
@@ -67,9 +74,19 @@ createApp({
         this.$refs.resultsHeading?.focus();
       });
     } catch (error) {
-      this.error = error.message;
+      this.setErrorState(error);
     } finally {
       this.loading = false;
+
+      if (this.error) {
+        this.$nextTick(() => {
+          if (shouldPreserveSkipLinkFocus()) {
+            return;
+          }
+
+          this.focusErrorHeading();
+        });
+      }
     }
   },
   beforeUnmount() {
@@ -77,8 +94,14 @@ createApp({
     this.clearRetakeConfirmation();
   },
   methods: {
+    homeAction() {
+      return secondaryHomeAction();
+    },
     announce(message) {
       announceLive(this, message);
+    },
+    focusErrorHeading() {
+      this.$refs.errorHeading?.focus();
     },
     formatMarks,
     typeLabel(type) {
@@ -156,7 +179,14 @@ createApp({
       this.clearRetakeConfirmation();
       clearAttempt(this.test.id);
       this.announce(`Saved attempt cleared for ${this.test.title}. Starting a new attempt.`);
-      window.location.href = `test.html?test=${encodeURIComponent(this.test.id)}`;
+      navigateToTest(this.test.id);
+    },
+    setErrorState(error) {
+      const config = resolvePageError('results', error, this.test);
+      this.errorTitle = config.title;
+      this.error = config.message;
+      this.errorActions = config.actions;
+      this.announce(`${config.title}. ${config.message}`);
     },
   },
 }).mount('#app');
