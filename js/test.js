@@ -1,19 +1,23 @@
 import {
+  attemptRecoveryNotice,
   announceLive,
   clearLiveAnnouncement,
+  createAppError,
   createAttempt,
   formatDuration,
-  getAttempt,
+  navigateToResults,
+  readAttemptState,
   loadTest,
   questionAnswerState,
   questionTypesLabel,
   remainingMs,
+  resolvePageError,
   saveAttempt,
   scoreTest,
   setTransientMessage,
   shouldPreserveSkipLinkFocus,
   testParam,
-} from './common.js?v=20260410-01';
+} from './common.js?v=20260410-4';
 
 const { createApp } = Vue;
 const QUESTION_NAV_LABEL_MAX_LENGTH = 80;
@@ -40,6 +44,8 @@ createApp({
     return {
       loading: true,
       error: '',
+      errorTitle: '',
+      errorActions: [],
       liveMessage: '',
       test: null,
       attempt: null,
@@ -153,16 +159,21 @@ createApp({
       const testId = testParam();
 
       if (!testId) {
-        throw new Error('No test id was provided. Start from the landing page.');
+        throw createAppError('missing-test-id', 'Choose a test from the test list to get started.');
       }
 
       this.test = await loadTest(testId);
-      this.attempt = getAttempt(this.test) || createAttempt(this.test);
+      const attemptState = readAttemptState(this.test);
+      this.attempt = attemptState.attempt || createAttempt(this.test);
       this.reviewMode = Boolean(this.attempt.reviewMode);
       this.navOpen = window.innerWidth >= 960;
       this.remainingMs = remainingMs(this.attempt);
       saveAttempt(this.test.id, this.attempt);
       this.announce(`Loaded ${this.test.title}.`);
+
+      if (attemptState.issue) {
+        this.announce(attemptRecoveryNotice(this.test, 'saved progress'));
+      }
 
       if (this.attempt.submitted) {
         this.redirectToResults();
@@ -183,7 +194,7 @@ createApp({
       }, 1000);
 
     } catch (error) {
-      this.error = error.message;
+      this.setErrorState(error);
     } finally {
       this.loading = false;
 
@@ -199,6 +210,14 @@ createApp({
           }
 
           this.focusQuestionHeading();
+        });
+      } else {
+        this.$nextTick(() => {
+          if (shouldPreserveSkipLinkFocus()) {
+            return;
+          }
+
+          this.focusErrorHeading();
         });
       }
     }
@@ -223,8 +242,18 @@ createApp({
     focusQuestionMapHeading() {
       this.$refs.questionMapHeading?.focus();
     },
+    focusErrorHeading() {
+      this.$refs.errorHeading?.focus();
+    },
     typeLabel(type) {
       return questionTypesLabel(type);
+    },
+    setErrorState(error) {
+      const config = resolvePageError('test', error, this.test);
+      this.errorTitle = config.title;
+      this.error = config.message;
+      this.errorActions = config.actions;
+      this.announce(`${config.title}. ${config.message}`);
     },
     persistAttempt() {
       this.attempt.reviewMode = this.reviewMode;
@@ -405,7 +434,7 @@ createApp({
       this.redirectToResults();
     },
     redirectToResults() {
-      window.location.href = `results.html?test=${encodeURIComponent(this.test.id)}`;
+      navigateToResults(this.test.id);
     },
   },
 }).mount('#app');

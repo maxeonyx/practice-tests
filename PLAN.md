@@ -67,6 +67,16 @@ Partial answer status testing (2026-04-10):
 - Persistence ✅ — statuses survive page refresh from localStorage
 - Scoring unchanged ✅ — partial matching still gets partial credit on results
 
+Error navigation + recovery UX (2026-04-10):
+- Every error/empty state now has a "Back to Tests" link ✅ — no more dead-end pages
+- Student-friendly error messages ✅ — errors display in a structured panel with heading, explanation, and actions instead of raw strings
+- Results page missing-attempt recovery ✅ — offers both "Back to Tests" and "Start or Resume Test" when no results saved
+- Corrupt localStorage surfacing ✅ — if saved progress can't be restored, students get an explanation instead of silent data loss
+- Shared error-state handling ✅ — duplicated error mapping in test.js/results.js extracted to common.js
+- Navigation helpers ✅ — canonical URL helpers and shared action builders replace hardcoded page URLs
+- Error state accessibility ✅ — focus and live-region announcements now consistent between error and success states
+- Verified: all four Issue #2 error paths, happy path (full test flow), and corrupt localStorage recovery
+
 ## Future Work
 
 - **More tests** — the platform supports multiple tests via `tests/index.json`. Drop in new JSON files.
