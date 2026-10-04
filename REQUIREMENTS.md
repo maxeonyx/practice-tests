@@ -910,3 +910,27 @@ The curriculum reviewers should have been, should be working now. The account us
 ## Interactive curriculum review for Max
 
 Yeah, and I want some kind of admin page, so I can view the full curriculum. Once you've finished building and reviewing the full curriculum, then please build me a page so I can do the same interactively. Again, relax and step back to the design principles. What do I need to know? What do I need to see in order to be confident that you've correctly understood the end goal of this app and chosen all of the curriculum correctly, aiming to get the user up to speed with the actual content that's likely to be in the actual exam. I would like to see a model of what's likely to be in the tests, and then coverage of all of those topics, and explanations of why the content in the app is going to cover those topics enough to get the user up to date—not up to date, but, like, you know, good enough to pass and do well at the exams.
+
+## Completion evidence — breadth, depth, quality and accuracy
+
+I want at least four things to be demonstrated. And if they're not demonstrated, we need to achieve them before we call this done. Breadth, depth, quality, and accuracy. First is breadth of the course content. I want to ensure everything is covered. Then depth: is everything covered in such a way that it can actually be learned from this app? Then quality: how easy is it to learn from this app? How high quality are the cards? Are they appropriately small, easy to understand, well written, visual? How well broken down are the dependencies? And then last, accuracy: is all the information correct? Are the sources clear and useful, so I can see where on the original Stream site or which course resources were used to build this (or if it came from general knowledge - which is fine!)
+
+## How to demonstrate the four dimensions
+
+Importantly, I don't actually know everything that should be in the exam. So I need you to argue from the breadth of the content that's available, what the scope of the exam will be, and then demonstrate that everything in that scope is in the curriculum. For depth, I don't know what every detail of every medication is. So I need some representative examples, and then I want there to be asserted that all of them have been treated similarly. Quality, again similar process, representative examples, and, you know, what have we done to ensure that the learning experience is really, really good? And that often means less is more. Putting work into making the question well written, small, easy to understand, choosing good pictures, checking the diagrams are good, doing diagrams whenever possible. And then lastly, accuracy. This is less— this is easier for me to check. I just have to look at a representative sample and, you know, check that the stuff is accurate. Just check that it's easy for me to understand the chain of things that led this card or thing to be in the curriculum. For example, you know, which test justifies this being in scope, what topic it is, what the original source from the content archive, or whether it was, you know, a source added by the agent, and then is it linked to any other cards or anything like that.
+
+## Exhaustive inventory, proposed exam scope and curriculum coverage
+
+You should specifically aim for exhaustiveness. That's often what I want to know. So you can give me an exhaustive list of categories of course content, and then point out specific parts that are useful and why, to then give me an exhaustive scope for the exam content, right? Then give me an exhaustive, you know, categorization or list of the, you know, curriculum items you've put in to cover that. That makes sense. I think that will be quite helpful if you aim for exhaustiveness, even if the exhaustiveness is gamed by having an other category with a bunch of examples in it. That's fine.
+
+## Integrated Care — diversity of plausible exam questions
+
+I've got one more thing I need to show on, which is that I want you to have built a model of example questions for the Integrated Care exam. And it should be like a distribution of different kinds of questions that could possibly come up, and how the app is going to prepare one to answer such questions. Because we don't have a practice exam for that, so we need to prepare for a diversity of different questions.
+
+The app should answer. Sorry, the review or the curriculum overview page should answer how the app will prepare one to answer such questions, even though we don't know exactly what they are.
+
+## Exemplar testing — pause curriculum work
+
+All right, I realised the curriculum overview can't explain that yet. So it's futile right now because we didn't support different kinds of questions yet. So you should have told me that straight away, sorry. I'm asking for something in the wrong order.
+
+Actually no. Let's do one example of every different type of question, please, right now. Pause your work on the curriculum. I want to just do a test of a single one of every different type of question that you're going to make, please. An exemplar.

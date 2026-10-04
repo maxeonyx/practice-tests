@@ -13,13 +13,14 @@ export function knowledgeShape(
   rootId: string,
   currentId: string,
   previousId?: string,
+  prerequisites = (id: string) => question(id).prerequisiteQuestionIds,
 ) {
   const depths = new Map<string, number>();
   const edges: [string, string][] = [];
   function visit(id: string, depth: number) {
     if (depths.has(id) && depths.get(id)! >= depth) return;
     depths.set(id, depth);
-    for (const child of question(id).prerequisiteQuestionIds) {
+    for (const child of prerequisites(id)) {
       if (!edges.some(([a, b]) => a === id && b === child))
         edges.push([id, child]);
       visit(child, depth + 1);

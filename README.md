@@ -2,9 +2,11 @@
 
 An offline nursing revision app at https://practice-tests.maxeonyx.com. A time choice opens one question from Integrated Care A5 (29 October,40%) or the Pharmacology final (2 November,50%).
 
-Answer mentally. “I know it” reveals the answer and difficulty controls. “I don’t know it” steps into supporting questions, then returns to the original; a standalone fact reveals its answer and Next. Learning images ground the content, with a separate wordless prerequisite cue. The scheduler balances exam preparation and spaced recall. Progress stays on the device, with quick reopening at the saved step and fresh starts after a new day or three hours away.
+Answer mentally. “I know” reveals the answer and difficulty controls. “I don’t know” steps into supporting questions, then returns to the original; a standalone fact reveals its answer and Next. Learning images ground the content, with a separate wordless prerequisite cue. The scheduler balances exam preparation and spaced recall. Progress stays on the device, with quick reopening at the saved step and fresh starts after a new day or three hours away.
 
 The review link, https://practice-tests.maxeonyx.com/?review=1, uses separate practice progress.
+
+The interaction trial at https://practice-tests.maxeonyx.com/examples.html contains one exemplar each of an ordinary flashcard, multiple choice, true/false, diagram recall and a scaffolded open answer. It stores its position and written draft in session storage, independently of learner progress. Read [DESIGN.md](DESIGN.md) for the trial’s readiness rule and self-marking limits.
 
 Run `npm ci` and `npm run dev`. For production verification, run `npm run build`, `npx playwright install chromium`, and `npm test`. `npm run lint` checks formatting. GitHub Actions builds and tests before publishing pushes to `main`.
 

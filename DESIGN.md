@@ -10,7 +10,7 @@ The hidden model connects assessments and their source-defined scope to the know
 
 Courses, topics, prerequisites, weak areas and review queues guide the app’s decisions. A subtle wordless DAG provides orientation while it steps back into prerequisite questions. The domain images and diagrams separately ground the content being learned. The learner answers questions while the app handles routing and planning.
 
-An ordinary card asks one clear thing. Its answer is concise and sufficient to learn that thing. A short exam vignette can require meaningful reasoning without becoming an essay. Ordinary flashcards are the first flow to design and build after agreement; diagram interaction, multiple-choice assessment and full dictated answers can extend it later.
+An ordinary card asks one clear thing. Its answer is concise and sufficient to learn that thing. A short exam vignette can require meaningful reasoning without becoming an essay. The learner feed uses ordinary flashcards; `examples.html` lets Max trial five question interactions separately from learner progress.
 
 ## Learner flows
 
@@ -28,7 +28,9 @@ Max’s salbutamol/candidiasis example anchors this sequence: an unknown applica
 
 **A longer weekend session.** The same feed continues through more review, new knowledge and application questions. Closely related questions can stay together when they build an explanation; the scheduler switches to other high-value material between these runs. A longer session should test increasingly integrated reasoning, rather than repeat more recognition questions.
 
-**Larger answers later.** Max’s exploratory model shows a full open question first to give the concept cards a purpose. It asks for the full dictated answer only after the learner is good at the relevant concepts. Struggling through all the concept cards does not trigger a compulsory full answer; that demanding task remains for later. Presenting the motivating question and demanding the full response are separate actions. The exact readiness criterion, diagram-question interaction and route from an incorrect MCQ into concept cards need later design. ChatGPT sign-in is an unsettled, lower-priority idea for this extra flow, not part of the ordinary-card requirement.
+**Open-answer trial.** The example shows a full clinical question, then “Break it down” opens three supporting cards. A positive rating on all three permits a typed response, including dictation through the phone keyboard; a miss finishes the small-card practice without requiring the full answer. The learner compares their response with an authored model and self-marks. This immediate readiness rule is a trial for feedback, rather than proof of independent exam performance. ChatGPT sign-in and automated marking remain unsettled, lower-priority ideas.
+
+**Choice and diagram trials.** Multiple-choice and true/false examples mark the selected option immediately; an incorrect choice gives a short correction, then Continue opens supporting cards before returning to the original choices. “I don’t know” steps straight into those cards. The diagram example retains the pathway around an enzyme gap, with a separate question and the ordinary mental-recall controls. The examples page has a chooser so Max can test every interaction directly; this chooser is separate from the scheduler-selected learner feed.
 
 Integrated Care questions must be authored from assessment outcomes and supplied teaching because its practice tests and past papers are unavailable. Preparation should err toward demanding application and broad enough supporting understanding, while each individual question remains clear. A larger authored question collection is not proof that every item is assessed or deserves equal study time. Authored exam-style prompts and authentic Pharmacology past-paper prompts retain different provenance in source details.
 

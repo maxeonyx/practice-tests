@@ -9,7 +9,7 @@
     "preview": "vite preview --host 0.0.0.0",
     "test": "playwright test",
     "check": "tsc --noEmit",
-    "lint": "prettier --check src index.html package.json tsconfig.json vite.config.ts playwright.config.ts e2e .github/workflows/deploy.yml"
+    "lint": "prettier --check src index.html examples.html package.json tsconfig.json vite.config.ts playwright.config.ts e2e .github/workflows/deploy.yml"
   },
   "dependencies": {
     "idb": "^8.0.3",

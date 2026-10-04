@@ -1,5 +1,7 @@
 # Prototype and curriculum delivery
 
+Current work is testing one exemplar of each proposed question interaction with Max. Full-curriculum authoring, review and the admin page are paused for this feedback.
+
 Max approved this delivery plan on 4 October 2026. Kibra needs the app and whole curriculum ready by 5 pm Monday 5 October 2026, New Zealand daylight time. Max can participate until midnight tonight, Sunday 4 October; complete the feedback that needs him in that window, then continue autonomously.
 
 ## Ready for Kibra
@@ -24,11 +26,15 @@ After that, author and review the full curriculum in batches against an objectiv
 
 Perform a separate source-review pass for each batch, checking complete answer claims and actual page/slide images rather than only text-anchor matches. Distinguish authored practice, authentic prompts and adaptations, and preserve source qualifiers and historical dates. Review visual accuracy, answer leakage, clinical reasoning, shared dependencies and unnecessary repetition. Use genuine source or suitably licensed clinical images and meaningful domain illustrations; do not invent drug packaging or substitute decorative card grids for subject diagrams.
 
-The current catalogue has 355 questions across sixteen units, but earlier audits identify material gaps and none of its clusters has an attached learning image. Prepared unpublished content and source images are useful starting material, subject to this review. Missing textbooks, absent external teaching and conflicting medical claims need source recovery or corroboration from authoritative references such as NZF, Medsafe, IMAC and Health New Zealand. Unresolved assessed knowledge remains an explicit gap to close, and cannot be counted as completed curriculum.
+The learner prototype uses eight full questions and their supporting cards, with selected learning visuals. Prepared unpublished curriculum candidates and source images need coverage and accuracy review before release. Missing textbooks, absent external teaching and conflicting medical claims need source recovery or corroboration from authoritative references such as NZF, Medsafe, IMAC and Health New Zealand. Unresolved assessed knowledge remains an explicit gap to close, and cannot be counted as completed curriculum.
 
 ## Interactive curriculum review
 
 After building and reviewing the full curriculum, build a separate read-only page for Max to inspect it. Start from the likely exam tasks and source-confirmed scope; let him trace topics into actual questions, supporting concepts, full reference answers and evidence. Explain how that knowledge supports exam performance, distinguish confirmed guidance from inference, and expose gaps and limitations. The ordinary learner feed remains focused on revision. This page is for curriculum judgment, not a prediction of passing from card counts.
+
+## Completion evidence
+
+Demonstrate four dimensions before calling the full curriculum done. Breadth maps every source-defined required objective and topic to actual content, exposing omissions. Depth traces each exam task into the explanations, applications and supporting knowledge needed to learn it. Quality reviews ordinary cards for small scope, self-contained wording, useful visuals and sound dependencies in the actual feed. Accuracy checks claims against relevant evidence and identifies the original Stream location, supplied resource or supplementary/general-knowledge basis. A matching quotation or a card count alone cannot demonstrate these dimensions. The admin page makes the evidence inspectable. Its breadth argument starts with an exhaustive classified inventory of available material, explains each category’s usefulness, proposes an exhaustive exam-topic scope from that evidence, and links every scope item to curriculum items. Any residual “other” category lists concrete examples. Representative depth, quality and accuracy walkthroughs accompany a truthful account of the review applied across the complete deck.
 
 ## Release checks
 

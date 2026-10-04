@@ -2,6 +2,11 @@ import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 export default defineConfig({
   base: "/",
+  build: {
+    rollupOptions: {
+      input: { main: "index.html", examples: "examples.html" },
+    },
+  },
   plugins: [
     VitePWA({
       registerType: "prompt",
@@ -28,6 +33,7 @@ export default defineConfig({
       workbox: {
         cleanupOutdatedCaches: true,
         navigateFallback: "/index.html",
+        navigateFallbackDenylist: [/\/examples\.html$/],
         globPatterns: ["**/*.{js,css,html,png,svg,webp,webmanifest}"],
       },
     }),
