@@ -29,10 +29,12 @@ async function readProgress(page: Page, name = reviewDatabase) {
   }, name);
 }
 
-async function nextBranchingQuestion(page: Page) {
+async function findTeachBackQuestion(page: Page) {
   for (let count = 0; count < 12; count++) {
     if (
-      await page.getByLabel("Supporting knowledge", { exact: true }).isVisible()
+      (await page.locator("#question-prompt").innerText()).includes(
+        "nods during your medicine explanation",
+      )
     ) {
       return;
     }
@@ -43,7 +45,7 @@ async function nextBranchingQuestion(page: Page) {
     ).toBeVisible();
   }
   throw new Error(
-    "The representative feed never offered a prerequisite question.",
+    "The representative feed never offered its teach-back question.",
   );
 }
 
@@ -65,6 +67,7 @@ test("an unknown fact reveals its answer and learning image, then Next continues
     path: `artifacts/${test.info().project.name}-answer.png`,
     fullPage: true,
   });
+  await expect(image).toHaveJSProperty("complete", true);
   expect(
     await image.evaluate(
       (element) => (element as HTMLImageElement).naturalWidth,
@@ -120,7 +123,7 @@ test("unknown prerequisite questions step back without the parent answer and ret
   page,
 }) => {
   await begin(page);
-  await nextBranchingQuestion(page);
+  await findTeachBackQuestion(page);
   const parent = await page.locator("#question-prompt").innerText();
   const parentId = await page.locator("main").getAttribute("data-root-id");
   await expect(
@@ -153,6 +156,9 @@ test("unknown prerequisite questions step back without the parent answer and ret
     await page
       .getByRole("button", { name: "I don’t know it", exact: true })
       .click();
+    await expect(page.locator(".answer-controls button:disabled")).toHaveCount(
+      0,
+    );
     if (
       await page.getByRole("button", { name: "Next", exact: true }).isVisible()
     ) {
@@ -167,15 +173,28 @@ test("unknown prerequisite questions step back without the parent answer and ret
     "The full question should return despite missed supporting answers.",
   ).toBe(true);
   expect(supportPrompts.length).toBeGreaterThan(1);
+  expect(
+    supportPrompts.filter(
+      (prompt) => prompt === "What does health literacy mean?",
+    ),
+  ).toHaveLength(1);
   await expect(page.locator("#question-answer")).toHaveCount(0);
   await page.getByRole("button", { name: "I know it", exact: true }).click();
   await page.getByRole("button", { name: "Easy", exact: true }).click();
-  await expect(page.locator("#question-prompt")).not.toHaveText(parent);
+  await expect(page.locator("#question-answer")).toHaveCount(0);
+  if (await page.locator("#question-prompt").isVisible()) {
+    await expect(page.locator("#question-prompt")).not.toHaveText(parent);
+  } else {
+    await expect(
+      page.getByRole("heading", { name: "How much time do you have?" }),
+    ).toBeVisible();
+  }
   const progress = await readProgress(page);
-  expect(progress.attempts.at(-1)).toMatchObject({
-    rating: "easy",
-    independent: false,
+  const parentRecall = progress.attempts.find((value) => {
+    const attempt = value as { questionId: string; rating: string };
+    return attempt.questionId === parentId && attempt.rating === "easy";
   });
+  expect(parentRecall).toMatchObject({ rating: "easy", independent: false });
   expect(
     progress.reviews.find(
       (value) => (value as { questionId: string }).questionId === parentId,
@@ -205,6 +224,7 @@ test("a quick reopen preserves the revealed answer without another setup step", 
   await begin(page);
   const question = await page.locator("#question-prompt").innerText();
   await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await expect(page.locator("#question-answer")).toBeVisible();
   await page.reload();
   await expect(page.locator("#question-prompt")).toHaveText(question);
   await expect(page.locator("#question-answer")).toContainText("Rotarix");
@@ -239,6 +259,9 @@ for (const [name, start, finish] of [
     await page
       .getByRole("button", { name: "I don’t know it", exact: true })
       .click();
+    await expect(page.locator(".answer-controls button:disabled")).toHaveCount(
+      0,
+    );
     await page.clock.setSystemTime(new Date(finish));
     await page.reload();
     await expect(
@@ -265,6 +288,7 @@ test("an offline reopening retains question, image and new saved progress", asyn
   page.on("pageerror", (error) => errors.push(error.message));
   await begin(page);
   await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await expect(page.locator("#question-answer")).toBeVisible();
   await page.evaluate(async () => {
     await navigator.serviceWorker.ready;
   });
