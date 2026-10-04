@@ -37,6 +37,7 @@ export interface Session {
   partIndex: number;
   assisted: boolean;
   seenIds: string[];
+  cuedIds?: string[];
   decomposedIds: string[];
   frames: { parentId: string; childIds: string[]; remainingIds: string[] }[];
   startedAt: string;

@@ -246,6 +246,18 @@ function followingSession(
   const next = recommend({ ...state, session: s, attempts, reviews });
   return next === undefined ? null : startSession(next.question.id);
 }
+function supportingIds(q: Question): string[] {
+  const ids = new Set<string>();
+  function visit(parent: Question) {
+    for (const id of parent.prerequisiteQuestionIds) {
+      if (ids.has(id)) continue;
+      ids.add(id);
+      visit(question(id));
+    }
+  }
+  visit(q);
+  return [...ids];
+}
 async function rate(rating: AnswerRating, missedBeforeReveal = false) {
   const s = state.session!;
   const q = question(s.questionId);
@@ -257,17 +269,23 @@ async function rate(rating: AnswerRating, missedBeforeReveal = false) {
     answeredAt: now.toISOString(),
     answer: "",
     rating,
-    independent: !s.seenIds.includes(q.id),
+    independent: !s.seenIds.includes(q.id) && !(s.cuedIds ?? []).includes(q.id),
     rootId: s.rootId,
     sessionStartedAt: s.startedAt,
   };
   const previous = state.reviews.find((r) => r.questionId === q.id);
   const review =
-    rating !== "again" && s.seenIds.includes(q.id)
+    rating !== "again" && !attempt.independent
       ? (previous ?? scheduleReview(q.id, "again", undefined, now))
       : scheduleReview(q.id, rating, previous, now);
   const updated = {
     ...s,
+    cuedIds: [
+      ...new Set([
+        ...(s.cuedIds ?? []),
+        ...(rating === "again" && s.claim === "known" ? supportingIds(q) : []),
+      ]),
+    ],
     seenIds: [...new Set([...s.seenIds, q.id])],
     lastActiveAt: now.toISOString(),
   };
