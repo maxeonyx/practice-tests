@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-test("preference survives reopening and offline reload without fabricated study content", async ({
+test("preference survives reopening and offline reload with one scheduler recommendation", async ({
   page,
   context,
 }) => {
@@ -18,7 +18,7 @@ test("preference survives reopening and offline reload without fabricated study 
   ).toBeVisible();
   await page.getByRole("link", { name: "Home", exact: true }).click();
   await expect(
-    page.getByText("Waiting for course material", { exact: true }),
+    page.getByRole("button", { name: "Start studying", exact: true }),
   ).toBeVisible();
   await page.getByRole("button", { name: "20 min", exact: true }).click();
   await expect(

@@ -590,3 +590,23 @@ The next major step will be for me to provide the two-course content package. At
 ## Subsequent clarification — home screen
 
 Sorry, I don't think the home screen should show both courses. It shouldn't let the user choose which course. It should just tell the user which course you should be studying. It should know how ready you are for the different courses, how many marks it's worth, etc. And then it should balance appropriately. It's not about the user choosing. It's about the scheduler deciding, and suggesting at least.
+
+## Course-content iteration
+
+`/home/maxeonyx/course-content-raw.zip`  Thank you very much, and now I would like you to take a look at the content from there. First of all, move that file into your directory here, and then I'd like you to explicitly go through the design process and, you know, come up with the effective curriculum content, UI principles. We're aiming for excellence here. We're not aiming for something half-baked. Excellence means putting a lot of work in to make it absolutely exactly what is required. No extra writing, extra UI functionality, extra anything. But the leaner and more precise something is, the more cognitive effort is required to get it just perfect. So don't skimp out on that. Do a lot of planning, do a lot of checks, aim for excellence here. Go ahead, give us amazing content and amazing user experience. The goal is that Kibra can go into this app, she can do her study, and the app will take care of her.
+
+Pharmacology final date and weighting, supplied by Max: "50% Nov 2".
+
+## Visual learning and recall interaction
+
+Focus especially hard on how we can make things visual. It's going to be a lot easier to recall if the lessons are visual. Even, for example, the structure of the metabolic chain. You should see where you are in that as you revise the different parts of it.
+
+For example, the integrated care. Some kind of mind map and pieces of it not filled in. You should see the question in the gap and then answer the question. For medical conditions, you might see a picture. For drugs, you might see the packaging. For test revision practices, you might see a little diagram of how that works. Again, aiming for excellence.
+
+Yeah, and I'm imagining a two-phase answering part to a flashcard. If you see the question, you get I know it or I don't know it, right? Then once you see the answer, if you knew it, then you get asked, you know, was it easy? Was it hard? Was it, was it, you know, somewhere in the middle? And that can be useful information for the scheduler, Anki style. And the scheduler should also know about the curriculum somehow. And I'm sure that there's great algorithms out there that you know and can reproduce, you know, quite easily for us. So we can get an excellent result here. So we've got two things going on. We've got the system for effective curriculum learning, and then we've got the content in that effective curriculum, and how best to revise it guides what the system needs to be capable of doing.
+
+> Also, you should take a look at the advice around the assignments. What content will be in which test. That information should be in the package I gave you.
+
+> The final thing is that when Kebra is in the test, she's confident in answering the questions from what she's revised. So we should, while we do need to step back into the fundamental content and get understanding, we should also have actual test questions and answers in the course content, and in fact probably start with that and then explicitly step back. That's what I'm thinking.
+
+> I think it's likely both exams will have long answer, you know, free form things at the end. For integrated care, definitely. For pharmacology, maybe. No. For pharmacology, definitely we have long answer. For integrated care, maybe long short answer. Yeah. They'll both likely have not. They won't just be multiple choice. They will have larger, more complicated questions, especially at the end of the test.

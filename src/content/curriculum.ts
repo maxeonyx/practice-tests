@@ -1,29 +1,39 @@
+import data from "./data.json" with { type: "json" };
 export type CourseId = "integrated-care" | "pharmacology";
-export interface SourceReference {
+export interface Source {
+  id: string;
+  title: string;
   file: string;
-  page?: number;
-  learningOutcome?: string;
+  sha256: string;
+  kind: string;
 }
-export interface Course {
-  id: CourseId;
-  name: string;
-  label: string;
+export interface SourceReference {
+  sourceId: string;
+  page: number;
+  excerpt: string;
 }
 export interface Assessment {
   id: string;
   courseId: CourseId;
   title: string;
-  date?: string;
+  date: string;
+  weight: number;
+  format: string;
+  scope: string;
+  sources: SourceReference[];
 }
 export interface CurriculumUnit {
   id: string;
   courseId: CourseId;
   title: string;
-  sources: SourceReference[];
+  order: number;
+  scope: string;
+  gaps: string[];
 }
 export interface Concept {
   id: string;
   unitId: string;
+  clusterId: string;
   title: string;
   prerequisiteIds: string[];
   sources: SourceReference[];
@@ -31,17 +41,62 @@ export interface Concept {
 export interface Question {
   id: string;
   courseId: CourseId;
-  conceptIds: string[];
+  unitId: string;
+  clusterId: string;
+  kind: "recall" | "constructed";
+  title?: string;
   prompt: string;
   rubric: string[];
+  conceptIds: string[];
   prerequisiteQuestionIds: string[];
   sources: SourceReference[];
+  importance: number;
+  estimatedSeconds: number;
+  origin?: { sourceId: string; page: number; year: number; marks: number };
 }
-export const courses: Course[] = [
+export interface Cluster {
+  id: string;
+  unitId: string;
+  title: string;
+  section: string;
+  questionId: string;
+  diagram: {
+    kind: "chain" | "map" | "compare" | "timeline";
+    central: string;
+    nodes: { conceptId: string; label: string; answer: string }[];
+  };
+}
+interface Curriculum {
+  sources: Source[];
+  assessments: Assessment[];
+  units: CurriculumUnit[];
+  concepts: Concept[];
+  questions: Question[];
+  clusters: Cluster[];
+}
+export const curriculum = data as Curriculum;
+export const { sources, assessments, units, concepts, questions, clusters } =
+  curriculum;
+export const courses = [
   {
-    id: "integrated-care",
+    id: "integrated-care" as const,
     name: "Integrated Care Nursing",
     label: "Integrated Care",
   },
-  { id: "pharmacology", name: "Pharmacology Nursing", label: "Pharmacology" },
+  {
+    id: "pharmacology" as const,
+    name: "Pharmacology Nursing",
+    label: "Pharmacology",
+  },
 ];
+export const questionById = new Map(questions.map((q) => [q.id, q]));
+export const clusterById = new Map(clusters.map((c) => [c.id, c]));
+export const sourceById = new Map(sources.map((s) => [s.id, s]));
+export function question(id: string): Question {
+  const value = questionById.get(id);
+  if (value === undefined)
+    throw new Error(
+      `Cannot open revision question ${id}: it is absent from the published curriculum. Keep saved progress and check the content migration.`,
+    );
+  return value;
+}

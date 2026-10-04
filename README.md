@@ -1,9 +1,9 @@
-# Kira
+# Kibra
 
-A calm, local-first nursing revision app: the most useful next step, chosen for Kira.
+An offline nursing revision app at https://practice-tests.maxeonyx.com. Home chooses one next question across Integrated Care A5 (29 October, 40%) and the Pharmacology final (2 November, 50%).
 
-The foundation includes a responsive home, a separate course overview, saved time preferences, and an installable offline shell; learning activities await the course material.
+Attempt a written exam-style question, check the answer guide, and rate recall. An unknown answer opens visual prerequisite questions, then returns to the whole question. FSRS schedules reviews; assessment dates, weights and curriculum gaps guide allocation. Drafts, attempts and the current step stay in IndexedDB on the device.
 
-Run `npm ci`, then `npm run dev` to work locally. For production verification, run `npm run build`, `npx playwright install chromium`, and `npm test`. Deployment runs through the existing GitHub Pages workflow at https://practice-tests.maxeonyx.com.
+Run `npm ci` and `npm run dev`. For production verification, run `npm run build`, `npx playwright install chromium`, and `npm test`. `npm run lint` checks formatting. GitHub Actions builds and tests before publishing pushes to `main`.
 
-Read [REQUIREMENTS.md](REQUIREMENTS.md) when planning the adaptive learning system or ingesting course content, and [AGENTS.md](AGENTS.md) for architecture and deployment details.
+Read [REQUIREMENTS.md](REQUIREMENTS.md) for Max’s original vision and corrections, [DESIGN.md](DESIGN.md) for the learning and allocation decisions, [CONTENT.md](CONTENT.md) before editing source-derived teaching, and [AGENTS.md](AGENTS.md) for implementation and deployment boundaries.
