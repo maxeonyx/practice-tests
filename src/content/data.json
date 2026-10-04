@@ -14258,7 +14258,7 @@
       "importance": 2,
       "estimatedSeconds": 35,
       "visual": {
-        "src": "/images/rotarix-source.png",
+        "src": "/images/rotarix.svg",
         "alt": "Rotarix vaccine box and the oral tube shown in the supplied immunisation schedule.",
         "showOn": "answer",
         "sourceId": "schedule",
