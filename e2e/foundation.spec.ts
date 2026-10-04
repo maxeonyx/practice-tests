@@ -1,67 +1,35 @@
 import { test, expect } from "@playwright/test";
-test("preference survives reopening and offline reload with one scheduler recommendation", async ({
+
+test("a time choice goes straight to a clear mental-recall question", async ({
   page,
-  context,
 }) => {
-  const errors: string[] = [];
-  page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto("/");
+  await page.goto("/?review=1");
   await expect(
-    page.getByRole("heading", { name: "Integrated Care Nursing" }),
-  ).toBeHidden();
-  await page.getByRole("link", { name: "Courses", exact: true }).click();
+    page.getByRole("heading", { name: "How much time do you have?" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "10 min", exact: true }).click();
+  await expect(page.locator("#question-prompt")).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Integrated Care Nursing" }),
+    page.getByRole("button", { name: "I know it", exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Pharmacology Nursing" }),
+    page.getByRole("button", { name: "I don’t know it", exact: true }),
   ).toBeVisible();
-  await page.getByRole("link", { name: "Home", exact: true }).click();
+  await expect(page.getByRole("textbox")).toHaveCount(0);
   await expect(
     page.getByRole("button", { name: "Start studying", exact: true }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "20 min", exact: true }).click();
+  ).toHaveCount(0);
   await expect(
-    page.getByRole("status").filter({ hasText: "Preference saved" }),
-  ).toBeVisible();
-  await page.reload();
-  await expect(
-    page.getByRole("button", { name: "20 min", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
-  await expect(
-    page.getByText("Ready to open offline", { exact: true }),
-  ).toBeVisible();
-  await page.evaluate(async () => {
-    await navigator.serviceWorker.ready;
-  });
-  await page.reload();
-  await context.setOffline(true);
-  await page.reload();
-  await expect(
-    page.getByRole("button", { name: "20 min", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
-  await page.getByRole("button", { name: "5 min", exact: true }).click();
-  await expect(
-    page.getByText("Preference saved on this device.", { exact: true }),
-  ).toBeVisible();
-  const reopened = await context.newPage();
-  await reopened.goto("/");
-  await expect(
-    reopened.getByRole("button", { name: "5 min", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
+    page.getByRole("link", { name: "Courses", exact: true }),
+  ).toHaveCount(0);
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
-  await expect(page.locator("body")).not.toContainText("Practice Tests");
-  await page.screenshot({
-    path: `artifacts/${test.info().project.name}.png`,
-    fullPage: true,
-  });
-  expect(errors).toEqual([]);
 });
-test("manifest and domain are published with the static shell", async ({
+
+test("manifest icons and the static domain are published", async ({
   request,
 }) => {
   const manifest = await (await request.get("/manifest.webmanifest")).json();

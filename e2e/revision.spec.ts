@@ -1,296 +1,373 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 
-test("a written answer resumes offline, then an unknown question teaches its visual pieces and returns to the whole", async ({
-  page,
-  context,
-}) => {
-  await page.goto("/");
-  await page
-    .getByRole("button", { name: "Start studying", exact: true })
-    .click();
-  await expect(
-    page.getByRole("textbox", { name: "Your answer" }),
-  ).toBeVisible();
-  const whole = await page.locator("#question-prompt").textContent();
-  await page
-    .getByRole("textbox", { name: "Your answer" })
-    .fill("My recalled explanation, before seeing the guide.");
-  await expect(
-    page.getByText("Answer saved on this device.", { exact: true }),
-  ).toBeVisible();
-  await page.reload();
-  await page
-    .getByRole("button", { name: "Resume studying", exact: true })
-    .click();
-  await expect(page.getByRole("textbox", { name: "Your answer" })).toHaveValue(
-    "My recalled explanation, before seeing the guide.",
-  );
-  await page
-    .getByRole("button", { name: "I don’t know it", exact: true })
-    .click();
-  await expect(
-    page.getByText("Build the understanding", { exact: true }),
-  ).toBeVisible();
-  await expect(page.locator(".diagram .current")).toBeVisible();
-  await page.evaluate(async () => {
-    await navigator.serviceWorker.ready;
-  });
-  await page.reload();
-  await context.setOffline(true);
-  await page.reload();
-  await page
-    .getByRole("button", { name: "Resume studying", exact: true })
-    .click();
-  for (let piece = 0; piece < 30; piece++) {
-    if (
-      await page
-        .getByText("Return to the whole question", { exact: true })
-        .isVisible()
-    )
-      break;
-    await page
-      .getByRole("button", { name: "I don’t know it", exact: true })
-      .click();
-    const previous = await page.locator("#question-prompt").textContent();
-    await page
-      .getByRole("button", { name: /^(Continue|Work through the pieces)$/ })
-      .click();
-    await expect(page.locator("#question-prompt")).not.toHaveText(previous!);
-  }
-  await expect(page.locator("#question-prompt")).toHaveText(whole!);
-  await expect(page.getByRole("textbox", { name: "Your answer" })).toHaveValue(
-    "",
-  );
-  await page.getByRole("button", { name: "I know it", exact: true }).click();
-  await page.getByRole("button", { name: /^Good/ }).click();
-  await expect(
-    page.getByText("Practised with help", { exact: true }),
-  ).toBeVisible();
-  await page.getByRole("link", { name: "Courses", exact: true }).click();
-  await expect(
-    page.getByText("0 independent answers", { exact: false }).first(),
-  ).toBeVisible();
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth,
-    ),
-  ).toBe(true);
-});
+const reviewUrl = "/?review=1";
+const reviewDatabase = "kira-revision-review";
 
-test("self correction and an independent written answer produce different readiness evidence", async ({
-  page,
-}) => {
-  await page.goto("/");
-  await page
-    .getByRole("button", { name: "Start studying", exact: true })
-    .click();
-  await page
-    .getByRole("textbox", { name: "Your answer" })
-    .fill("A complete answer recalled without help.");
-  await page.getByRole("button", { name: "I know it", exact: true }).click();
-  await expect(page.getByRole("button", { name: /^Easy/ })).toBeVisible();
-  await page.getByRole("button", { name: "I missed it", exact: true }).click();
-  await expect(
-    page.getByText("Build the understanding", { exact: true }),
-  ).toBeVisible();
-  await page.getByRole("link", { name: "Home", exact: true }).click();
-  await page.getByRole("link", { name: "Courses", exact: true }).click();
-  await expect(
-    page.getByText("0 independent answers", { exact: false }).first(),
-  ).toBeVisible();
-});
+async function begin(page: Page) {
+  await page.goto(reviewUrl);
+  await page.getByRole("button", { name: "10 min", exact: true }).click();
+  await expect(page.locator("#question-prompt")).toBeVisible();
+}
 
-test("an independently recalled response persists with its scheduled review and readiness evidence", async ({
-  page,
-}) => {
-  await page.goto("/");
-  await page
-    .getByRole("button", { name: "Start studying", exact: true })
-    .click();
-  const answer =
-    "Mechanism, effects and nursing implications recalled before revealing the guide.";
-  await page.getByRole("textbox", { name: "Your answer" }).fill(answer);
-  await page.getByRole("button", { name: "I know it", exact: true }).click();
-  await page.getByRole("button", { name: /^Easy/ }).click();
-  await expect(
-    page.getByText("Recalled independently", { exact: true }),
-  ).toBeVisible();
-  await page.reload();
-  await page.getByRole("link", { name: "Courses", exact: true }).click();
-  await expect(
-    page.getByText("1 independent answer", { exact: false }),
-  ).toBeVisible();
-  const data = await page.evaluate(async () => {
+async function readProgress(page: Page, name = reviewDatabase) {
+  return page.evaluate(async (databaseName) => {
     const db = await new Promise<IDBDatabase>((resolve, reject) => {
-      const r = indexedDB.open("kira-revision");
-      r.onsuccess = () => resolve(r.result);
-      r.onerror = () => reject(r.error);
+      const request = indexedDB.open(databaseName);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
     });
     const read = (store: string) =>
       new Promise<unknown[]>((resolve, reject) => {
-        const r = db.transaction(store).objectStore(store).getAll();
-        r.onsuccess = () => resolve(r.result);
-        r.onerror = () => reject(r.error);
+        const request = db.transaction(store).objectStore(store).getAll();
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
       });
     const attempts = await read("attempts");
     const reviews = await read("reviews");
     db.close();
     return { attempts, reviews };
+  }, name);
+}
+
+async function nextBranchingQuestion(page: Page) {
+  for (let count = 0; count < 12; count++) {
+    if (
+      await page.getByLabel("Supporting knowledge", { exact: true }).isVisible()
+    ) {
+      return;
+    }
+    await page.getByRole("button", { name: "I know it", exact: true }).click();
+    await page.getByRole("button", { name: "Easy", exact: true }).click();
+    await expect(
+      page.getByRole("button", { name: "I know it", exact: true }),
+    ).toBeVisible();
+  }
+  throw new Error(
+    "The representative feed never offered a prerequisite question.",
+  );
+}
+
+test("an unknown fact reveals its answer and learning image, then Next continues immediately", async ({
+  page,
+}) => {
+  await begin(page);
+  await expect(page.locator("#question-prompt")).toContainText("six-week");
+  await expect(page.locator("#question-answer")).toHaveCount(0);
+  await expect(page.locator("main img")).toHaveCount(0);
+  const question = await page.locator("#question-prompt").innerText();
+  await page
+    .getByRole("button", { name: "I don’t know it", exact: true })
+    .click();
+  await expect(page.locator("#question-answer")).toContainText("Rotarix");
+  const image = page.locator("main img");
+  await expect(image).toBeVisible();
+  expect(
+    await image.evaluate(
+      (element) => (element as HTMLImageElement).naturalWidth,
+    ),
+  ).toBeGreaterThan(0);
+  await expect(
+    page.getByRole("button", { name: "Easy", exact: true }),
+  ).toHaveCount(0);
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await expect(page.locator("#question-prompt")).not.toHaveText(question);
+  await expect(
+    page.getByRole("button", { name: "I know it", exact: true }),
+  ).toBeVisible();
+  const progress = await readProgress(page);
+  expect(progress.attempts).toHaveLength(1);
+  expect(progress.attempts[0]).toMatchObject({
+    rating: "again",
+    independent: false,
   });
-  expect(data.attempts).toHaveLength(1);
-  expect(data.reviews).toHaveLength(1);
-  expect(data.attempts[0]).toMatchObject({
-    answer,
+});
+
+test("known answers receive difficulty feedback and immediately advance with independent evidence", async ({
+  page,
+}) => {
+  await begin(page);
+  const question = await page.locator("#question-prompt").innerText();
+  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await expect(page.locator("#question-answer")).toContainText("Rotarix");
+  await expect(
+    page.getByRole("button", { name: "Hard", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Medium", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "I was wrong", exact: true }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Easy", exact: true }).click();
+  await expect(page.locator("#question-prompt")).not.toHaveText(question);
+  await expect(
+    page.getByRole("button", { name: "I know it", exact: true }),
+  ).toBeVisible();
+  const progress = await readProgress(page);
+  expect(progress.attempts).toHaveLength(1);
+  expect(progress.reviews).toHaveLength(1);
+  expect(progress.attempts[0]).toMatchObject({
     rating: "easy",
     independent: true,
   });
 });
 
-test("version-one preferences migrate intact into actual study", async ({
+test("unknown prerequisite questions step back without the parent answer and return even after missed supports", async ({
+  page,
+}) => {
+  await begin(page);
+  await nextBranchingQuestion(page);
+  const parent = await page.locator("#question-prompt").innerText();
+  await expect(
+    page.getByLabel("Supporting knowledge", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByLabel("Supporting knowledge", { exact: true }).locator("text"),
+  ).toHaveCount(0);
+  await page
+    .getByRole("button", { name: "I don’t know it", exact: true })
+    .click();
+  await expect(page.locator("#question-prompt")).not.toHaveText(parent);
+  await expect(page.locator("#question-answer")).toHaveCount(0);
+  let returned = false;
+  const supportPrompts: string[] = [];
+  for (let count = 0; count < 40; count++) {
+    const prompt = await page.locator("#question-prompt").innerText();
+    if (prompt === parent) {
+      returned = true;
+      break;
+    }
+    supportPrompts.push(prompt);
+    await page
+      .getByRole("button", { name: "I don’t know it", exact: true })
+      .click();
+    if (
+      await page.getByRole("button", { name: "Next", exact: true }).isVisible()
+    ) {
+      await page.getByRole("button", { name: "Next", exact: true }).click();
+    }
+    await expect(
+      page.getByRole("button", { name: "I know it", exact: true }),
+    ).toBeVisible();
+  }
+  expect(
+    returned,
+    "The full question should return despite missed supporting answers.",
+  ).toBe(true);
+  expect(supportPrompts.length).toBeGreaterThan(1);
+  await expect(page.locator("#question-answer")).toHaveCount(0);
+  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await page.getByRole("button", { name: "Easy", exact: true }).click();
+  await expect(page.locator("#question-prompt")).not.toHaveText(parent);
+  const progress = await readProgress(page);
+  expect(progress.attempts.at(-1)).toMatchObject({
+    rating: "easy",
+    independent: false,
+  });
+});
+
+test("correcting a false claim records a miss and continues from a standalone fact", async ({
+  page,
+}) => {
+  await begin(page);
+  const question = await page.locator("#question-prompt").innerText();
+  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await page.getByRole("button", { name: "I was wrong", exact: true }).click();
+  await expect(page.locator("#question-prompt")).not.toHaveText(question);
+  const progress = await readProgress(page);
+  expect(progress.attempts).toHaveLength(1);
+  expect(progress.attempts[0]).toMatchObject({
+    rating: "again",
+    independent: false,
+  });
+});
+
+test("a quick reopen preserves the revealed answer without another setup step", async ({
+  page,
+}) => {
+  await begin(page);
+  const question = await page.locator("#question-prompt").innerText();
+  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await page.reload();
+  await expect(page.locator("#question-prompt")).toHaveText(question);
+  await expect(page.locator("#question-answer")).toContainText("Rotarix");
+  await expect(
+    page.getByRole("button", { name: "Medium", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "How much time do you have?" }),
+  ).toHaveCount(0);
+});
+
+for (const [name, start, finish] of [
+  [
+    "a new New Zealand day",
+    "2026-10-04T23:50:00+13:00",
+    "2026-10-05T00:10:00+13:00",
+  ],
+  [
+    "three hours away",
+    "2026-10-04T18:00:00+13:00",
+    "2026-10-04T21:01:00+13:00",
+  ],
+]) {
+  test(`${name} starts fresh while retaining previous recall evidence`, async ({
+    page,
+  }) => {
+    await page.clock.install({ time: new Date(start) });
+    await begin(page);
+    await page.getByRole("button", { name: "I know it", exact: true }).click();
+    await page.getByRole("button", { name: "Easy", exact: true }).click();
+    const pausedQuestion = await page.locator("#question-prompt").innerText();
+    await page
+      .getByRole("button", { name: "I don’t know it", exact: true })
+      .click();
+    await page.clock.setSystemTime(new Date(finish));
+    await page.reload();
+    await expect(
+      page.getByRole("heading", { name: "How much time do you have?" }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "5 min", exact: true }).click();
+    await expect(page.locator("#question-prompt")).not.toHaveText(
+      pausedQuestion,
+    );
+    await expect(
+      page.getByRole("button", { name: "I know it", exact: true }),
+    ).toBeVisible();
+    expect((await readProgress(page)).attempts.length).toBeGreaterThanOrEqual(
+      2,
+    );
+  });
+}
+
+test("an offline reopening retains question, image and new saved progress", async ({
+  page,
+  context,
+}) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await begin(page);
+  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+  });
+  await page.reload();
+  await expect(page.locator("#question-answer")).toContainText("Rotarix");
+  await context.setOffline(true);
+  await page.reload();
+  await expect(page.locator("#question-answer")).toContainText("Rotarix");
+  expect(
+    await page
+      .locator("main img")
+      .evaluate((element) => (element as HTMLImageElement).naturalWidth),
+  ).toBeGreaterThan(0);
+  await page.getByRole("button", { name: "Medium", exact: true }).click();
+  await expect(
+    page.getByRole("button", { name: "I know it", exact: true }),
+  ).toBeVisible();
+  await page.reload();
+  expect((await readProgress(page)).attempts).toHaveLength(1);
+  expect(errors).toEqual([]);
+});
+
+test("a stale tab cannot overwrite another tab’s saved question", async ({
+  page,
+  context,
+}) => {
+  await page.goto(reviewUrl);
+  const other = await context.newPage();
+  await other.goto(reviewUrl);
+  await expect(
+    other.getByRole("button", { name: "10 min", exact: true }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "10 min", exact: true }).click();
+  const savedQuestion = await page.locator("#question-prompt").innerText();
+  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await other.getByRole("button", { name: "10 min", exact: true }).click();
+  await expect(other.getByRole("alert")).toContainText("Another tab changed");
+  await other.reload();
+  await expect(other.locator("#question-prompt")).toHaveText(savedQuestion);
+  await expect(other.locator("#question-answer")).toContainText("Rotarix");
+});
+
+test("the review link keeps normal learner progress separate", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "10 min", exact: true }).click();
+  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await page.getByRole("button", { name: "Easy", exact: true }).click();
+  expect((await readProgress(page, "kira-revision")).attempts).toHaveLength(1);
+  await page.goto(reviewUrl);
+  await expect(
+    page.getByRole("heading", { name: "How much time do you have?" }),
+  ).toBeVisible();
+  expect((await readProgress(page)).attempts).toHaveLength(0);
+  expect((await readProgress(page, "kira-revision")).attempts).toHaveLength(1);
+});
+
+test("version-one preferences survive migration and ordinary revision works", async ({
   page,
 }) => {
   await page.goto("/CNAME");
   await page.evaluate(async () => {
     const db = await new Promise<IDBDatabase>((resolve, reject) => {
-      const r = indexedDB.open("kira-revision", 1);
-      r.onupgradeneeded = () => {
-        r.result.createObjectStore("preferences");
-        r.result.createObjectStore("attempts", { keyPath: "id" });
-        r.result.createObjectStore("reviews", { keyPath: "questionId" });
+      const request = indexedDB.open("kira-revision", 1);
+      request.onupgradeneeded = () => {
+        request.result.createObjectStore("preferences");
+        request.result.createObjectStore("attempts", { keyPath: "id" });
+        request.result.createObjectStore("reviews", { keyPath: "questionId" });
       };
-      r.onsuccess = () => resolve(r.result);
-      r.onerror = () => reject(r.error);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
     });
     await new Promise<void>((resolve, reject) => {
-      const tx = db.transaction("preferences", "readwrite");
-      tx.objectStore("preferences").put(
-        { schemaVersion: 1, availableMinutes: 20 },
-        "learner",
-      );
-      tx.oncomplete = () => resolve();
-      tx.onerror = () => reject(tx.error);
+      const transaction = db.transaction("preferences", "readwrite");
+      transaction
+        .objectStore("preferences")
+        .put({ schemaVersion: 1, availableMinutes: 20 }, "learner");
+      transaction.oncomplete = () => resolve();
+      transaction.onerror = () => reject(transaction.error);
     });
     db.close();
   });
   await page.goto("/");
-  await expect(
-    page.getByRole("button", { name: "20 min", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
-  await page
-    .getByRole("button", { name: "Start studying", exact: true })
-    .click();
-  await page
-    .getByRole("textbox", { name: "Your answer" })
-    .fill("Migration preserved my preference and lets me study.");
-  await expect(
-    page.getByText("Answer saved on this device.", { exact: true }),
-  ).toBeVisible();
+  const preference = await page.evaluate(async () => {
+    const request = indexedDB.open("kira-revision");
+    const db = await new Promise<IDBDatabase>((resolve, reject) => {
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+    const result = await new Promise<{
+      schemaVersion: number;
+      availableMinutes: number;
+    }>((resolve, reject) => {
+      const request = db
+        .transaction("preferences")
+        .objectStore("preferences")
+        .get("learner");
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+    db.close();
+    return result;
+  });
+  expect(preference).toMatchObject({ schemaVersion: 1, availableMinutes: 20 });
+  await page.getByRole("button", { name: "10 min", exact: true }).click();
+  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await page.getByRole("button", { name: "Easy", exact: true }).click();
+  expect((await readProgress(page, "kira-revision")).attempts).toHaveLength(1);
 });
 
-test("a stale tab cannot overwrite another tab’s saved session", async ({
-  page,
-  context,
-}) => {
-  await page.goto("/");
-  const other = await context.newPage();
-  await other.goto("/");
-  await expect(
-    other.getByRole("button", { name: "Start studying", exact: true }),
-  ).toBeVisible();
-  await page
-    .getByRole("button", { name: "Start studying", exact: true })
-    .click();
-  await page
-    .getByRole("textbox", { name: "Your answer" })
-    .fill("This answer belongs to the active tab.");
-  await expect(
-    page.getByText("Answer saved on this device.", { exact: true }),
-  ).toBeVisible();
-  await other
-    .getByRole("button", { name: "Start studying", exact: true })
-    .click();
-  await expect(other.getByRole("alert")).toContainText("Another tab changed");
-  await other.reload();
-  await other
-    .getByRole("button", { name: "Resume studying", exact: true })
-    .click();
-  await expect(other.getByRole("textbox", { name: "Your answer" })).toHaveValue(
-    "This answer belongs to the active tab.",
-  );
-});
-
-test("after the first assessment, new work comes from the remaining course", async ({
-  page,
-}) => {
-  await page.clock.install({ time: new Date("2026-10-30T12:00:00+13:00") });
-  await page.goto("/");
-  await expect(page.locator(".assessment-chip")).toContainText("Pharmacology");
-  await expect(page.locator(".assessment-chip")).toContainText("50%");
-  await page
-    .getByRole("button", { name: "Start studying", exact: true })
-    .click();
-  await expect(page.locator(".study-top")).toContainText("Pharmacology");
-});
-
-test("a paused question from the completed first exam does not override the remaining exam", async ({
+test("after Integrated Care ends, a paused question cannot override Pharmacology", async ({
   page,
 }) => {
   await page.clock.install({ time: new Date("2026-10-28T12:00:00+13:00") });
-  await page.goto("/");
-  await expect(page.locator(".assessment-chip")).toContainText(
-    "Integrated Care",
-  );
-  await page
-    .getByRole("button", { name: "Start studying", exact: true })
-    .click();
-  await page
-    .getByRole("textbox", { name: "Your answer" })
-    .fill("A saved answer before the first test.");
-  await expect(
-    page.getByText("Answer saved on this device.", { exact: true }),
-  ).toBeVisible();
+  await begin(page);
+  const pausedQuestion = await page.locator("#question-prompt").innerText();
   await page.clock.setSystemTime(new Date("2026-10-30T12:00:00+13:00"));
-  await page.getByRole("link", { name: "Home", exact: true }).click();
-  await expect(page.locator(".assessment-chip")).toContainText("Pharmacology");
-  await page
-    .getByRole("button", { name: "Start studying", exact: true })
-    .click();
-  await expect(page.locator(".study-top")).toContainText("Pharmacology");
-});
-
-test("a final input during a transition cannot become the next question’s draft", async ({
-  page,
-}) => {
-  await page.goto("/");
-  await page
-    .getByRole("button", { name: "Start studying", exact: true })
-    .click();
-  await page
-    .getByRole("textbox", { name: "Your answer" })
-    .fill("My whole-question attempt.");
-  await expect(
-    page.getByText("Answer saved on this device.", { exact: true }),
-  ).toBeVisible();
-  await page.evaluate(() => {
-    const answer = document.querySelector<HTMLTextAreaElement>("#answer")!;
-    const next = [
-      ...document.querySelectorAll<HTMLButtonElement>("button"),
-    ].find((b) => b.textContent === "I don’t know it")!;
-    next.click();
-    answer.value = "A late whole-question input.";
-    answer.dispatchEvent(new Event("input", { bubbles: true }));
-  });
-  await expect(
-    page.getByText("Build the understanding", { exact: true }),
-  ).toBeVisible();
-  await expect(page.getByRole("textbox", { name: "Your answer" })).toHaveValue(
-    "",
-  );
   await page.reload();
-  await page
-    .getByRole("button", { name: "Resume studying", exact: true })
-    .click();
-  await expect(page.getByRole("textbox", { name: "Your answer" })).toHaveValue(
-    "",
-  );
+  await page.getByRole("button", { name: "10 min", exact: true }).click();
+  await expect(page.locator("#question-prompt")).not.toHaveText(pausedQuestion);
+  await expect(page.locator("[data-course='pharmacology']")).toBeVisible();
 });
