@@ -7,6 +7,10 @@ test("a time choice goes straight to a clear mental-recall question", async ({
   await expect(
     page.getByRole("heading", { name: "How much time do you have?" }),
   ).toBeVisible();
+  await page.screenshot({
+    path: `artifacts/${test.info().project.name}-time.png`,
+    fullPage: true,
+  });
   await page.getByRole("button", { name: "10 min", exact: true }).click();
   await expect(page.locator("#question-prompt")).toBeVisible();
   await expect(
@@ -22,6 +26,10 @@ test("a time choice goes straight to a clear mental-recall question", async ({
   await expect(
     page.getByRole("link", { name: "Courses", exact: true }),
   ).toHaveCount(0);
+  await page.screenshot({
+    path: `artifacts/${test.info().project.name}-question.png`,
+    fullPage: true,
+  });
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,

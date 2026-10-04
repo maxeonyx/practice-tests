@@ -61,6 +61,10 @@ test("an unknown fact reveals its answer and learning image, then Next continues
   await expect(page.locator("#question-answer")).toContainText("Rotarix");
   const image = page.locator("main img");
   await expect(image).toBeVisible();
+  await page.screenshot({
+    path: `artifacts/${test.info().project.name}-answer.png`,
+    fullPage: true,
+  });
   expect(
     await image.evaluate(
       (element) => (element as HTMLImageElement).naturalWidth,
@@ -130,6 +134,10 @@ test("unknown prerequisite questions step back without the parent answer and ret
     .click();
   await expect(page.locator("#question-prompt")).not.toHaveText(parent);
   await expect(page.locator("#question-answer")).toHaveCount(0);
+  await page.screenshot({
+    path: `artifacts/${test.info().project.name}-prerequisite.png`,
+    fullPage: true,
+  });
   const missedParentReview = (await readProgress(page)).reviews.find(
     (value) => (value as { questionId: string }).questionId === parentId,
   );
@@ -378,5 +386,45 @@ test("after Integrated Care ends, a paused question cannot override Pharmacology
   await page.reload();
   await page.getByRole("button", { name: "10 min", exact: true }).click();
   await expect(page.locator("#question-prompt")).not.toHaveText(pausedQuestion);
-  await expect(page.locator("[data-course='pharmacology']")).toBeVisible();
+  await expect(page.locator("main[data-course='pharmacology']")).toBeVisible();
+});
+
+test("question provenance appears only when requested and closes back to the same question", async ({
+  page,
+}) => {
+  await begin(page);
+  const question = await page.locator("#question-prompt").innerText();
+  await expect(page.getByText("Question sources", { exact: true })).toHaveCount(
+    0,
+  );
+  await page
+    .getByRole("button", { name: "Question information", exact: true })
+    .click();
+  const information = page.getByRole("dialog");
+  await expect(
+    information.getByRole("heading", { name: "Question sources", exact: true }),
+  ).toBeVisible();
+  await expect(information).toContainText("Page");
+  await page.getByRole("button", { name: "Close", exact: true }).click();
+  await expect(information).not.toBeVisible();
+  await expect(page.locator("#question-prompt")).toHaveText(question);
+  await expect(page.locator("#question-answer")).toHaveCount(0);
+});
+
+test("iPhone installation help is available on demand with the requested button name", async ({
+  browser,
+}) => {
+  const context = await browser.newContext({
+    baseURL: test.info().project.use.baseURL,
+    userAgent:
+      "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 CriOS/140.0.7339.0 Mobile/15E148 Safari/604.1",
+  });
+  const page = await context.newPage();
+  await page.goto(reviewUrl);
+  await page.getByRole("button", { name: "Install app", exact: true }).click();
+  await expect(page.getByRole("dialog")).toContainText(
+    "tap Share, then Add to Home Screen",
+  );
+  await expect(page.getByRole("dialog")).toContainText("Safari");
+  await context.close();
 });
