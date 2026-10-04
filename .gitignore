@@ -1,6 +1,6 @@
-# Learning objective photos (not for deployment)
-WhatsApp Image*
+node_modules/
+dist/
+playwright-report/
+test-results/
 *.ignore.*
-
-# Test/CI artifacts
 artifacts/

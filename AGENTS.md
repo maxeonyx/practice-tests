@@ -1,69 +1,21 @@
-# Practice Tests — AGENTS.md
+# Kira revision
 
-## Project
+Static, local-first nursing revision for Kira, deployed at https://practice-tests.maxeonyx.com through GitHub Pages on pushes to `main`.
 
-Lightweight static practice test platform. Moodle-style test experience, deployed to GitHub Pages at `practice-tests.maxeonyx.com`.
+## Development
 
-## Stack
+Node 22, npm, TypeScript, Vite, idb, and vite-plugin-pwa. `npm ci` installs dependencies; `npm run dev` previews development; `npm run build` checks types and builds `dist`; `npm run check` checks types; `npm run lint` checks formatting; `npm test` exercises the production build in Chromium. Install the browser with `npx playwright install chromium` before testing. CI builds and tests before deploying.
 
-- Static site with a lightweight CDN-loaded framework (e.g., Vue, Preact) — no build step
-- GitHub Pages deployment
-- Cloudflare DNS for custom domain
-- localStorage for all state
+## Boundaries
 
-## Repo Structure
+- `src/content/curriculum.ts`: source-linked curriculum types and the two course identities.
+- `src/study/state.ts`: attempts, review state, and versioned learner preferences. Scheduling is a future implementation.
+- `src/persistence/database.ts`: IndexedDB database `kira-revision`, version 1. Add explicit upgrade migrations when changing stores; preserve learner data.
+- `src/main.ts`: presentation and hash navigation between Home and Courses.
+- `src/style.css`: responsive presentation; no external fonts or runtime CDN dependencies.
 
-```
-practice-tests/
-  index.html          — landing page (list of available tests)
-  test.html           — test-taking page (shared by all tests)
-  results.html        — results/marking page
-  css/                — styles
-  js/                 — application logic
-  tests/              — test content as JSON files
-  REQUIREMENTS.md     — stakeholder stories & requirements
-  AGENTS.md           — this file
-```
+Read [REQUIREMENTS.md](REQUIREMENTS.md) before product or content work for the user's full vision and subsequent corrections. Home presents the scheduler's recommendation; the course overview is separate. Course content, dates, marks, and readiness require supplied source material.
 
-## Commands
+## Deployment
 
-- No build step — serve the site over HTTP for local preview because the app fetches JSON files
-- Local preview: `python -m http.server 4173`
-- Deploy: push to `main`, GitHub Pages serves automatically
-
-## Test Content Format
-
-Tests are JSON files in `tests/`. Each test file contains metadata and an array of questions. See REQUIREMENTS.md for the four question types.
-Landing page metadata lives in `tests/index.json`, which maps test ids to JSON files.
-
-### Catalog entry schema (`tests/index.json`)
-
-- `id` — unique test id string
-- `title` — landing page title
-- `description` — landing page summary
-- `durationMinutes` — whole-number duration
-- `questionCount` — whole-number count kept in sync with the test file
-- `questionTypes` — display labels shown on the landing page
-- `file` — path to the test JSON file
-
-### Test file schema (`tests/<name>.json`)
-
-- top-level fields: `id`, `title`, `description`, `durationMinutes`, `questions`
-- every question needs `id`, `type`, and `prompt`
-- every question needs a positive `marks` value; current weighting is 1 mark for `multiple-choice`, 1 for `true-false`, 2 for `matching`, and 4 for `short-answer`
-- `multiple-choice`: add `options` array and `correctAnswer` matching one of the options
-- `true-false`: add `correctAnswer` with `True` or `False`
-- `matching`: add unique `options` plus `pairs`, where each pair has a unique `prompt` and an `answer` present in `options`
-- `short-answer`: no `correctAnswer`; optional `sampleResponseGuide` can help future authors review expected responses
-
-### Notes
-
-- Matching answers are treated as one-to-one, so each correct answer should be unique within a question
-- Keep placeholder or schema-reference tests out of `tests/index.json` so they are not shown to students
-
-## Key Decisions
-
-- Lightweight CDN framework (Vue, Preact, etc.) — gives reactivity without a build step
-- localStorage for persistence — no accounts, no server
-- One question per page with navigation — matches Moodle UX
-- Auto-mark everything except short answers
+Root public path matches the custom domain. `public/CNAME` is copied into the built artifact and must match root `CNAME`. Preserve the domain and Pages workflow. Service-worker updates wait for the learner to select Reload; precached assets provide the offline shell. Storage is origin-scoped, so keeping the domain is essential to retaining progress. Browser data deletion removes local progress.
