@@ -247,14 +247,6 @@ footer {
   gap: 4px;
   color: #647369;
 }
-footer p {
-  font-family: Georgia, serif;
-  font-size: 16px;
-  margin: 4px 0 10px;
-}
-.footer-mark {
-  font-size: 23px;
-}
 #offline-status {
   font-size: 10px;
 }
@@ -666,18 +658,6 @@ summary {
   max-width: 320px;
   margin: 0 auto 24px;
 }
-.map .diagram-nodes {
-  border-top: 1px solid #9bae8e;
-  padding-top: 20px;
-}
-.map .diagram-node::before {
-  content: "";
-  position: absolute;
-  height: 20px;
-  top: -21px;
-  left: 50%;
-  border-left: 1px solid #9bae8e;
-}
 .timeline .node-number {
   background: #193f37;
   color: #fff;
@@ -875,14 +855,9 @@ textarea[readonly] {
   .map .diagram-nodes {
     grid-template-columns: 1fr 1fr;
     gap: 12px;
-    padding-top: 16px;
   }
   .map .diagram-node {
     padding: 12px;
-  }
-  .map .diagram-node::before {
-    height: 16px;
-    top: -17px;
   }
   .map .node-top strong {
     font-size: 12px;
@@ -932,9 +907,6 @@ textarea[readonly] {
   }
 }
 @media (max-width: 350px) {
-  .map .diagram-nodes {
-    grid-template-columns: 1fr;
-  }
   .unit-count {
     display: none;
   }
@@ -988,20 +960,96 @@ textarea[readonly] {
   .diagram.overview .node-number {
     display: none;
   }
-  .diagram.overview.chain .diagram-node:not(:last-child)::after,
-  .diagram.overview.timeline .diagram-node:not(:last-child)::after {
+
+}
+@media (max-width: 600px) {
+  .chain .diagram-nodes,
+  .timeline .diagram-nodes {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .chain .diagram-node,
+  .timeline .diagram-node {
+    grid-row: var(--row);
+    grid-column: var(--col);
+    padding: 12px;
+  }
+  .chain .diagram-node p,
+  .timeline .diagram-node p {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .chain .diagram-node .learning-icon,
+  .timeline .diagram-node .learning-icon {
+    width: 30px;
+    height: 30px;
+  }
+  .chain .diagram-node .node-top strong,
+  .timeline .diagram-node .node-top strong {
+    font-size: 12px;
+  }
+  .chain .diagram-node:not(:last-child)::after,
+  .timeline .diagram-node:not(:last-child)::after {
     content: "→";
     top: 50%;
     right: -14px;
     bottom: auto;
     font-size: 16px;
   }
-  .diagram.overview.chain .diagram-node:nth-child(even):not(:last-child)::after,
-  .diagram.overview.timeline
-    .diagram-node:nth-child(even):not(:last-child)::after {
+  .chain .diagram-node:nth-child(even):not(:last-child)::after,
+  .timeline .diagram-node:nth-child(even):not(:last-child)::after {
     content: "↓";
     top: auto;
     right: 50%;
     bottom: -19px;
   }
+  .chain .diagram-node:nth-child(4n + 3):not(:last-child)::after,
+  .timeline .diagram-node:nth-child(4n + 3):not(:last-child)::after {
+    content: "←";
+    left: -14px;
+    right: auto;
+    top: 50%;
+    bottom: auto;
+  }
+}
+.map .diagram-nodes {
+  position: relative;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 28px;
+}
+.map .diagram-nodes::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -24px;
+  bottom: calc(var(--last-row-half) - var(--gap-adjust));
+  border-left: 1px solid #9bae8e;
+}
+.map .diagram-node::before {
+  content: "";
+  position: absolute;
+  width: 15px;
+  top: 50%;
+  right: -15px;
+  border-top: 1px solid #9bae8e;
+}
+.map .diagram-node:nth-child(even)::before {
+  left: -15px;
+  right: auto;
+}
+.source-media {
+  margin: 24px auto;
+  max-width: 560px;
+}
+.source-media img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  background: #fff;
+}
+.source-media figcaption {
+  font-size: 11px;
+  line-height: 1.6;
+  color: #647369;
+  margin: 10px 0;
 }

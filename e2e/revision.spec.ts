@@ -257,3 +257,40 @@ test("a paused question from the completed first exam does not override the rema
     .click();
   await expect(page.locator(".study-top")).toContainText("Pharmacology");
 });
+
+test("a final input during a transition cannot become the next question’s draft", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page
+    .getByRole("button", { name: "Start studying", exact: true })
+    .click();
+  await page
+    .getByRole("textbox", { name: "Your answer" })
+    .fill("My whole-question attempt.");
+  await expect(
+    page.getByText("Answer saved on this device.", { exact: true }),
+  ).toBeVisible();
+  await page.evaluate(() => {
+    const answer = document.querySelector<HTMLTextAreaElement>("#answer")!;
+    const next = [
+      ...document.querySelectorAll<HTMLButtonElement>("button"),
+    ].find((b) => b.textContent === "I don’t know it")!;
+    next.click();
+    answer.value = "A late whole-question input.";
+    answer.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+  await expect(
+    page.getByText("Build the understanding", { exact: true }),
+  ).toBeVisible();
+  await expect(page.getByRole("textbox", { name: "Your answer" })).toHaveValue(
+    "",
+  );
+  await page.reload();
+  await page
+    .getByRole("button", { name: "Resume studying", exact: true })
+    .click();
+  await expect(page.getByRole("textbox", { name: "Your answer" })).toHaveValue(
+    "",
+  );
+});

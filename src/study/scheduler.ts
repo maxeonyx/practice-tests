@@ -55,9 +55,7 @@ export function recommend(
   );
   const reviews = new Map(state.reviews.map((r) => [r.questionId, r]));
   const latest = [...state.attempts]
-    .filter((a) =>
-      questions.some((q) => q.id === a.questionId && q.kind === "constructed"),
-    )
+    .filter((a) => a.independent)
     .sort((a, b) => b.answeredAt.localeCompare(a.answeredAt));
   const recent = latest.slice(0, 3);
   const neglected =

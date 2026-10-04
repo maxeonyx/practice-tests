@@ -39,7 +39,7 @@ const date = (value: string) =>
     month: "long",
     timeZone: "Pacific/Auckland",
   }).format(new Date(value));
-app.innerHTML = `<a class="skip" href="#main">Skip to content</a><header><a class="brand" href="#home" aria-label="Kibra home"><span class="brand-mark">k</span> kibra<span class="brand-caption">NURSING REVISION</span></a><span class="personal">Made for you <span class="avatar">K</span></span></header><main id="main"><div id="error" role="alert" hidden></div><div id="view"><p class="loading">Opening your revision…</p></div><footer><span class="footer-mark" aria-hidden="true">✧</span><p>Understanding first. Confidence follows.</p><span id="offline-status" role="status">Preparing offline access…</span><button id="install" hidden>Install Kibra</button><button id="update" hidden>Update available · Reload</button></footer></main><nav aria-label="Main navigation"><a href="#home"><span aria-hidden="true">⌂</span>Home</a><a href="#courses"><span aria-hidden="true">▦</span>Courses</a></nav>`;
+app.innerHTML = `<a class="skip" href="#main">Skip to content</a><header><a class="brand" href="#home" aria-label="Kibra home"><span class="brand-mark">k</span> kibra<span class="brand-caption">NURSING REVISION</span></a><span class="personal">Made for you <span class="avatar">K</span></span></header><main id="main"><div id="error" role="alert" hidden></div><div id="view"><p class="loading">Opening your revision…</p></div><footer><span id="offline-status" role="status">Preparing offline access…</span><button id="install" hidden>Install Kibra</button><button id="update" hidden>Update available · Reload</button></footer></main><nav aria-label="Main navigation"><a href="#home"><span aria-hidden="true">⌂</span>Home</a><a href="#courses"><span aria-hidden="true">▦</span>Courses</a></nav>`;
 const view = document.querySelector<HTMLElement>("#view")!;
 let state: LearnerState;
 let busy = false;
@@ -106,21 +106,29 @@ function sourceDetails(refs: SourceReference[]) {
     })
     .join("")}</details>`;
 }
+function questionTitle(q: Question): string {
+  return (
+    q.title ??
+    clusterById
+      .get(q.clusterId)!
+      .diagram.nodes.find((n) => q.conceptIds.includes(n.conceptId))!.label
+  );
+}
 function diagram(q: Question, revealed: boolean, session?: Session) {
   const cluster = clusterById.get(q.clusterId)!;
   const d = cluster.diagram;
   const seen = new Set(
     q.kind === "constructed" ? [] : (session?.seenIds ?? []),
   );
-  return `<figure class="diagram ${d.kind} ${q.kind === "constructed" ? "overview" : "focus"}" aria-label="${escape(cluster.title)} knowledge map"><figcaption>${q.courseId === "integrated-care" ? icon("family") : ""}${escape(d.central)}</figcaption><div class="diagram-nodes">${d.nodes
+  return `<figure class="diagram ${d.kind} ${q.kind === "constructed" ? "overview" : "focus"}" aria-label="${escape(cluster.title)} knowledge map"><figcaption>${q.courseId === "integrated-care" ? icon("family") : ""}${escape(d.central)}</figcaption><div class="diagram-nodes" style="--last-row-half:${50 / Math.ceil(d.nodes.length / 2)}%;--gap-adjust:${(16 * (Math.ceil(d.nodes.length / 2) - 1)) / (2 * Math.ceil(d.nodes.length / 2))}px">${d.nodes
     .map((node, index) => {
       const current =
         q.kind === "recall" && q.conceptIds.includes(node.conceptId);
       const filled =
         (revealed && (q.kind === "constructed" || current)) ||
-        seen.has(node.conceptId);
+        (seen.has(node.conceptId) && !current);
       const recall = question(node.conceptId);
-      return `<div class="diagram-node ${current ? "current" : ""} ${filled ? "filled" : "gap"}">${conceptIcon(node.conceptId)}<div class="node-top"><span class="node-number">${index + 1}</span><strong>${escape(node.label)}</strong>${current ? '<span class="here">You are here</span>' : ""}</div><p>${escape(filled ? node.answer : recall.prompt)}</p>${filled ? '<span class="node-state">Reconstructed</span>' : '<span class="node-state">Recall this piece</span>'}</div>`;
+      return `<div class="diagram-node ${current ? "current" : ""} ${filled ? "filled" : "gap"}" style="--row:${Math.floor(index / 2) + 1};--col:${Math.floor(index / 2) % 2 === 0 ? (index % 2) + 1 : 2 - (index % 2)}">${conceptIcon(node.conceptId)}<div class="node-top"><span class="node-number">${index + 1}</span><strong>${escape(node.label)}</strong>${current ? '<span class="here">You are here</span>' : ""}</div><p>${escape(filled ? node.answer : recall.prompt)}</p>${filled ? '<span class="node-state">Reconstructed</span>' : '<span class="node-state">Recall this piece</span>'}</div>`;
     })
     .join("")}</div></figure>`;
 }
@@ -148,7 +156,7 @@ function home() {
   const completed = state.attempts.filter(
     (a) => a.independent && a.rating !== "again",
   ).length;
-  view.innerHTML = `<section class="intro"><p class="eyebrow">A LITTLE TIME. A CLEAR NEXT STEP.</p><h1>Your space to<br><em>make it click.</em></h1><p class="intro-copy">Welcome, Kibra. ${completed > 0 ? "Keep building what you can recall." : "Start with a question. We’ll help you connect the pieces."}</p></section><section class="revision"><div class="revision-copy"><p class="eyebrow">${resume ? "YOUR SAVED STEP" : "YOUR NEXT STEP"}</p><h2>${escape(q?.title ?? (q === undefined ? (assessments.every((a) => new Date(a.date).getTime() <= Date.now()) ? "Assessments complete." : "A good place to pause.") : clusterById.get(q.clusterId)!.title))}</h2><p>${resume ? "Your answer and place are saved. Pick up where you left off." : escape(next?.reason ?? (assessments.every((a) => new Date(a.date).getTime() <= Date.now()) ? "Your study history stays on this device." : "Your studied questions are waiting for their next spaced review."))}</p>${q === undefined ? "" : `<div class="assessment-chip">${course!.label} · ${date(exam!.date)} · ${exam!.weight}%</div><button class="primary light" data-action="start">${resume ? "Resume studying" : "Start studying"} <span aria-hidden="true">→</span></button>`}</div><div class="path-art" aria-hidden="true"><svg viewBox="0 0 280 200"><path d="M30 160C30 80 140 180 140 100S250 120 250 35" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="5 7"/><circle cx="30" cy="160" r="13" fill="#dce7ad"/><circle cx="140" cy="100" r="13" fill="#b8c9ba"/><circle cx="250" cy="35" r="19" fill="#dce7ad"/><path d="m241 35 6 6 12-13" fill="none" stroke="#193f37" stroke-width="3"/></svg><span>Question → understanding → recall</span></div></section><section class="time-section"><h2>What does your day allow?</h2><p>You can always keep going or stop early.</p><div class="time-options" role="group" aria-label="Available study time">${[
+  view.innerHTML = `<section class="intro"><p class="eyebrow">A LITTLE TIME. A CLEAR NEXT STEP.</p><h1>Your space to<br><em>make it click.</em></h1><p class="intro-copy">Welcome, Kibra. ${completed > 0 ? "Keep building what you can recall." : "Start with a question. We’ll help you connect the pieces."}</p></section><section class="revision"><div class="revision-copy"><p class="eyebrow">${resume ? "YOUR SAVED STEP" : "YOUR NEXT STEP"}</p><h2>${escape(q === undefined ? (assessments.every((a) => new Date(a.date).getTime() <= Date.now()) ? "Assessments complete." : "A good place to pause.") : questionTitle(q))}</h2><p>${resume ? "Your answer and place are saved. Pick up where you left off." : escape(next?.reason ?? (assessments.every((a) => new Date(a.date).getTime() <= Date.now()) ? "Your study history stays on this device." : "Your studied questions are waiting for their next spaced review."))}</p>${q === undefined ? "" : `<div class="assessment-chip">${course!.label} · ${date(exam!.date)} · ${exam!.weight}%</div><button class="primary light" data-action="start">${resume ? "Resume studying" : "Start studying"} <span aria-hidden="true">→</span></button>`}</div><div class="path-art" aria-hidden="true"><svg viewBox="0 0 280 200"><path d="M30 160C30 80 140 180 140 100S250 120 250 35" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="5 7"/><circle cx="30" cy="160" r="13" fill="#dce7ad"/><circle cx="140" cy="100" r="13" fill="#b8c9ba"/><circle cx="250" cy="35" r="19" fill="#dce7ad"/><path d="m241 35 6 6 12-13" fill="none" stroke="#193f37" stroke-width="3"/></svg><span>Question → understanding → recall</span></div></section><section class="time-section"><h2>What does your day allow?</h2><p>You can always keep going or stop early.</p><div class="time-options" role="group" aria-label="Available study time">${[
     [5, "5 min"],
     [20, "20 min"],
     [60, "An hour +"],
@@ -205,6 +213,22 @@ function coursesView() {
     })
     .join("")}</section>`;
 }
+function questionOrigin(q: Question): string {
+  if (q.sources.every((r) => sourceById.get(r.sourceId)!.kind === "authored"))
+    return "Written exam practice · hypothetical paper";
+  if (q.origin !== undefined)
+    return `${q.origin.year} past examination · ${q.origin.marks} marks · answer guide derived from the course`;
+  if (q.provenance !== undefined)
+    return `2026 guide revision question · supplied guide answer`;
+  return q.kind === "constructed"
+    ? "Course-based practice · self-mark against the guide"
+    : "Recall a fundamental piece";
+}
+function teachingImage(q: Question): string {
+  const image = clusterById.get(q.clusterId)!.image;
+  if (image === undefined) return "";
+  return `<figure class="source-media"><img src="${escape(image.src)}" alt="${escape(image.alt)}" width="${image.width}" height="${image.height}" loading="lazy" decoding="async"><figcaption>${escape(image.caption)}</figcaption></figure>`;
+}
 function studyView() {
   const s = state.session;
   if (s === null) {
@@ -229,7 +253,7 @@ function studyView() {
   }
   const revealed = s.phase === "feedback";
   const unknown = s.claim === "unknown";
-  view.innerHTML = `<section class="study"><div class="study-top"><p class="eyebrow">${course.label} / ${escape(unit.title)}</p><a class="quiet-link" href="#home">Pause</a></div><p class="stage">${stage}</p>${part ? `<p class="parent-question">Working towards: ${escape(root.title!)}</p>${s.parts.length > 0 ? `<div class="piece-progress">Piece ${s.partIndex + 1} of ${s.parts.length}</div>` : ""}` : ""}<h1 class="question-title">${escape(q.title ?? clusterById.get(q.clusterId)!.title)}</h1><p id="question-prompt" class="question-prompt">${escape(q.prompt)}</p>${q.origin === undefined ? `<p class="question-origin">${q.kind === "constructed" ? "Course-based practice · self-mark against the guide" : "Recall a fundamental piece"}</p>` : `<p class="question-origin">${q.origin.year} past examination · ${q.origin.marks} marks · answer guide derived from the course</p>`}${diagram(q, revealed, s)}<label class="answer-label" for="answer">Your answer <span>${q.kind === "constructed" ? "Write the explanation you would give in the test." : "Recall first, then check."}</span></label><textarea id="answer" aria-label="Your answer" rows="${q.kind === "constructed" ? 6 : 3}" placeholder="Put it in your own words…" ${revealed ? "readonly" : ""}>${escape(s.answer)}</textarea><p id="draft-status" role="status">Answer saved on this device.</p>${!revealed ? `<div class="answer-actions"><button class="primary" data-action="known">I know it</button><button class="secondary" data-action="unknown">I don’t know it</button></div>` : `<section class="feedback"><h2>Marking guide</h2><p class="marking-instruction">Check each point against your answer. Include the links between mechanism, effect and care where asked.</p><ol class="rubric">${q.rubric.map((r) => `<li>${escape(r)}</li>`).join("")}</ol>${unknown ? `<p class="learning-note">This needs more recall. Let’s build the pieces.</p><button class="primary" data-action="continue">${!s.decomposedIds.includes(q.id) && q.prerequisiteQuestionIds.length > 0 ? "Work through the pieces" : "Continue"}</button>` : `<h3>How was your recall?</h3><div class="ratings"><button data-rating="hard"><strong>Hard</strong><span>Correct, with effort</span></button><button data-rating="good"><strong>Good</strong><span>Correct, steady recall</span></button><button data-rating="easy"><strong>Easy</strong><span>Quick and complete</span></button></div><button class="correction" data-rating="again">I missed it</button>`}</section>${sourceDetails(q.sources)}`}</section>`;
+  view.innerHTML = `<section class="study"><div class="study-top"><p class="eyebrow">${course.label} / ${escape(unit.title)}</p><a class="quiet-link" href="#home">Pause</a></div><p class="stage">${stage}</p>${part ? `<p class="parent-question">Working towards: ${escape(questionTitle(root))}</p>${s.parts.length > 0 ? `<div class="piece-progress">Piece ${s.partIndex + 1} of ${s.parts.length}</div>` : ""}` : ""}<h1 class="question-title">${escape(questionTitle(q))}</h1><p id="question-prompt" class="question-prompt">${escape(q.prompt)}</p><p class="question-origin">${escape(questionOrigin(q))}</p>${diagram(q, revealed, s)}<label class="answer-label" for="answer">Your answer <span>${q.kind === "constructed" ? "Write the explanation you would give in the test." : "Recall first, then check."}</span></label><textarea id="answer" aria-label="Your answer" rows="${q.kind === "constructed" ? 6 : 3}" placeholder="Put it in your own words…" ${revealed ? "readonly" : ""}>${escape(s.answer)}</textarea><p id="draft-status" role="status">Answer saved on this device.</p>${!revealed ? `<div class="answer-actions"><button class="primary" data-action="known">I know it</button><button class="secondary" data-action="unknown">I don’t know it</button></div>` : `<section class="feedback"><h2>Marking guide</h2><p class="marking-instruction">Check each point against your answer.</p><ol class="rubric">${q.rubric.map((r) => `<li>${escape(r)}</li>`).join("")}</ol>${unknown ? `<p class="learning-note">This needs more recall. Let’s build the pieces.</p><button class="primary" data-action="continue">${!s.decomposedIds.includes(q.id) && q.prerequisiteQuestionIds.length > 0 ? "Work through the pieces" : "Continue"}</button>` : `<h3>How was your recall?</h3><div class="ratings"><button data-rating="hard"><strong>Hard</strong><span>Correct, with effort</span></button><button data-rating="good"><strong>Good</strong><span>Correct, steady recall</span></button><button data-rating="easy"><strong>Easy</strong><span>Quick and complete</span></button></div><button class="correction" data-rating="again">I missed it</button>`}</section>${teachingImage(q)}${sourceDetails(q.sources)}`}</section>`;
 }
 function render() {
   if (state === undefined) return;
@@ -241,6 +265,18 @@ function render() {
     if (link.hash === (route === "#courses" ? "#courses" : "#home"))
       link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
+  }
+  if (route === "#study") {
+    const focus = view.querySelector<HTMLElement>(
+      state.session?.phase === "feedback"
+        ? ".feedback"
+        : ".question-title, .completion h1",
+    );
+    if (focus !== null) {
+      focus.tabIndex = -1;
+      focus.focus({ preventScroll: true });
+      focus.scrollIntoView({ block: "start" });
+    }
   }
   document.title =
     route === "#study"
@@ -283,9 +319,11 @@ async function rate(rating: AnswerRating) {
     rating,
     independent: !s.assisted && q.id === s.rootId,
   };
+  const memoryRating =
+    rating !== "again" && s.seenIds.includes(q.id) ? "good" : rating;
   const review = scheduleReview(
     q.id,
-    rating,
+    memoryRating,
     state.reviews.find((r) => r.questionId === q.id),
     now,
   );
@@ -338,14 +376,25 @@ view.addEventListener("input", (event) => {
   if (
     !(target instanceof HTMLTextAreaElement) ||
     target.id !== "answer" ||
+    target.disabled ||
     failed
   )
     return;
   const answer = target.value;
+  const owner = {
+    questionId: state.session!.questionId,
+    startedAt: state.session!.startedAt,
+  };
   const status = document.querySelector<HTMLElement>("#draft-status")!;
   status.textContent = "Saving answer…";
   enqueue(async () => {
-    await save({ session: { ...state.session!, answer } });
+    if (
+      state.session === null ||
+      state.session.questionId !== owner.questionId ||
+      state.session.startedAt !== owner.startedAt
+    )
+      return;
+    await save({ session: { ...state.session, answer } });
     if (pending === 1 && status.isConnected)
       status.textContent = "Answer saved on this device.";
   });
@@ -358,6 +407,8 @@ view.addEventListener("click", (event) => {
   busy = true;
   for (const button of view.querySelectorAll<HTMLButtonElement>("button"))
     button.disabled = true;
+  const answer = view.querySelector<HTMLTextAreaElement>("#answer");
+  if (answer !== null) answer.disabled = true;
   enqueue(async () => {
     if (target.dataset.minutes !== undefined) {
       const availableMinutes =

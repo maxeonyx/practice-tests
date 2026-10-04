@@ -52,9 +52,25 @@ export interface Question {
   sources: SourceReference[];
   importance: number;
   estimatedSeconds: number;
+  provenance?: {
+    kind: "guide-revision";
+    sourceId: string;
+    page: number;
+    answerPage: number;
+    questionNumber: string;
+  };
   origin?: { sourceId: string; page: number; year: number; marks: number };
 }
 export interface Cluster {
+  image?: {
+    src: string;
+    alt: string;
+    caption: string;
+    sourceId: string;
+    page: number;
+    width: number;
+    height: number;
+  };
   id: string;
   unitId: string;
   title: string;

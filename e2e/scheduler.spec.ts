@@ -124,3 +124,22 @@ test("published curriculum has complete links, source traces, and acyclic prereq
     questions.filter((q) => q.origin !== undefined).length,
   ).toBeGreaterThanOrEqual(3);
 });
+
+test("independent due recall sessions count toward course balance", () => {
+  const state = empty();
+  const recall = questions
+    .filter((q) => q.courseId === "integrated-care" && q.kind === "recall")
+    .slice(0, 3);
+  state.attempts = recall.map((q, i) => ({
+    id: String(i),
+    questionId: q.id,
+    courseId: q.courseId,
+    answeredAt: new Date(now.getTime() - i * 1000).toISOString(),
+    answer: "recalled",
+    rating: "good",
+    independent: true,
+  }));
+  expect(
+    recommend(state, new Date("2026-10-28T12:00:00+13:00"))?.question.courseId,
+  ).toBe("pharmacology");
+});
