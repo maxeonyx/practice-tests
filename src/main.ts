@@ -5,6 +5,7 @@ import {
   assessments,
   question,
   questionById,
+  studyRootIds,
   sourceById,
   type Question,
 } from "./content/curriculum";
@@ -92,7 +93,8 @@ function canResume(session: Session | null): session is Session {
   if (
     session === null ||
     session.phase === "complete" ||
-    !questionById.has(session.rootId)
+    !questionById.has(session.rootId) ||
+    !studyRootIds.includes(session.rootId)
   )
     return false;
   const lastActive = session.lastActiveAt ?? session.startedAt;
@@ -141,6 +143,10 @@ function study() {
   const revealed = s.phase === "feedback";
   document.body.dataset.course = q.courseId;
   const main = document.querySelector("main")!;
+  const previousId =
+    main.getAttribute("data-root-id") === s.rootId
+      ? (main.getAttribute("data-question-id") ?? undefined)
+      : undefined;
   main.setAttribute("data-course", q.courseId);
   main.setAttribute("data-question-id", q.id);
   main.setAttribute("data-root-id", s.rootId);
@@ -149,7 +155,7 @@ function study() {
     : s.claim === "unknown"
       ? '<button class="primary next" data-action="continue">Next <span aria-hidden="true">→</span></button>'
       : `<button class="wrong" data-rating="again">I was wrong</button><div class="ratings"><button data-rating="hard">Hard</button><button data-rating="good">Medium</button><button data-rating="easy">Easy</button></div>`;
-  view.innerHTML = `<section class="study ${revealed ? "revealed" : ""}"><div class="study-tools"><button class="icon-button" data-action="home" aria-label="Home">${controlIcon("home")}</button>${knowledgeShape(s.rootId, s.questionId)}<button class="icon-button" data-action="information" aria-label="Question information">${controlIcon("info")}</button></div><article class="card"><h1 id="question-prompt" class="question-prompt">${escape(q.prompt)}</h1>${learningVisual(q, revealed)}${revealed ? `<div id="question-answer" class="answer" tabindex="-1">${q.rubric.map((line) => `<p>${escape(line)}</p>`).join("")}</div>` : ""}</article><div class="answer-controls ${revealed && s.claim === "known" ? "rating-controls" : ""}" aria-label="Answer controls">${controls}</div></section>`;
+  view.innerHTML = `<section class="study ${revealed ? "revealed" : ""}"><div class="study-tools"><button class="icon-button" data-action="home" aria-label="Home">${controlIcon("home")}</button>${knowledgeShape(s.rootId, s.questionId, previousId)}<button class="icon-button" data-action="information" aria-label="Question information">${controlIcon("info")}</button></div><article class="card"><h1 id="question-prompt" class="question-prompt">${escape(q.prompt)}</h1>${learningVisual(q, revealed)}${revealed ? `<div id="question-answer" class="answer" tabindex="-1">${q.rubric.map((line) => `<p>${escape(line)}</p>`).join("")}</div>` : ""}</article><div class="answer-controls ${revealed && s.claim === "known" ? "rating-controls" : ""}" aria-label="Answer controls">${controls}</div></section>`;
 }
 function render() {
   if (state === undefined || failed) return;
@@ -319,7 +325,10 @@ view.addEventListener("click", (event) => {
       };
       const next = recommend({ ...state, preferences }, now, { fresh: true });
       await save({
-        preferences,
+        preferences: {
+          ...preferences,
+          ...(next === undefined ? {} : { lastOpenedRootId: next.question.id }),
+        },
         session:
           next === undefined ? null : startSession(next.question.id, now),
       });
@@ -369,6 +378,23 @@ view.addEventListener("click", (event) => {
   });
 });
 window.addEventListener("hashchange", render);
+document.addEventListener("visibilitychange", () => {
+  if (
+    document.hidden ||
+    state === undefined ||
+    busy ||
+    failed ||
+    location.hash !== "#study" ||
+    canResume(state.session)
+  )
+    return;
+  busy = true;
+  enqueue(async () => {
+    await save({ session: null });
+    location.hash = "#home";
+    render();
+  });
+});
 loadState()
   .then(async (saved) => {
     state = saved;

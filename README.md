@@ -1,8 +1,10 @@
 # Kibra
 
-An offline nursing revision app at https://practice-tests.maxeonyx.com. Home chooses one next question across Integrated Care A5 (29 October, 40%) and the Pharmacology final (2 November, 50%).
+An offline nursing revision app at https://practice-tests.maxeonyx.com. A time choice opens one question from Integrated Care A5 (29 October,40%) or the Pharmacology final (2 November,50%).
 
-Attempt a written exam-style question, check the answer guide, and rate recall. An unknown answer opens visual prerequisite questions, then returns to the whole question. FSRS schedules reviews; assessment dates, weights and curriculum gaps guide allocation. Drafts, attempts and the current step stay in IndexedDB on the device.
+Answer mentally. “I know it” reveals the answer and difficulty controls. “I don’t know it” steps into supporting questions, then returns to the original; a standalone fact reveals its answer and Next. Learning images ground the content, with a separate wordless prerequisite cue. The scheduler balances exam preparation and spaced recall. Progress stays on the device, with quick reopening at the saved step and fresh starts after a new day or three hours away.
+
+The review link, https://practice-tests.maxeonyx.com/?review=1, uses separate practice progress.
 
 Run `npm ci` and `npm run dev`. For production verification, run `npm run build`, `npx playwright install chromium`, and `npm test`. `npm run lint` checks formatting. GitHub Actions builds and tests before publishing pushes to `main`.
 

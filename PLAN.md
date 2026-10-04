@@ -1,6 +1,6 @@
 # Prototype and curriculum delivery
 
-This plan is for review before implementation. Kibra needs the app and whole curriculum ready by 5 pm Monday 5 October 2026, New Zealand daylight time. Max can participate until midnight tonight, Sunday 4 October; complete the feedback that needs him in that window, then continue autonomously.
+Max approved this delivery plan on 4 October 2026. Kibra needs the app and whole curriculum ready by 5 pm Monday 5 October 2026, New Zealand daylight time. Max can participate until midnight tonight, Sunday 4 October; complete the feedback that needs him in that window, then continue autonomously.
 
 ## Ready for Kibra
 
@@ -36,7 +36,7 @@ The learner release requires a reviewed coverage ledger, source-supported conten
 
 ## Proposed checkpoints
 
-These are delivery targets for prompt plan review, in New Zealand daylight time (NZDT, UTC+13).
+These are delivery targets, in New Zealand daylight time (NZDT, UTC+13).
 
 | When | Result |
 | --- | --- |

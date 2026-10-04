@@ -888,3 +888,7 @@ We'll do plan/review loop, then a build/testing/feedback loop, then finally a cu
 ## Availability — this build session and autonomous work afterwards
 
 but I only have this build session available to be involved. so midnight today plus any autonomous work after that
+
+## Plan approval — begin the build
+
+Looks good. Let's start the plan, thank you.

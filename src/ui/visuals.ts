@@ -9,7 +9,11 @@ export function controlIcon(name: "home" | "info" | "close") {
   return `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${shapes[name]}</svg>`;
 }
 
-export function knowledgeShape(rootId: string, currentId: string) {
+export function knowledgeShape(
+  rootId: string,
+  currentId: string,
+  previousId?: string,
+) {
   const depths = new Map<string, number>();
   const edges: [string, string][] = [];
   function visit(id: string, depth: number) {
@@ -34,6 +38,13 @@ export function knowledgeShape(rootId: string, currentId: string) {
       }),
     );
   }
+  const previous =
+    previousId === undefined ? undefined : positions.get(previousId);
+  const current = positions.get(currentId)!;
+  const animate =
+    previous !== undefined &&
+    previousId !== currentId &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   return `<svg class="knowledge-shape ${rootId === currentId ? "resting" : "stepping"}" viewBox="0 0 120 68" role="img" aria-label="Supporting knowledge"><g fill="none" stroke="currentColor" stroke-width="1">${edges
     .map(([from, to]) => {
       const a = positions.get(from)!;
@@ -42,5 +53,5 @@ export function knowledgeShape(rootId: string, currentId: string) {
     })
     .join(
       "",
-    )}</g>${[...positions].map(([id, p]) => `<circle data-question-id="${id}" class="${id === currentId ? "active" : ""}" cx="${p.x}" cy="${p.y}" r="${id === currentId ? 3.5 : 2}"/>`).join("")}</svg>`;
+    )}</g>${[...positions].map(([id, p]) => `<circle data-question-id="${id}" cx="${p.x}" cy="${p.y}" r="2"/>`).join("")}<circle class="active" cx="${current.x}" cy="${current.y}" r="3.5">${animate ? `<animate attributeName="cx" from="${previous!.x}" to="${current.x}" dur=".35s"/><animate attributeName="cy" from="${previous!.y}" to="${current.y}" dur=".35s"/>` : ""}</circle></svg>`;
 }
