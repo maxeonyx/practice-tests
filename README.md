@@ -6,4 +6,4 @@ Attempt a written exam-style question, check the answer guide, and rate recall. 
 
 Run `npm ci` and `npm run dev`. For production verification, run `npm run build`, `npx playwright install chromium`, and `npm test`. `npm run lint` checks formatting. GitHub Actions builds and tests before publishing pushes to `main`.
 
-Read [REQUIREMENTS.md](REQUIREMENTS.md) for Max’s original vision and corrections, [DESIGN.md](DESIGN.md) for the learning and allocation decisions, [CONTENT.md](CONTENT.md) before editing source-derived teaching, and [AGENTS.md](AGENTS.md) for implementation and deployment boundaries.
+Read [REQUIREMENTS.md](REQUIREMENTS.md) before product work for Max’s original prompt, subsequent dictations, preferences, corrections and unresolved tensions. Read [DESIGN.md](DESIGN.md) when continuing the product discussion: it is a proposal awaiting Max’s review before redesign implementation. Read [CONTENT.md](CONTENT.md) before editing source-derived teaching, and [AGENTS.md](AGENTS.md) for implementation and deployment boundaries.

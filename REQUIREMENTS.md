@@ -1,3 +1,69 @@
+# Project context from Max
+
+Read this before product design or implementation. The recovered context below is an assistant interpretation; the conversation record preserves Max’s wording, including examples, hedging, changes of direction and name variants. The current phase is design with Max: record context, explore the product model, give a Design Echo in chat, then stop for his response. Do not implement the redesign in this phase.
+
+## Recovered context
+
+The outcome is Kibra’s ability to answer her nursing exam questions confidently. She studies on placement, often tired, with unpredictable time. Five minutes must be useful; longer sessions must keep finding worthwhile work. The app takes care of selecting, teaching and reviewing material.
+
+Current explicit direction: the entire teaching structure is in the background. The learner sees one question, answers it to herself, and uses “I know it” or “I don’t know it”. The known path reveals the answer and asks about recall difficulty. An unknown question with prerequisite cards goes directly into those concepts instead of showing its full answer. Visuals accompany questions to communicate the subject. Course choice, curriculum navigation, prerequisite stacks, learning phases and scheduling machinery do not belong in the interface.
+
+| Information | Status and evidence |
+| --- | --- |
+| Mobile is the primary interface; Kibra uses Chrome on iPhone. | Explicit priority and observed use. |
+| One combined feed, selected by the scheduler. | Explicit direction; course identity and source records still matter behind the scenes. |
+| Integrated Care should open the app at least for the first few days. | Latest preference, expressed with “might”; Kibra is more stressed about that exam. This does not request excluding Pharmacology from the rest of the feed. |
+| Begin with a real exam multiple-choice question. | Explicit correction after trying the large written opening question. |
+| Integrated Care requires authored exam-style questions and demanding preparation. | Latest context: no practice tests or previous exams for that course, so question types must be inferred. Max asks to err on too hard rather than not hard enough and anticipates more concepts and material to build up to. |
+| One clear, manageable question at a time. | Explicit correction; questions must be separate from the accompanying diagram. |
+| Mental recall and “I know it / I don’t know it”; recall difficulty helps scheduling. | Two reveal/learning decisions are explicitly confirmed as important. |
+| “I don’t know it” with prerequisites enters them directly before the full answer. | Explicit latest instruction. This is internal teaching expressed through subsequent questions, not a visible prerequisite list. |
+| Salbutamol/candidiasis sequence: parent question → smaller questions → original question. | Latest concrete example. It includes an unknown leaf revealing an answer and Next, a known-but-wrong correction, a Medium rating, then a Hard rating on the returned question. Treat the named questions as an illustrative flow, not a prescribed first-session lesson. |
+| Multiple formats, including actual exam questions and longer answers. | Explicit earlier requirement. Long written questions as the default opening were rejected. How full written practice fits the latest minimal interaction remains open. |
+| Start with the ordinary flashcard flow demonstrated by Max. | Latest scope direction. Other question types remain relevant; they do not all need a DAG. |
+| A larger open question can motivate concept cards before full dictation practice. | Latest exploratory model: show the full task first, teach its concepts, and prompt the full dictated answer only when the learner is good at those concepts. If she gets them all wrong, leave the demanding full task for later. Exact readiness criteria are unsettled. |
+| ChatGPT sign-in for open-answer work. | Exploratory “ideally”, “some kind”, “I don't know”; explicitly less important, extra and potentially cognitively demanding. Do not turn this into a core authentication or runtime-AI requirement. |
+| No filler, greetings, slogans, avatars, dashboard metrics or metadata blocks in the learning flow. | Explicit dislikes from the first release. Reading is for learning content. |
+| Time availability before study, prominently placed. | Explicit preference. First-use landing and returning-use time prompt were described with “maybe”; they are not a settled screen specification. |
+| Aesthetically appealing landing page. | Liked at first glance; its content and layout were then criticised. Preserve calm visual quality without preserving the page structure. |
+| Subject visuals rather than text boxes styled as diagrams. | Explicit criticism. Pathway location, missing mind-map pieces, conditions, packaging and exam-method diagrams were examples, not a mandatory asset checklist. |
+| No text other than content; wordless beautiful diagrams, images, clean animation and styling. | Latest explicit visual direction. Stock images of diseases/drugs may appear in questions, answers or both. Functional button labels remain in Max’s concrete interaction example; retaining them is the current interpretation. |
+| A DAG, not a chain. | Explicit correction to the latest visual description. Shared concepts can support multiple questions; a fixed sequence/tree is insufficient. |
+| Different course colour schemes so the learner recognises the subject. | Latest request as an example of excellence; exact colours are unspecified. This is a visual cue in the combined feed. |
+| Exam dates, weights, learning gaps, study capacity and remaining content guide allocation. | Explicit scheduler direction. “Same amount of time per mark” is the requested baseline across the whole available period; equal card counts or a fixed split are not the goal. Evening/weekend/study-day hours were illustrative and unspecified. |
+| After the first exam, focus entirely on the other course. | Explicit later wording, stronger than the original “shift heavily”. |
+| Installable, offline, durable local progress without an account. | Original constraints; iPhone Chrome failed to present an installation option in Kibra’s observed use. |
+| “Install app”. | Exact requested replacement for the button text “install kibra”; not implemented during the design phase. |
+| Inspect excellent learning/flashcard products and adopt their useful ideas. | Explicit request; remove machinery rather than accumulate features. |
+| Source-aligned medical teaching and assessment coverage. | Original and repeated requirement. The supplied archive is primary evidence; gaps and uncertain claims must remain visible to content authors. |
+| Excellence requires substantial design effort and checking. | Repeated motivation; implementation volume and content counts are not the target. |
+
+## Changes and open tensions
+
+The original prompt requested visibly separate courses and a visible curriculum. Later messages rejected course choice, then the Home/Courses split and overview emphasis, and finally said the teaching structure should not be exposed at all. This is an explicit change of direction, not an instruction to make the old curriculum screen smaller.
+
+The original prompt says not to think of the product primarily as flashcards. The latest description is a very simple question-and-answer feed. These can fit together if the curriculum and diagnosis are the hidden teaching model while questions are the learner’s interaction. That reconciliation is an assistant proposal, not a quotation from Max.
+
+Earlier messages say “probably start” with actual test questions and step back, and describe a large exam question decomposing into pieces before returning to the whole. Later use rejected that large opening and the visible decomposition loop. Preserve the purpose—understanding that supports exam performance—while reconsidering the sequence and the interface.
+
+The early missing-node example placed a question in the diagram gap. Later feedback explicitly says the question should be separate from the diagram. This later correction determines the proposed visual interaction.
+
+Both exams need practice beyond multiple choice. Max’s self-correction confirms Pharmacology long answers and leaves Integrated Care’s larger/longer short-answer format uncertain. The exact place for full written practice and the assumed future study capacity are still design questions. “I know it / I don’t know it” is confirmed; the latest unknown-with-prerequisites instruction changes the earlier immediate-reveal interpretation.
+
+Later feedback proposes a full question as motivation before its concept cards, with the demanding full dictated answer deferred until the learner is good at the concepts. This revisits the earlier rejection of a large free-form opening: presenting the task and demanding a complete answer are different actions in the proposed interpretation. Ordinary flashcards are the first scope; diagram interaction, multiple-choice wrong-answer routing and dictation are still partly exploratory.
+
+The useful installation need is access from Kibra’s iPhone Home Screen. A pop-up was an example (“could be”), not a requirement for an automatic browser prompt.
+
+The request for a real exam MCQ as the opening now sits beside an Integrated Care opening preference and the absence of its past/practice papers. Authored Integrated Care exam-style MCQs are a proposed reconciliation, with authenticity of source content distinguished from authenticity of an exam prompt. Greater challenge concerns preparation depth; it does not undo the request for individually clear questions or establish an exact syllabus expansion.
+
+Max says the teaching structure should be entirely in the background, then requests wordless diagrams showing the current position in a DAG. The proposed distinction is hidden curriculum planning/routing versus visible relationships between the ideas being studied. This is an interpretation to review, not an instruction to display labelled prerequisite graphs. The optional time prompt also needs reconciling with the latest “no text other than the content” direction.
+
+## Conversation record
+
+### Original pasted prompt
+
+The following prompt is retained verbatim. Its first-milestone instructions describe the initial stage; subsequent messages below contain the later direction.
+
 You are a senior product engineer, learning-systems designer, and UX designer. You are taking over an existing website/repository called **Practice Tests** and turning it into a new adaptive revision platform for **Kira**, a nursing student with two important exams approximately three weeks away.
 
 This is intended to become an exceptionally good revision product, not merely a collection of flashcards.
@@ -610,3 +676,174 @@ Yeah, and I'm imagining a two-phase answering part to a flashcard. If you see th
 > The final thing is that when Kebra is in the test, she's confident in answering the questions from what she's revised. So we should, while we do need to step back into the fundamental content and get understanding, we should also have actual test questions and answers in the course content, and in fact probably start with that and then explicitly step back. That's what I'm thinking.
 
 > I think it's likely both exams will have long answer, you know, free form things at the end. For integrated care, definitely. For pharmacology, maybe. No. For pharmacology, definitely we have long answer. For integrated care, maybe long short answer. Yeah. They'll both likely have not. They won't just be multiple choice. They will have larger, more complicated questions, especially at the end of the test.
+
+## First-release review — landing, feed, allocation and metadata
+
+Hi, I'm just going through and reviewing the first release of the app now.
+
+I like the landing page at an aesthetic level. It's appealing, although mostly at first glance only. It has a lot of junk text. For example, a little time, a clear next step. This is useless. The title, Your space to make it click. This is useless. Welcome, Kira, start with a question, we'll help you connect the pieces. It's a bit weird to address directly like that, and the text is useless. In fact, it has a lot of useless text on the page, right? A lot of it. So it's supposed to be functional first, and, you know, reading text should be reserved for the actual content of the course. Takes time, you know. So anyways, I like the What does your day allow? optional question. That should be more prominent though, because you would ask it before you click Start studying. And install the app doesn't need to be at the bottom of the scroll screen. It could be like, yeah, it could be a pop-up. Also, the idea of having a home and courses is kind of silly, and even an overview is a bit weird, because, like, in fact, how do you even start? Oh, potentially you can't start yet based on the current release. Is that right? Is that right? How can you even begin? I don't think we need an overview page per se. Well, if we do, it's a later on thing. Right now what I want to test actually is the basic, you know, you should go straight into the content, right? You should just get asked a question straight away. You should open the app, first time opening it, maybe you can be on the home screen, but second time opening it, maybe you get the How much time do you have? and then straight into content, like literally a question. That's the entire point of this. So, yeah, maybe the overview can be a separate view or something, but it's not important. And I don't think that the courses should be divided up so much. It should be one, like flashcard feed, and maybe it can go through phases, you know, within one day you do, you know, a few questions this course, a few questions that course, and then, you know, twice as many this course and then twice as many that course or something like that. And if you're following down a why, why, why, you know, stepping backwards thread, you can stay in the same course, going deeper into the content. But then once you've done the first set of questions, you can go to the next course, and you can just sort of alternate or something. And also the scheduler should be deciding what's important. You know, for example, after the exam date passes, it should focus entirely on the other course, and it should think about how many days and study time there are available and how much content needs to be covered in those days and weight it accordingly, so that if you were following it at the mix presented by the study guide app, you would cover around about proportional amount of content for each course over the total available time, so that you have, you know, not the same, because they're not worth the same amount, but the same amount of time per mark of both courses over the whole study time, with some reasonable assumption of, like, you know, evenings during the placement period, X number of hours on the weekend and in the study day on the week prior to the exam, and then after the first exam, the weekend spent any hours in there spent only on the second course. You've got a lot of aesthetically pleasing but useless stuff on this page. For example, the app title is in the main page flow, whereas it should be on the left-hand margin so that it doesn't take up any page space. The login thing on the top right, made for you, what is that doing there? Your curriculum, the whole picture, independent answers, blah blah blah. This is just completely useless text. Even the independent answers, untested questions, zero views, view counts. Those are taking up page space before you get to the actual important stuff on this page, which is the content. Right? The accordion list makes sense, although it's not actually an accordion now that I see. It's, um, they're just independently openable. Also, mobile is the primary interface for this. I don't know if you know that. I assume it works fine on mobile. I like the idea with assessment scope and core sources, but I don't know. It's a lot of text. For what purpose? And perhaps a separate view or a separate flow for the metadata and stuff like that. Like maybe there should be a little information button on a card or something that's hard to click. But if you do, it tells you the details. That sounds good. It shouldn't be part of the main app flow, you know? Totally a secondary thing. Not even a secondary thing, a tertiary thing. What I want you to do is go through and, sorry, go and search up other apps, other learning platforms, other flashcard apps, etc. Look for the really good ones and copy it. Just copy it. And take all the good ideas and take them all and improve it. We don't want to add more stuff. Less is more, right? You'll know you've done a really good job when it achieves— this app achieves the purpose with nothing extra. Nothing extra on the screen. Heaps under the hood, but the user only needs to know what they need to know. Everything else is in the way of learning.
+
+## Kibra’s iPhone installation feedback
+
+I have some feedback from Kibra. Firstly, when she opened it on her iPhone in Google Chrome, it didn't give her any options to add it to home screen or any options to install it or anything like that. So I'm not sure what to do to get it on her home screen as an app. And then, yeah, she's doing it now, and I'm going to do it and give you more feedback.
+
+## First question — size, authenticity and starting format
+
+Well, so this very first question. It's this, like, weird first question. It's not very studyable. It's not very good as a hook. It says, The journey of a medicine, and then it's a free-form answer. That's not good for study. It's too big. The question's way, way, way too big. Maybe it's good as an exam question, but is it a real exam question? Is it really inspired? It doesn't really look quite right. Maybe it is. I don't know. I don't think the app should ever open with a free-form answer like this. It's too much cognitive effort. It's not— it's defeating the purpose of the app. The exams have plenty of multiple choice in them, so we should start with a real exam multiple choice.
+
+## First question — locating the question
+
+What is even the question? This is, like, particularly bad. It doesn't really make any sense at all. It's giving us a diagram, and then it's not giving us any question. Yeah, it isn't. That's a bit bizarre, frankly. It's not good at all. Next.
+
+## First question — unknown-answer interaction
+
+And I clicked I don't know it, and it didn't move us to the next question. It didn't really make sense, sorry. It didn't really make sense at all. Maybe if it's a series of cards, like you could, you could, like select one or have to recall it, but, like, I don't get it, sorry. What was the question? Oh, the questions in the diagram. Right. I see. That's not a good UX at all. Really terrible user experience.
+
+## First question — forced reconstruction
+
+Oh, if it had the UI here. No, no, no. It's just bad. I'm just clicking I don't know it until we go through it. Really bad. Oh, and it's still come to the same question again. Oh, because it's then doing the entire question again. Right. I see. It kind of makes sense, but it's also way too much cognitive effort for the very first question in the app. It's a bad experience.
+
+## Receptor question — individual cards and a separate visual
+
+Okay, yeah, and the same problem for the next one: receptor to response. This makes sense. This is a nice question, but it should be a series of cards, right? Individual cards and individual questions. It should— every single thing should be easy to understand, to answer. The app is doing the breakdown. The reader should have to do nothing at all. They should just have a question. That's it. And then they answer it, or they say, I know it, or they, I don't know it, right? If they don't know it, you know, it gets shown to them. Or if they say, yeah, basically the answer gets shown to them next after that. And then, you know, they can say it was easy or hard or whatever. And if it's like a series of questions, yeah, we can have a diagram on the screen and show where we are in the diagram. That's it. And then a question, right? We should know this question: where is it in the diagram? The question doesn't need to be inside the diagram, though. That's terrible.
+
+## Question formats and visual quality
+
+It seems all of the questions are also in the same format right now, which is a problem. So the app is not usable yet. That's fine. We have more work to do. And in general, there's just a lot too much here. And the diagrams aren't good. Not very good anyway. You've built them out of HTML elements. They're basically just little cards and things. I want actually a visual experience, not just a website experience. And there's just too much text everywhere.
+
+## Collate the conversation before changing the app
+
+Before you do anything to the app! Collate all my dictations including the original one and the original prompt together please.
+
+## Installation button wording
+
+The button 'install kibra' needs to change to 'install app'
+
+## Design phase and Design Echo request
+
+I think the first version of the revision platform has ended up quite far from what I actually want. I've given you a lot of feedback and additional context since then, and rather than continuing to change the app incrementally, I'd like to step back and properly understand the design before we do more implementation.
+
+Please spend some real time on that.
+
+The first thing I'd like you to do is **record the useful information I've already given you about this project** somewhere durable in the repository. Go back through our conversation and collect the requirements, examples, things I've disliked, things I've liked, motivations, uncertainties, and any other context that seems important.
+
+Please preserve the distinctions between things I have actually asked for and ideas or examples that were only exploratory. If I've contradicted myself or something is still unclear, that's useful information too — don't silently resolve it.
+
+Then I'd like you to enter a design phase.
+
+Use the design doctrine as the spirit of this work: step back from the implementation, think about what we're actually trying to achieve for the person using this, consider the concrete situations in which they'll use it, and allow yourself to explore the problem before settling on a solution.
+
+The existing app shouldn't constrain you very much. It is useful evidence about what we've tried, but if the right design is substantially different, that's fine. Equally, don't redesign things just for the sake of redesigning them.
+
+I'm particularly interested in the **actual user flows and product model**, rather than implementation details at this point.
+
+Think through things such as:
+
+- What does the learner see when they arrive?
+- How do they understand what they need to learn?
+- How do they decide what to do next?
+- What does a very short revision session feel like?
+- What does a longer session feel like?
+- How do curriculum, topics, flashcards, exam-style questions, progress, weak areas and review fit together?
+- What happens when they stop halfway through and return later?
+- How does the system remain useful whether they spend five minutes or a large amount of time in it?
+- What should feel visual, and what information does the visual structure actually communicate?
+- Which concepts should be central to the product, and which things are merely features hanging off them?
+
+Those are prompts for thinking, not a specification. There may be much better questions once you understand the problem.
+
+Please feel comfortable exploring more than one possible shape for the product where that helps. I'm not looking for artificial "Option A / Option B / Option C" exercises; I just don't want us to lock onto the first plausible structure without noticing that there might be a substantially better one.
+
+For this phase, **don't implement the redesign yet**. I want to be involved at the point where the product model becomes concrete.
+
+When you've thought it through, give me a **Design Echo in chat**.
+
+Make it plain and concrete rather than abstract design language. I want to be able to read it and say, "yes, that is what I meant" or point directly at where your understanding is wrong.
+
+Please include:
+
+- your current understanding of what this product is fundamentally for;
+- the important requirements and constraints you've recovered from everything I've told you;
+- the main concepts you think the product should contain and how they relate;
+- the concrete user flows you currently imagine, from entering the app through doing useful revision and coming back later;
+- how the curriculum/progression side and the actual revision/question side fit together;
+- what the main screens or views might be, only insofar as they fall naturally out of those flows;
+- the important design decisions you've made so far and why;
+- places where you think my earlier feedback changes the direction of the existing app;
+- anything you're still uncertain about or where you think my input would materially change the design.
+
+It would be useful if you describe important flows almost like little walkthroughs:
+
+> Kibra opens the site after placement with ten minutes available. She sees _____. She can immediately understand _____. She chooses _____. The system then _____. When she finishes or has to leave, _____. When she comes back tomorrow, _____.
+
+That level of concreteness is much more useful to me than statements like "the interface should be intuitive" or "use a learner-centred dashboard."
+
+The Design Echo does not need to pretend the design is finished. If thinking carefully reveals questions we should answer together, surface them.
+
+The goal of this phase is simply to get our shared mental model right **before the ease of writing code pulls us into another implementation**.
+
+Once you've given me the Design Echo, stop there and let me respond. We can refine the design together and then decide when it is ready to build.
+
+## Correction — the teaching structure is entirely in the background
+
+Sorry, the previous design exposed the teaching structure at all. The teaching structure shouldn't be exposed at all. It should only be guiding the learner. It's totally in the background. The entire teaching structure is in the background, right? The app is complicated under the hood, but it's very simple in the front. You just answer some questions. You see a question, you answer it to yourself, you click a button, you get the answer, you keep going, right? That's it. That's absolutely it. And the questions are best accompanied by visual things.
+
+## Integrated Care opening focus, anxiety and harder authored preparation
+
+Something else is that Kibra's stressed about the Integrated Care exam more than the pharmacology one, so you might have the app open to that at least for the first few days please. It's also a better test and a greater challenge to make the questions for that, because we don't have practices tests and previous exams - we have to guess the kinds of questions they will ask, and make sure we err on too hard rather than not hard enough to make sure she's prepared, but that will leave us with more total study material for that course because there'll be more concepts to build up to
+
+## Course colours, confirmed buttons and direct prerequisite learning
+
+you should aim for excellence eg. use a different color scheme for the different courses so one can know what's going on.
+
+yes, I know it vs don't know it is important.
+
+if "i don't know it" and there are are prerequisite cards then we step into those concepts directly instead of showing the full answer
+
+## Concrete example — salbutamol, indication and candidiasis
+
+like
+
+Is salbutamol indicated for candidiasis?
+
+I don't know it
+
+What type of drug is salbutamol?
+
+I don't know it
+
+Salbutamol is ...
+
+Next
+
+What does "indicated" mean?
+
+I know it
+
+Indicated means ...
+
+I was wrong
+
+What is candidiasis commonly known as?
+
+I know it
+
+Medium
+
+Is salbutamol indicated for candidiasis?
+
+I know it
+
+Hard
+
+## Content-only screen and wordless visual relationships
+
+There should be nothing else going on in the app. no text other than the content. but there can and should be images and clean animations and styling, beautiful diagrams (with no words) showing where one is in the chain above, as well as stock images in either the answers or the questions or both showing diseases and drugs and etc.
+
+## Correction — DAG rather than chain
+
+not a chain but a dag tho soz
+
+## Multiple question types, readiness for full dictation and ordinary flashcards first
+
+Also note, there's lots of different kinds of questions. So what we talked about there is an ordinary flashcard flow, but there could be a diagram or flashcards flow maybe for diagrams, and there could be a dictation for an open answer. Ideally, we can do some kind of sign in with ChatGPT flow for that. I don't know. But that's less important. That's like extra, because it's kind of cognitively demanding, which is not the point of this app. Even then, I'd say maybe, like, answer all the free form question, the quite complicated question, should do the conceptual breakdown as a whole bunch of flashcards, and finally when the person is good at those, they should then be prompted to do the full dictation answer and that would be the end. And, you know, if they got them all wrong, it's no point giving the full thing, even coming back to the full thing, you know, if it's cognitively demanding to just try to dictate out a full answer. Probably we should leave it. Only when the person's actually good at the sub-concepts and things, then we should bring them back to the full answer. But you should start with the full question, because then it gets— that motivates the flashcards, right? Not all things have a DAG, right? Some of them, and some of them can be multi-choice to mimic the actual exam questions. But if the person gets the answer wrong, then it should go into the flashcards maybe? Not sure. There's, like, lots of options here, and the point is, the interface is very, very simple, right? But there's a lot going on behind the scenes. But let's start with ordinary flashcards, like I just went through with you.
