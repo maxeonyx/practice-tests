@@ -45,6 +45,34 @@ export function knowledgeShape(
     previous !== undefined &&
     previousId !== currentId &&
     !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let motion = "";
+  if (animate) {
+    const routes: string[][] = [[previousId!]];
+    const visited = new Set<string>([previousId!]);
+    let route: string[] = [];
+    while (routes.length > 0) {
+      const path = routes.shift()!;
+      const end = path.at(-1)!;
+      if (end === currentId) {
+        route = path;
+        break;
+      }
+      for (const [a, b] of edges) {
+        const neighbour = a === end ? b : b === end ? a : undefined;
+        if (neighbour !== undefined && !visited.has(neighbour)) {
+          visited.add(neighbour);
+          routes.push([...path, neighbour]);
+        }
+      }
+    }
+    motion = `M${previous!.x - current.x} ${previous!.y - current.y}`;
+    for (let i = 1; i < route.length; i++) {
+      const a = positions.get(route[i - 1])!;
+      const b = positions.get(route[i])!;
+      const mid = (a.y + b.y) / 2 - current.y;
+      motion += ` C${a.x - current.x} ${mid},${b.x - current.x} ${mid},${b.x - current.x} ${b.y - current.y}`;
+    }
+  }
   return `<svg class="knowledge-shape ${rootId === currentId ? "resting" : "stepping"}" viewBox="0 0 120 68" role="img" aria-label="Supporting knowledge"><g fill="none" stroke="currentColor" stroke-width="1">${edges
     .map(([from, to]) => {
       const a = positions.get(from)!;
@@ -53,5 +81,5 @@ export function knowledgeShape(
     })
     .join(
       "",
-    )}</g>${[...positions].map(([id, p]) => `<circle data-question-id="${id}" cx="${p.x}" cy="${p.y}" r="2"/>`).join("")}<circle class="active" cx="${current.x}" cy="${current.y}" r="3.5">${animate ? `<animate attributeName="cx" from="${previous!.x}" to="${current.x}" dur=".35s"/><animate attributeName="cy" from="${previous!.y}" to="${current.y}" dur=".35s"/>` : ""}</circle></svg>`;
+    )}</g>${[...positions].map(([id, p]) => `<circle data-question-id="${id}" cx="${p.x}" cy="${p.y}" r="2"/>`).join("")}<circle class="active" cx="${current.x}" cy="${current.y}" r="3.5">${animate ? `<animateMotion path="${motion}" dur=".45s" calcMode="paced"/>` : ""}</circle></svg>`;
 }

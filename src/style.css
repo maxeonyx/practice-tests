@@ -83,10 +83,10 @@ main {
   display: flex;
   flex-direction: column;
 }
-.home-mark {
+.home-brand {
   font-family: Georgia, serif;
-  font-style: italic;
-  font-size: 42px;
+  text-decoration: none;
+  font-size: 30px;
   margin-bottom: 38px;
   color: var(--accent);
 }
@@ -190,9 +190,15 @@ main {
   stroke-opacity: 0.13;
 }
 .card {
+  backface-visibility: hidden;
+  transform-origin: center;
   flex: 1;
-  width: 100%;
-  padding: 22px 28px 30px;
+  width: calc(100% - 32px);
+  margin: 0 16px 10px;
+  padding: 24px 20px 30px;
+  border-radius: 20px;
+  background: #ffffffb3;
+  border: 1px solid var(--line);
 }
 .question-prompt {
   font:
@@ -220,8 +226,8 @@ main {
   margin: 28px 0 0;
   border-top: 1px solid var(--line);
   padding-top: 16px;
-  font-size: 19px;
-  line-height: 1.55;
+  font-size: 22px;
+  line-height: 1.5;
   outline: none;
 }
 .answer p {
@@ -264,28 +270,18 @@ body[data-course="pharmacology"] .answer-controls {
   grid-column: 1/-1;
 }
 .rating-controls {
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
 }
-.rating-controls .wrong {
-  border: 0;
-  background: transparent;
-  color: var(--muted);
-  min-height: 44px;
-  padding: 8px;
-  font-size: 15px;
-}
-.ratings {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-.ratings button {
+.rating-controls button {
   background: var(--accent-soft);
   border: 0;
+  min-height: 62px;
+  font-size: 15px;
 }
-.ratings button:last-child {
-  background: var(--accent);
-  color: white;
+.rating-controls .wrong {
+  background: #f1e7e2;
+  color: #7b4a40;
 }
 dialog {
   width: min(90vw, 560px);
@@ -351,5 +347,14 @@ dialog h3 {
   *::after {
     transition: none !important;
     animation: none !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-brand {
+    position: fixed;
+    top: 32px;
+    left: 32px;
+    margin: 0;
   }
 }

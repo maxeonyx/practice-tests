@@ -7,8 +7,8 @@ export default defineConfig({
       registerType: "prompt",
       includeAssets: ["icon.svg", "icon-192.png", "icon-512.png"],
       manifest: {
-        name: "Kibra · Nursing revision",
-        short_name: "Kibra",
+        name: "Recall · Nursing revision",
+        short_name: "Recall",
         description: "Your nursing revision, one useful step at a time.",
         start_url: "/",
         scope: "/",

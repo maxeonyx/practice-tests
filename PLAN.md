@@ -26,6 +26,10 @@ Perform a separate source-review pass for each batch, checking complete answer c
 
 The current catalogue has 355 questions across sixteen units, but earlier audits identify material gaps and none of its clusters has an attached learning image. Prepared unpublished content and source images are useful starting material, subject to this review. Missing textbooks, absent external teaching and conflicting medical claims need source recovery or corroboration from authoritative references such as NZF, Medsafe, IMAC and Health New Zealand. Unresolved assessed knowledge remains an explicit gap to close, and cannot be counted as completed curriculum.
 
+## Interactive curriculum review
+
+After building and reviewing the full curriculum, build a separate read-only page for Max to inspect it. Start from the likely exam tasks and source-confirmed scope; let him trace topics into actual questions, supporting concepts, full reference answers and evidence. Explain how that knowledge supports exam performance, distinguish confirmed guidance from inference, and expose gaps and limitations. The ordinary learner feed remains focused on revision. This page is for curriculum judgment, not a prediction of passing from card counts.
+
 ## Release checks
 
 Before Max’s prototype feedback, exercise all answer routes, nested/shared dependencies, parent return, and hidden-answer behaviour. Inspect small-phone screens and visual placement, and test short sessions, persistence, quick reopening and fresh-session starts.

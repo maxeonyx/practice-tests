@@ -38,10 +38,10 @@ async function findTeachBackQuestion(page: Page) {
     ) {
       return;
     }
-    await page.getByRole("button", { name: "I know it", exact: true }).click();
+    await page.getByRole("button", { name: "I know", exact: true }).click();
     await page.getByRole("button", { name: "Easy", exact: true }).click();
     await expect(
-      page.getByRole("button", { name: "I know it", exact: true }),
+      page.getByRole("button", { name: "I know", exact: true }),
     ).toBeVisible();
   }
   throw new Error(
@@ -57,9 +57,7 @@ test("an unknown fact reveals its answer and learning image, then Next continues
   await expect(page.locator("#question-answer")).toHaveCount(0);
   await expect(page.locator("main img")).toHaveCount(0);
   const question = await page.locator("#question-prompt").innerText();
-  await page
-    .getByRole("button", { name: "I don’t know it", exact: true })
-    .click();
+  await page.getByRole("button", { name: "I don’t know", exact: true }).click();
   await expect(page.locator("#question-answer")).toContainText("Rotarix");
   const image = page.locator("main img");
   await expect(image).toBeVisible();
@@ -79,7 +77,7 @@ test("an unknown fact reveals its answer and learning image, then Next continues
   await page.getByRole("button", { name: "Next", exact: true }).click();
   await expect(page.locator("#question-prompt")).not.toHaveText(question);
   await expect(
-    page.getByRole("button", { name: "I know it", exact: true }),
+    page.getByRole("button", { name: "I know", exact: true }),
   ).toBeVisible();
   const progress = await readProgress(page);
   expect(progress.attempts).toHaveLength(1);
@@ -94,7 +92,7 @@ test("known answers receive difficulty feedback and immediately advance with ind
 }) => {
   await begin(page);
   const question = await page.locator("#question-prompt").innerText();
-  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await page.getByRole("button", { name: "I know", exact: true }).click();
   await expect(page.locator("#question-answer")).toContainText("Rotarix");
   await expect(
     page.getByRole("button", { name: "Hard", exact: true }),
@@ -108,7 +106,7 @@ test("known answers receive difficulty feedback and immediately advance with ind
   await page.getByRole("button", { name: "Easy", exact: true }).click();
   await expect(page.locator("#question-prompt")).not.toHaveText(question);
   await expect(
-    page.getByRole("button", { name: "I know it", exact: true }),
+    page.getByRole("button", { name: "I know", exact: true }),
   ).toBeVisible();
   const progress = await readProgress(page);
   expect(progress.attempts).toHaveLength(1);
@@ -132,9 +130,7 @@ test("unknown prerequisite questions step back without the parent answer and ret
   await expect(
     page.getByLabel("Supporting knowledge", { exact: true }).locator("text"),
   ).toHaveCount(0);
-  await page
-    .getByRole("button", { name: "I don’t know it", exact: true })
-    .click();
+  await page.getByRole("button", { name: "I don’t know", exact: true }).click();
   await expect(page.locator("#question-prompt")).not.toHaveText(parent);
   await expect(page.locator("#question-answer")).toHaveCount(0);
   await page.screenshot({
@@ -154,7 +150,7 @@ test("unknown prerequisite questions step back without the parent answer and ret
     }
     supportPrompts.push(prompt);
     await page
-      .getByRole("button", { name: "I don’t know it", exact: true })
+      .getByRole("button", { name: "I don’t know", exact: true })
       .click();
     await expect(page.locator(".answer-controls button:disabled")).toHaveCount(
       0,
@@ -165,7 +161,7 @@ test("unknown prerequisite questions step back without the parent answer and ret
       await page.getByRole("button", { name: "Next", exact: true }).click();
     }
     await expect(
-      page.getByRole("button", { name: "I know it", exact: true }),
+      page.getByRole("button", { name: "I know", exact: true }),
     ).toBeVisible();
   }
   expect(
@@ -179,7 +175,7 @@ test("unknown prerequisite questions step back without the parent answer and ret
     ),
   ).toHaveLength(1);
   await expect(page.locator("#question-answer")).toHaveCount(0);
-  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await page.getByRole("button", { name: "I know", exact: true }).click();
   await page.getByRole("button", { name: "Easy", exact: true }).click();
   await expect(page.locator("#question-answer")).toHaveCount(0);
   if (await page.locator("#question-prompt").isVisible()) {
@@ -207,7 +203,7 @@ test("correcting a false claim records a miss and continues from a standalone fa
 }) => {
   await begin(page);
   const question = await page.locator("#question-prompt").innerText();
-  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await page.getByRole("button", { name: "I know", exact: true }).click();
   await page.getByRole("button", { name: "I was wrong", exact: true }).click();
   await expect(page.locator("#question-prompt")).not.toHaveText(question);
   const progress = await readProgress(page);
@@ -223,7 +219,7 @@ test("a quick reopen preserves the revealed answer without another setup step", 
 }) => {
   await begin(page);
   const question = await page.locator("#question-prompt").innerText();
-  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await page.getByRole("button", { name: "I know", exact: true }).click();
   await expect(page.locator("#question-answer")).toBeVisible();
   await page.reload();
   await expect(page.locator("#question-prompt")).toHaveText(question);
@@ -253,11 +249,11 @@ for (const [name, start, finish] of [
   }) => {
     await page.clock.install({ time: new Date(start) });
     await begin(page);
-    await page.getByRole("button", { name: "I know it", exact: true }).click();
+    await page.getByRole("button", { name: "I know", exact: true }).click();
     await page.getByRole("button", { name: "Easy", exact: true }).click();
     const pausedQuestion = await page.locator("#question-prompt").innerText();
     await page
-      .getByRole("button", { name: "I don’t know it", exact: true })
+      .getByRole("button", { name: "I don’t know", exact: true })
       .click();
     await expect(page.locator(".answer-controls button:disabled")).toHaveCount(
       0,
@@ -272,7 +268,7 @@ for (const [name, start, finish] of [
       pausedQuestion,
     );
     await expect(
-      page.getByRole("button", { name: "I know it", exact: true }),
+      page.getByRole("button", { name: "I know", exact: true }),
     ).toBeVisible();
     expect((await readProgress(page)).attempts.length).toBeGreaterThanOrEqual(
       2,
@@ -287,7 +283,7 @@ test("an offline reopening retains question, image and new saved progress", asyn
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await begin(page);
-  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await page.getByRole("button", { name: "I know", exact: true }).click();
   await expect(page.locator("#question-answer")).toBeVisible();
   await page.evaluate(async () => {
     await navigator.serviceWorker.ready;
@@ -304,7 +300,7 @@ test("an offline reopening retains question, image and new saved progress", asyn
   ).toBeGreaterThan(0);
   await page.getByRole("button", { name: "Medium", exact: true }).click();
   await expect(
-    page.getByRole("button", { name: "I know it", exact: true }),
+    page.getByRole("button", { name: "I know", exact: true }),
   ).toBeVisible();
   await page.reload();
   expect((await readProgress(page)).attempts).toHaveLength(1);
@@ -323,7 +319,7 @@ test("a stale tab cannot overwrite another tab’s saved question", async ({
   ).toBeVisible();
   await page.getByRole("button", { name: "10 min", exact: true }).click();
   const savedQuestion = await page.locator("#question-prompt").innerText();
-  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await page.getByRole("button", { name: "I know", exact: true }).click();
   await other.getByRole("button", { name: "10 min", exact: true }).click();
   await expect(other.getByRole("alert")).toContainText("Another tab changed");
   await other.reload();
@@ -336,7 +332,7 @@ test("the review link keeps normal learner progress separate", async ({
 }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "10 min", exact: true }).click();
-  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await page.getByRole("button", { name: "I know", exact: true }).click();
   await page.getByRole("button", { name: "Easy", exact: true }).click();
   expect((await readProgress(page, "kira-revision")).attempts).toHaveLength(1);
   await page.goto(reviewUrl);
@@ -395,7 +391,7 @@ test("version-one preferences survive migration and ordinary revision works", as
   });
   expect(preference).toMatchObject({ schemaVersion: 1, availableMinutes: 20 });
   await page.getByRole("button", { name: "10 min", exact: true }).click();
-  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await page.getByRole("button", { name: "I know", exact: true }).click();
   await page.getByRole("button", { name: "Easy", exact: true }).click();
   expect((await readProgress(page, "kira-revision")).attempts).toHaveLength(1);
 });
@@ -458,18 +454,18 @@ test("supporting recall after correcting a revealed parent is recorded as cued l
 }) => {
   await begin(page);
   await findTeachBackQuestion(page);
-  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await page.getByRole("button", { name: "I know", exact: true }).click();
   await expect(page.locator("#question-answer")).toBeVisible();
   await page.getByRole("button", { name: "I was wrong", exact: true }).click();
   await expect(page.locator("#question-prompt")).toHaveText(
     "Why use teach-back after a medicine explanation?",
   );
   const supportId = await page.locator("main").getAttribute("data-question-id");
-  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await page.getByRole("button", { name: "I know", exact: true }).click();
   await expect(page.locator("#question-answer")).toBeVisible();
   await page.getByRole("button", { name: "Easy", exact: true }).click();
   await expect(
-    page.getByRole("button", { name: "I know it", exact: true }),
+    page.getByRole("button", { name: "I know", exact: true }),
   ).toBeEnabled();
   const progress = await readProgress(page);
   const recall = progress.attempts.find((value) => {

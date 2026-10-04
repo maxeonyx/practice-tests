@@ -50,7 +50,7 @@ function storageError(error: unknown) {
 }
 window.addEventListener("storage-blocked", () =>
   storageError(
-    new Error("Close other Kibra tabs, then reload to open saved progress."),
+    new Error("Close other Recall tabs, then reload to open saved progress."),
   ),
 );
 window.addEventListener("beforeunload", (event) => {
@@ -112,7 +112,7 @@ function canResume(session: Session | null): session is Session {
 function home() {
   document.body.dataset.course = "home";
   document.querySelector("main")!.setAttribute("data-course", "home");
-  view.innerHTML = `<section class="home"><span class="home-mark" aria-hidden="true">k</span><h1>How much time do you have?</h1><div class="time-options" role="group" aria-label="Available study time">${[
+  view.innerHTML = `<section class="home"><a class="home-brand" href="#home">Recall</a><h1>How much time do you have?</h1><div class="time-options" role="group" aria-label="Available study time">${[
     [5, "5 min"],
     [10, "10 min"],
     [20, "20 min"],
@@ -151,10 +151,10 @@ function study() {
   main.setAttribute("data-question-id", q.id);
   main.setAttribute("data-root-id", s.rootId);
   const controls = !revealed
-    ? `<button class="secondary" data-action="unknown">I don’t know it</button><button class="primary" data-action="known">I know it</button>`
+    ? `<button class="secondary" data-action="unknown">I don’t know</button><button class="primary" data-action="known">I know</button>`
     : s.claim === "unknown"
       ? '<button class="primary next" data-action="continue">Next <span aria-hidden="true">→</span></button>'
-      : `<button class="wrong" data-rating="again">I was wrong</button><div class="ratings"><button data-rating="hard">Hard</button><button data-rating="good">Medium</button><button data-rating="easy">Easy</button></div>`;
+      : `<button class="wrong" data-rating="again">I was wrong</button><button data-rating="hard">Hard</button><button data-rating="good">Medium</button><button data-rating="easy">Easy</button>`;
   view.innerHTML = `<section class="study ${revealed ? "revealed" : ""}"><div class="study-tools"><button class="icon-button" data-action="home" aria-label="Home">${controlIcon("home")}</button>${knowledgeShape(s.rootId, s.questionId, previousId)}<button class="icon-button" data-action="information" aria-label="Question information">${controlIcon("info")}</button></div><article class="card"><h1 id="question-prompt" class="question-prompt">${escape(q.prompt)}</h1>${learningVisual(q, revealed)}${revealed ? `<div id="question-answer" class="answer" tabindex="-1">${q.rubric.map((line) => `<p>${escape(line)}</p>`).join("")}</div>` : ""}</article><div class="answer-controls ${revealed && s.claim === "known" ? "rating-controls" : ""}" aria-label="Answer controls">${controls}</div></section>`;
 }
 function render() {
@@ -166,7 +166,31 @@ function render() {
   )
     study();
   else home();
-  document.title = location.hash === "#study" ? "Study · Kibra" : "Kibra";
+  document.title = location.hash === "#study" ? "Study · Recall" : "Recall";
+}
+async function reveal() {
+  const front = view.querySelector<HTMLElement>(".card");
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (front !== null && !reduced) {
+    front.animate(
+      [
+        { transform: "perspective(1200px) rotateY(0deg)" },
+        { transform: "perspective(1200px) rotateY(90deg)" },
+      ],
+      { duration: 140, easing: "ease-in", fill: "forwards" },
+    );
+    await new Promise<void>((resolve) => setTimeout(resolve, 140));
+  }
+  render();
+  const back = view.querySelector<HTMLElement>(".card");
+  if (back !== null && !reduced)
+    back.animate(
+      [
+        { transform: "perspective(1200px) rotateY(-90deg)" },
+        { transform: "perspective(1200px) rotateY(0deg)" },
+      ],
+      { duration: 160, easing: "ease-out" },
+    );
 }
 function showInformation() {
   const q = question(state.session!.questionId);
@@ -179,7 +203,7 @@ function showInformation() {
   dialogContent.innerHTML = `<h2>Question sources</h2><p>${origin !== undefined ? `Historical exam prompt (${origin.year}). The answer is grounded in course material.` : q.provenance !== undefined ? "Course study-guide revision question." : "Authored revision question grounded in course material."}</p>${sources
     .map((r) => {
       const source = sourceById.get(r.sourceId)!;
-      return `<section class="source"><h3>${escape(source.title)}</h3><p>${source.kind === "pptx" ? "Slide" : "Page"} ${r.page}</p><blockquote>${escape(r.excerpt)}</blockquote></section>`;
+      return `<section class="source"><h3>${escape(source.title)}</h3><p>${escape(source.id === "pharm" ? "Course study guide" : source.id === "schedule" ? "Schedule linked from Stream" : source.file.startsWith("pharmacology-old-exams/") ? "Supplied historical exam" : source.file.startsWith("raw-stream-files/") ? "Teaching material downloaded from Stream" : source.file.startsWith("raw-stream-html/") ? "Course page captured from Stream" : "Source material")} · ${source.kind === "pptx" ? "Slide" : "Page"} ${r.page}</p><blockquote>${escape(r.excerpt)}</blockquote></section>`;
     })
     .join("")}`;
   dialog.showModal();
@@ -305,7 +329,8 @@ async function rate(rating: AnswerRating, missedBeforeReveal = false) {
   );
   await save({ session, attempt, review });
   if (session === null) location.hash = "#home";
-  render();
+  if (missedBeforeReveal && session?.phase === "feedback") await reveal();
+  else render();
   window.scrollTo(0, 0);
 }
 view.addEventListener("click", (event) => {
@@ -368,7 +393,7 @@ view.addEventListener("click", (event) => {
             lastActiveAt: new Date().toISOString(),
           },
         });
-        render();
+        await reveal();
         view
           .querySelector<HTMLElement>(".answer")!
           .focus({ preventScroll: true });

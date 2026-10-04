@@ -1,4 +1,4 @@
-# Kibra
+# Recall
 
 An offline nursing revision app at https://practice-tests.maxeonyx.com. A time choice opens one question from Integrated Care A5 (29 October,40%) or the Pharmacology final (2 November,50%).
 

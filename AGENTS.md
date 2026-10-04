@@ -1,4 +1,4 @@
-# Kibra revision
+# Recall revision
 
 Static, local-first nursing revision for Kibra, deployed at https://practice-tests.maxeonyx.com through GitHub Pages on pushes to `main`.
 

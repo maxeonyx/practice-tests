@@ -14,10 +14,10 @@ test("a time choice goes straight to a clear mental-recall question", async ({
   await page.getByRole("button", { name: "10 min", exact: true }).click();
   await expect(page.locator("#question-prompt")).toBeVisible();
   await expect(
-    page.getByRole("button", { name: "I know it", exact: true }),
+    page.getByRole("button", { name: "I know", exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByRole("button", { name: "I don’t know it", exact: true }),
+    page.getByRole("button", { name: "I don’t know", exact: true }),
   ).toBeVisible();
   await expect(page.getByRole("textbox")).toHaveCount(0);
   await expect(
