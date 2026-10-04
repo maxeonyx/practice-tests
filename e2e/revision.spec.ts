@@ -78,7 +78,7 @@ test("an unknown fact reveals its answer and learning image, then Next continues
   expect(progress.attempts).toHaveLength(1);
   expect(progress.attempts[0]).toMatchObject({
     rating: "again",
-    independent: false,
+    independent: true,
   });
 });
 
@@ -118,6 +118,7 @@ test("unknown prerequisite questions step back without the parent answer and ret
   await begin(page);
   await nextBranchingQuestion(page);
   const parent = await page.locator("#question-prompt").innerText();
+  const parentId = await page.locator("main").getAttribute("data-root-id");
   await expect(
     page.getByLabel("Supporting knowledge", { exact: true }),
   ).toBeVisible();
@@ -129,6 +130,9 @@ test("unknown prerequisite questions step back without the parent answer and ret
     .click();
   await expect(page.locator("#question-prompt")).not.toHaveText(parent);
   await expect(page.locator("#question-answer")).toHaveCount(0);
+  const missedParentReview = (await readProgress(page)).reviews.find(
+    (value) => (value as { questionId: string }).questionId === parentId,
+  );
   let returned = false;
   const supportPrompts: string[] = [];
   for (let count = 0; count < 40; count++) {
@@ -164,6 +168,11 @@ test("unknown prerequisite questions step back without the parent answer and ret
     rating: "easy",
     independent: false,
   });
+  expect(
+    progress.reviews.find(
+      (value) => (value as { questionId: string }).questionId === parentId,
+    ),
+  ).toEqual(missedParentReview);
 });
 
 test("correcting a false claim records a miss and continues from a standalone fact", async ({
@@ -178,7 +187,7 @@ test("correcting a false claim records a miss and continues from a standalone fa
   expect(progress.attempts).toHaveLength(1);
   expect(progress.attempts[0]).toMatchObject({
     rating: "again",
-    independent: false,
+    independent: true,
   });
 });
 
