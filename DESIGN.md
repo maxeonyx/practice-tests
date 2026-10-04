@@ -1,6 +1,6 @@
-# Product design under discussion
+# Product model for the prototype
 
-This proposal prepares Kibra to answer her nursing exam questions confidently while making ordinary revision easy to begin, easy to continue and safe to interrupt. It follows Max’s latest correction: the teaching structure guides the learner entirely from the background. Max is reviewing the product model before redesign implementation.
+This model prepares Kibra to answer her nursing exam questions confidently while making ordinary revision easy to begin, easy to continue and safe to interrupt. The teaching structure guides the learner from the background. [PLAN.md](PLAN.md) sets out the delivery and review loops; prototype feedback will refine the experience.
 
 ## Product model
 
@@ -72,7 +72,7 @@ Recognition, unaided recall and application provide different evidence. A correc
 
 Course-map launch, assigned daily lessons and integrated-exam-first study were compared with a continuous feed against short tired sessions, interruption and sustained exam preparation. Map navigation exposes planning work; daily lessons impose completion boundaries; large exam-first tasks reproduce the opening difficulty Max observed. A plain independent-card queue is easier to use but cannot, by itself, repair causal understanding or ensure exam transfer.
 
-The proposed integrating idea is a continuous feed backed by curriculum-aware teaching: the interface stays constant while question selection changes to review, introduce, clarify or test application. Coherent related questions can stay together without becoming a visible lesson. This is a product proposal for Max to correct, not an approved specification.
+The integrating idea is a continuous feed backed by curriculum-aware teaching: the interface stays constant while question selection changes to review, introduce, clarify or test application. Coherent related questions can stay together without becoming a visible lesson. The prototype will test this model with actual learner flows.
 
 ## Decisions needing Max’s input
 

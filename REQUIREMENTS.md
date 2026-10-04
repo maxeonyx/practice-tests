@@ -1,6 +1,6 @@
 # Project context from Max
 
-Read this before product design or implementation. The recovered context below is an assistant interpretation; the conversation record preserves Max’s wording, including examples, hedging, changes of direction and name variants. The current phase is design with Max: record context, explore the product model, give a Design Echo in chat, then stop for his response. Do not implement the redesign in this phase.
+Read this before product design or implementation. The recovered context below is an assistant interpretation; the conversation record preserves Max’s wording, including examples, hedging, changes of direction and name variants. The current phase is review of the prototype delivery plan in [PLAN.md](PLAN.md). The product model guides a build/testing/feedback loop, followed by curriculum review; agree the plan before implementing.
 
 ## Recovered context
 
@@ -43,6 +43,9 @@ Current explicit direction: the learner sees one question, answers it to herself
 | Source-aligned medical teaching and assessment coverage. | Original and repeated requirement. The supplied archive is primary evidence; gaps and uncertain claims must remain visible to content authors. |
 | Review source grounding explicitly for at least one Integrated Care question. | Latest request for the question-authoring phase. Source-derived facts, invented scenario details and uncertain exam format must be distinguished. |
 | Excellence requires substantial design effort and checking. | Repeated motivation; implementation volume and content counts are not the target. |
+| Plan/review, then build/testing/feedback, then curriculum review. | Latest explicit delivery sequence. Prototype feedback and representative curriculum review must fit Max’s availability tonight; remaining work can continue autonomously. |
+| The whole curriculum must be in place before Kibra starts tomorrow at 5 pm. | Latest requirement plus “5pm” timing answer: Monday 5 October 2026, NZDT. Full coverage must be checked against assessed knowledge, not inferred from unit/card counts. |
+| Max can be involved only in this build session, until midnight today, with autonomous work after that. | Latest exact availability: Sunday 4 October to Monday 5 October NZDT. Do not depend on his replies tomorrow. |
 
 ## Changes and open tensions
 
@@ -869,3 +872,19 @@ just not again in a new session
 ## Trial direction — start on full questions every time
 
 actually nah let's discard that rule I just said, let's just try it without that rule. we just start on the full questions every time for now. that's more stepping back which is good
+
+## Prototype plan and delivery loops
+
+Ok - excellent!!
+
+Let's now make a plan for getting the app into a prototype state, please.
+
+We'll do plan/review loop, then a build/testing/feedback loop, then finally a curriculum review loop because we need the whole curriculum in place before kibra starts using it tomorrow.
+
+## Deadline — reply about the requested New Zealand ready time
+
+5pm
+
+## Availability — this build session and autonomous work afterwards
+
+but I only have this build session available to be involved. so midnight today plus any autonomous work after that
