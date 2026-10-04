@@ -9,6 +9,8 @@ export interface StudyAttempt {
   answer: string;
   rating: AnswerRating;
   independent: boolean;
+  rootId?: string;
+  sessionStartedAt?: string;
 }
 export interface ReviewState {
   questionId: string;
@@ -17,7 +19,9 @@ export interface ReviewState {
 }
 export interface Preferences {
   schemaVersion: 1;
-  availableMinutes: 5 | 20 | 60 | null;
+  availableMinutes: 5 | 10 | 20 | 60 | null;
+  firstOpenedAt?: string;
+  lastOpenedRootId?: string;
 }
 export const initialPreferences: Preferences = {
   schemaVersion: 1,
@@ -36,6 +40,7 @@ export interface Session {
   decomposedIds: string[];
   frames: { parentId: string; childIds: string[]; remainingIds: string[] }[];
   startedAt: string;
+  lastActiveAt?: string;
   completedRating?: AnswerRating;
 }
 export interface LearnerState {
@@ -59,5 +64,6 @@ export function startSession(questionId: string, now = new Date()): Session {
     decomposedIds: [],
     frames: [],
     startedAt: now.toISOString(),
+    lastActiveAt: now.toISOString(),
   };
 }

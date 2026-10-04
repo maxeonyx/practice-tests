@@ -14,26 +14,58 @@ interface RevisionDB extends DBSchema {
   session: { key: string; value: Session | null };
   meta: { key: string; value: number };
 }
-const database = openDB<RevisionDB>("kira-revision", 2, {
-  upgrade(db, oldVersion) {
-    if (oldVersion < 1) {
-      db.createObjectStore("preferences");
-      db.createObjectStore("attempts", { keyPath: "id" });
-      db.createObjectStore("reviews", { keyPath: "questionId" });
-    }
-    if (oldVersion < 2) {
-      db.createObjectStore("session");
-      db.createObjectStore("meta");
-    }
-  },
-  blocked() {
-    window.dispatchEvent(new Event("storage-blocked"));
-  },
-  blocking(_old, _new, event) {
-    (event.target as IDBDatabase).close();
-    window.dispatchEvent(new Event("storage-blocked"));
-  },
-});
+async function openDatabase() {
+  const reviewProfile = new URLSearchParams(window.location.search).getAll(
+    "review",
+  );
+  if (
+    reviewProfile.length > 1 ||
+    (reviewProfile.length === 1 && reviewProfile[0] !== "1")
+  )
+    throw new Error(
+      "Cannot open revision: the review profile is invalid. Use ?review=1 for isolated review progress, or remove the review parameter to open your study progress. Saved browser data has been kept.",
+    );
+  return openDB<RevisionDB>(
+    reviewProfile.length === 1 ? "kira-revision-review" : "kira-revision",
+    2,
+    {
+      upgrade(db, oldVersion) {
+        if (oldVersion < 1) {
+          db.createObjectStore("preferences");
+          db.createObjectStore("attempts", { keyPath: "id" });
+          db.createObjectStore("reviews", { keyPath: "questionId" });
+        }
+        if (oldVersion < 2) {
+          db.createObjectStore("session");
+          db.createObjectStore("meta");
+        }
+      },
+      blocked() {
+        window.dispatchEvent(new Event("storage-blocked"));
+      },
+      blocking(_old, _new, event) {
+        (event.target as IDBDatabase).close();
+        window.dispatchEvent(new Event("storage-blocked"));
+      },
+    },
+  );
+}
+const database = openDatabase();
+function validatePreferences(preferences: Preferences): void {
+  if (
+    preferences.schemaVersion !== 1 ||
+    ![null, 5, 10, 20, 60].includes(preferences.availableMinutes) ||
+    (preferences.lastOpenedRootId !== undefined &&
+      (typeof preferences.lastOpenedRootId !== "string" ||
+        preferences.lastOpenedRootId.length === 0)) ||
+    (preferences.firstOpenedAt !== undefined &&
+      (typeof preferences.firstOpenedAt !== "string" ||
+        !Number.isFinite(Date.parse(preferences.firstOpenedAt))))
+  )
+    throw new Error(
+      "Cannot open saved revision preferences: unsupported format or invalid study time. Keep browser data and check the application migration.",
+    );
+}
 export async function loadState(): Promise<LearnerState> {
   const db = await database;
   const tx = db.transaction(
@@ -48,13 +80,16 @@ export async function loadState(): Promise<LearnerState> {
     tx.objectStore("meta").get("revision"),
   ]);
   await tx.done;
+  if (saved !== undefined) validatePreferences(saved);
   if (
-    saved !== undefined &&
-    (saved.schemaVersion !== 1 ||
-      ![null, 5, 20, 60].includes(saved.availableMinutes))
+    session !== undefined &&
+    session !== null &&
+    session.lastActiveAt !== undefined &&
+    (typeof session.lastActiveAt !== "string" ||
+      !Number.isFinite(Date.parse(session.lastActiveAt)))
   )
     throw new Error(
-      "Cannot open saved revision preferences: unsupported format. Keep browser data and check the application migration.",
+      "Cannot resume revision: the saved activity time is invalid. Keep browser data and check the application migration.",
     );
   return {
     preferences: saved ?? { ...initialPreferences },
@@ -73,6 +108,7 @@ export async function persist(
     review?: ReviewState;
   },
 ): Promise<number> {
+  if (change.preferences !== undefined) validatePreferences(change.preferences);
   const tx = (await database).transaction(
     ["preferences", "attempts", "reviews", "session", "meta"],
     "readwrite",

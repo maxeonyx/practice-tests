@@ -7,9 +7,14 @@ import {
   sources,
   assessments,
   units,
+  studyRootIds,
 } from "../src/content/curriculum";
 import { recommend, scheduleReview } from "../src/study/scheduler";
-import { initialPreferences, type LearnerState } from "../src/study/state";
+import {
+  initialPreferences,
+  startSession,
+  type LearnerState,
+} from "../src/study/state";
 const now = new Date("2026-10-04T12:00:00+13:00");
 const empty = (): LearnerState => ({
   preferences: { ...initialPreferences },
@@ -59,17 +64,20 @@ test("a due prerequisite can be recommended as independent spaced recall", () =>
   const state = empty();
   const future = new Date(now.getTime() + 86400000 * 20);
   state.reviews = questions
-    .filter((q) => q.kind === "constructed")
+    .filter((q) => studyRootIds.includes(q.id))
     .map((q) => scheduleReview(q.id, "easy", undefined, future));
+  const support = studyRootIds
+    .map(question)
+    .flatMap((q) => q.prerequisiteQuestionIds)[0];
   state.reviews.push(
     scheduleReview(
-      "adme-metabolism",
+      support,
       "again",
       undefined,
       new Date(now.getTime() - 3600000),
     ),
   );
-  expect(recommend(state, now)?.question.id).toBe("adme-metabolism");
+  expect(recommend(state, now)?.question.id).toBe(support);
 });
 test("published curriculum has complete links, source traces, and acyclic prerequisites", () => {
   expect(new Set(questions.map((q) => q.id)).size).toBe(questions.length);
@@ -142,4 +150,110 @@ test("independent due recall sessions count toward course balance", () => {
   expect(
     recommend(state, new Date("2026-10-28T12:00:00+13:00"))?.question.courseId,
   ).toBe("pharmacology");
+});
+
+test("fresh openings favour Integrated Care and vary after repeated misses", () => {
+  const state = empty();
+  state.preferences.firstOpenedAt = now.toISOString();
+  const seen = new Set<string>();
+  const careRoots = studyRootIds.filter(
+    (id) => question(id).courseId === "integrated-care",
+  );
+  for (let i = 0; i < careRoots.length; i++) {
+    const next = recommend(state, now, { fresh: true })?.question;
+    expect(next).toBeDefined();
+    expect(next!.courseId).toBe("integrated-care");
+    expect(seen.has(next!.id)).toBe(false);
+    seen.add(next!.id);
+    state.session = startSession(next!.id, now);
+    state.attempts.push({
+      id: String(i),
+      questionId: next!.id,
+      rootId: next!.id,
+      sessionStartedAt: new Date(now.getTime() + i * 1000).toISOString(),
+      courseId: next!.courseId,
+      answeredAt: now.toISOString(),
+      answer: "",
+      rating: "again",
+      independent: true,
+    });
+    state.reviews.push(scheduleReview(next!.id, "again", undefined, now));
+  }
+  expect(seen.size).toBe(careRoots.length);
+  expect(recommend(state, now, { fresh: true })?.question.id).not.toBe(
+    state.session?.rootId,
+  );
+});
+
+test("assisted prerequisite work counts once per root toward cross-course allocation", () => {
+  const state = empty();
+  const roots = studyRootIds
+    .filter((id) => question(id).courseId === "integrated-care")
+    .slice(0, 3);
+  state.attempts = roots.flatMap((id, i) =>
+    [0, 1, 2].map((step) => ({
+      id: `${i}-${step}`,
+      questionId: id,
+      rootId: id,
+      sessionStartedAt: new Date(now.getTime() - i * 1000).toISOString(),
+      courseId: question(id).courseId,
+      answeredAt: now.toISOString(),
+      answer: "",
+      rating: "again" as const,
+      independent: false,
+    })),
+  );
+  expect(recommend(state, now)?.question.courseId).toBe("pharmacology");
+  state.attempts = state.attempts.filter((a) => a.rootId === roots[0]);
+  expect(
+    recommend(state, new Date("2026-10-28T12:00:00+13:00"))?.question.courseId,
+  ).toBe("integrated-care");
+});
+
+test("continuation covers new roots without immediately repeating a completed root", () => {
+  const state = empty();
+  const first = recommend(state, now, { fresh: true })!.question;
+  state.session = { ...startSession(first.id, now), phase: "complete" };
+  state.reviews = [
+    scheduleReview(
+      first.id,
+      "again",
+      undefined,
+      new Date(now.getTime() - 3600000),
+    ),
+  ];
+  const next = recommend(state, now)?.question;
+  expect(next!.id).not.toBe(first.id);
+  expect(studyRootIds).toContain(next!.id);
+  expect(question(next!.id).unitId).not.toBe(first.unitId);
+});
+
+test("fresh openings after the first exam contain Pharmacology full questions only", () => {
+  const next = recommend(empty(), new Date("2026-10-30T12:00:00+13:00"), {
+    fresh: true,
+  })!.question;
+  expect(next.courseId).toBe("pharmacology");
+  expect(studyRootIds).toContain(next.id);
+});
+
+test("old catalogue reviews remain saved without entering the prototype feed", () => {
+  const state = empty();
+  state.reviews = [
+    scheduleReview(
+      "adme",
+      "again",
+      undefined,
+      new Date(now.getTime() - 3600000),
+    ),
+  ];
+  expect(recommend(state, now)?.question.id).not.toBe("adme");
+  expect(state.reviews[0].questionId).toBe("adme");
+});
+
+test("a fresh opening varies even when the previous question was not rated", () => {
+  const state = empty();
+  state.preferences.lastOpenedRootId = studyRootIds[0];
+  expect(recommend(state, now, { fresh: true })?.question.id).not.toBe(
+    studyRootIds[0],
+  );
 });

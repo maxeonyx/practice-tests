@@ -2,7 +2,9 @@ import { fsrs, createEmptyCard, Rating } from "ts-fsrs";
 import {
   assessments,
   questions,
-  concepts,
+  question,
+  studyRootIds,
+  type CourseId,
   type Question,
 } from "../content/curriculum";
 import type {
@@ -49,64 +51,158 @@ export interface Recommendation {
 export function recommend(
   state: LearnerState,
   now = new Date(),
+  options: { fresh?: boolean } = {},
 ): Recommendation | undefined {
   const active = assessments.filter(
     (a) => new Date(a.date).getTime() > now.getTime(),
   );
+  const roots = new Set(studyRootIds);
+  const availableIds = new Set<string>();
+  function include(id: string): void {
+    if (availableIds.has(id)) return;
+    availableIds.add(id);
+    for (const prerequisite of question(id).prerequisiteQuestionIds)
+      include(prerequisite);
+  }
+  for (const id of studyRootIds) include(id);
   const reviews = new Map(state.reviews.map((r) => [r.questionId, r]));
-  const latest = [...state.attempts]
-    .filter((a) => a.independent)
-    .sort((a, b) => b.answeredAt.localeCompare(a.answeredAt));
-  const recent = latest.slice(0, 3);
+  const attempts = [...state.attempts].sort((a, b) =>
+    b.answeredAt.localeCompare(a.answeredAt),
+  );
+  // A prerequisite sequence is one piece of course work, including missed answers.
+  const work = new Map<string, StudyAttempt>();
+  for (const attempt of attempts) {
+    const key =
+      attempt.rootId !== undefined && attempt.sessionStartedAt !== undefined
+        ? `${attempt.sessionStartedAt}:${attempt.rootId}`
+        : attempt.id;
+    if (!work.has(key)) work.set(key, attempt);
+  }
+  const workItems = [...work.values()];
+  const rootExposure = new Map<string, number>();
+  const unitExposure = new Map<string, number>();
+  const courseWork = new Map<CourseId, number>();
+  for (const attempt of workItems) {
+    const rootId = attempt.rootId ?? attempt.questionId;
+    const unitId = question(rootId).unitId;
+    rootExposure.set(rootId, (rootExposure.get(rootId) ?? 0) + 1);
+    unitExposure.set(unitId, (unitExposure.get(unitId) ?? 0) + 1);
+  }
+  for (const attempt of workItems.slice(0, 12))
+    courseWork.set(
+      attempt.courseId,
+      (courseWork.get(attempt.courseId) ?? 0) + 1,
+    );
+  const coursePriority = (courseId: CourseId) => {
+    const exam = active.find((a) => a.courseId === courseId)!;
+    const days = Math.max(
+      1,
+      (Date.parse(exam.date) - now.getTime()) / 86400000,
+    );
+    return (
+      exam.weight / Math.sqrt(days) / (2 + (courseWork.get(courseId) ?? 0))
+    );
+  };
+  const recent = workItems.slice(0, 3);
   const neglected =
     recent.length === 3 &&
     recent.every((a) => a.courseId === recent[0].courseId)
       ? active.find((a) => a.courseId !== recent[0].courseId)?.courseId
       : undefined;
-  const ranked = questions.flatMap((q) => {
-    const exam = active.find((a) => a.courseId === q.courseId);
-    if (exam === undefined) return [];
-    const review = reviews.get(q.id);
-    const due =
-      review !== undefined && review.card.due.getTime() <= now.getTime();
-    if (q.kind === "recall" && !due) return [];
-    if (review !== undefined && !due) return [];
-    const days = Math.max(
-      1,
-      (new Date(exam.date).getTime() - now.getTime()) / 86400000,
+  const initialCare =
+    state.preferences.firstOpenedAt === undefined ||
+    now.getTime() - Date.parse(state.preferences.firstOpenedAt) < 3 * 86400000;
+  let candidates = (
+    options.fresh === true ? studyRootIds.map(question) : questions
+  )
+    .filter((q) => availableIds.has(q.id))
+    .filter((q) => active.some((a) => a.courseId === q.courseId))
+    .filter((q) => {
+      if (options.fresh === true) return true;
+      const review = reviews.get(q.id);
+      if (review !== undefined)
+        return review.card.due.getTime() <= now.getTime();
+      return roots.has(q.id);
+    });
+  const previousRoot =
+    state.session?.rootId ?? state.preferences.lastOpenedRootId;
+  candidates = candidates.filter((q) => q.id !== previousRoot);
+  const preferredCourse: CourseId | undefined =
+    options.fresh === true &&
+    initialCare &&
+    candidates.some((q) => q.courseId === "integrated-care")
+      ? "integrated-care"
+      : neglected;
+  if (
+    preferredCourse !== undefined &&
+    candidates.some((q) => q.courseId === preferredCourse)
+  )
+    candidates = candidates.filter((q) => q.courseId === preferredCourse);
+  if (options.fresh === true) {
+    const first = studyRootIds.find((id) =>
+      candidates.some((q) => q.id === id),
     );
+    if (attempts.length === 0 && first !== undefined)
+      return {
+        question: question(first),
+        reason: "Start with an exam-relevant question.",
+      };
+    const exposure = (q: Question) => rootExposure.get(q.id) ?? 0;
+    candidates.sort(
+      (a, b) =>
+        exposure(a) - exposure(b) ||
+        coursePriority(b.courseId) - coursePriority(a.courseId) ||
+        a.estimatedSeconds - b.estimatedSeconds ||
+        studyRootIds.indexOf(a.id) - studyRootIds.indexOf(b.id),
+    );
+    const next = candidates[0];
+    return next === undefined
+      ? undefined
+      : {
+          question: next,
+          reason: "Start with a varied exam-relevant question.",
+        };
+  }
+  const ranked = candidates.map((q) => {
+    const review = reviews.get(q.id);
     const last = independentEvidence(state.attempts, q.id);
     const recall =
       review === undefined
         ? 0
         : memory.get_retrievability(review.card, now, false);
-    const connections = concepts.filter((c) =>
-      c.prerequisiteIds.some((id) => q.conceptIds.includes(id)),
-    ).length;
+    const unitWork = unitExposure.get(q.unitId) ?? 0;
     const need =
       review === undefined
-        ? 1
-        : 1.4 + (1 - recall) + (last?.rating === "again" ? 0.5 : 0);
+        ? 1.5
+        : 1.4 + (1 - recall) + (last?.rating === "again" ? 0.3 : 0);
+    const recentRepeats = attempts.filter(
+      (a) =>
+        a.questionId === q.id &&
+        now.getTime() - Date.parse(a.answeredAt) < 3 * 3600000,
+    ).length;
+    const breadth =
+      roots.has(q.id) && review === undefined ? 1 + 1 / (1 + unitWork) : 1;
     const short =
-      state.preferences.availableMinutes === 5
-        ? Math.min(1, 240 / q.estimatedSeconds)
+      state.preferences.availableMinutes !== null &&
+      state.preferences.availableMinutes <= 10
+        ? Math.min(
+            1,
+            (state.preferences.availableMinutes * 60) / q.estimatedSeconds,
+          )
         : 1;
     const score =
-      (exam.weight / Math.sqrt(days)) *
-      need *
-      (1 + Math.min(connections, 5) * 0.08) *
-      q.importance *
-      short;
-    const reason = due
-      ? "A spaced review is due. Reconstruct it before checking the guide."
-      : "Build an untested area before your assessment.";
-    return [{ question: q, reason, score }];
+      (coursePriority(q.courseId) * q.importance * need * breadth * short) /
+      (1 + recentRepeats);
+    return {
+      question: q,
+      reason:
+        review === undefined
+          ? "Build an untested area before your assessment."
+          : "A spaced review is due.",
+      score,
+    };
   });
-  const balanced =
-    neglected === undefined
-      ? ranked
-      : ranked.filter((r) => r.question.courseId === neglected);
-  return (balanced.length > 0 ? balanced : ranked).sort(
+  return ranked.sort(
     (a, b) => b.score - a.score || a.question.id.localeCompare(b.question.id),
   )[0];
 }
