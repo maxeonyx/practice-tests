@@ -315,7 +315,9 @@ test("the review query opens Examples online and offline without creating learne
   page,
 }) => {
   await page.goto("/examples.html?review=1");
-  await page.evaluate(() => navigator.serviceWorker.ready.then(() => undefined));
+  await page.evaluate(() =>
+    navigator.serviceWorker.ready.then(() => undefined),
+  );
   await page.reload();
   await expect(page).toHaveTitle("Question examples · Recall");
   await page.context().setOffline(true);
