@@ -310,3 +310,18 @@ test("missing a supporting idea returns to Examples without demanding the full a
     page.getByRole("textbox", { name: "Your answer", exact: true }),
   ).toHaveCount(0);
 });
+
+test("the review query opens Examples online and offline without creating learner progress", async ({
+  page,
+}) => {
+  await page.goto("/examples.html?review=1");
+  await page.evaluate(() => navigator.serviceWorker.ready.then(() => undefined));
+  await page.reload();
+  await expect(page).toHaveTitle("Question examples · Recall");
+  await page.context().setOffline(true);
+  await page.reload();
+  await expect(
+    page.getByRole("button", { name: launches.multipleChoice, exact: true }),
+  ).toBeVisible();
+  expect(await page.evaluate(() => indexedDB.databases())).toEqual([]);
+});

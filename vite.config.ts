@@ -33,7 +33,8 @@ export default defineConfig({
       workbox: {
         cleanupOutdatedCaches: true,
         navigateFallback: "/index.html",
-        navigateFallbackDenylist: [/\/examples\.html$/],
+        navigateFallbackDenylist: [/\/examples\.html(?:\?|$)/],
+        ignoreURLParametersMatching: [/^utm_/, /^fbclid$/, /^review$/],
         globPatterns: ["**/*.{js,css,html,png,svg,webp,webmanifest}"],
       },
     }),
