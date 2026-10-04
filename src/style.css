@@ -1,4 +1,5 @@
 :root {
+  scrollbar-gutter: stable;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: #24392f;
   background: #f5f4ee;
@@ -110,7 +111,7 @@ main {
   border-radius: 15px;
   font-size: 18px;
 }
-.time-options button:last-child {
+.time-options button[data-minutes="null"] {
   grid-column: 1/-1;
   color: white;
   background: var(--accent);

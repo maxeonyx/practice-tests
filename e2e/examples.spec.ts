@@ -277,10 +277,11 @@ test("the full answer waits for three successful supports, keeps typed dictation
   ).toBeVisible();
 });
 
-test("missing a supporting idea returns to Examples without demanding the full answer", async ({
+test("missing a supporting idea returns to the full question and model without demanding writing", async ({
   page,
 }) => {
   await openExample(page, "openAnswer");
+  const parent = await page.locator("#question-prompt").innerText();
   await page
     .getByRole("button", { name: "Break it down", exact: true })
     .click();
@@ -302,13 +303,15 @@ test("missing a supporting idea returns to Examples without demanding the full a
   await page.getByRole("button", { name: "I know", exact: true }).click();
   await page.getByRole("button", { name: "Easy", exact: true }).click();
 
-  await expect(
-    page.getByRole("button", { name: launches.openAnswer, exact: true }),
-  ).toBeVisible();
-  await expect(page.locator("#question-prompt")).toHaveCount(0);
+  await expect(page.locator("#question-prompt")).toHaveText(parent);
+  await expect(page.locator("#model-answer")).toContainText("teach-back");
   await expect(
     page.getByRole("textbox", { name: "Your answer", exact: true }),
   ).toHaveCount(0);
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await expect(
+    page.getByRole("button", { name: launches.openAnswer, exact: true }),
+  ).toBeVisible();
 });
 
 test("the review query opens Examples online and offline without creating learner progress", async ({

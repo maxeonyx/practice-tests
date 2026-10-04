@@ -934,3 +934,15 @@ The app should answer. Sorry, the review or the curriculum overview page should 
 All right, I realised the curriculum overview can't explain that yet. So it's futile right now because we didn't support different kinds of questions yet. So you should have told me that straight away, sorry. I'm asking for something in the wrong order.
 
 Actually no. Let's do one example of every different type of question, please, right now. Pause your work on the curriculum. I want to just do a test of a single one of every different type of question that you're going to make, please. An exemplar.
+
+## Exemplar feedback and curriculum approval
+
+I did all of the examples. They all work really well. Thank you very much. The only issue was at the very end of the diagram question. Sorry, not the diagram question, the open answer. The open answer didn't return to the final open answer with an example answer. It didn't return to the final card. Yeah, I guess in theory it's supposed to have, like a free text field or something, right? When we return.
+
+Also the, like, list of answers has, like, one of them. The open answer is, like, a different color. The button is a different color for no reason.
+
+And getting the app deployed. Thank you very much.
+
+Finish up that open answer bug and fix the list of example questions having a different colored button at the end for some reason. And then that's the only things. The multi-choice worked really well. The true false worked well, and the diagram question was nice. So I think, yeah, we're ready to commit to the curriculum. Commit to finishing the curriculum and, yeah, finish the curriculum and build me the curriculum review page and then get the app deployed, and I think we're good.
+
+One other small issue. Also there's one other small issue I noticed, which is that when the card flip animation happens, it somehow affects the page layout, like adds a scroll bar or something, and, like, some things jiggle around. Yeah, like the entire layout of the page sort of jiggles around.

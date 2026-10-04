@@ -104,9 +104,11 @@ function render() {
       controls = `<button class="primary next" data-action="model" ${s.draft.trim().length === 0 ? "disabled" : ""}>Show model answer</button>`;
     }
     if (s.openStage === "model") {
-      content = `<textarea class="response-input" aria-label="Your answer">${escape(s.draft)}</textarea><div id="model-answer" class="answer"><h2>Model answer</h2><ol class="model-points">${q.rubric.map((line) => `<li>${escape(line)}</li>`).join("")}</ol></div>${visual(true)}`;
-      controls = ratings;
-      ratingControls = true;
+      content = `${s.draft.trim().length > 0 ? `<textarea class="response-input" aria-label="Your answer">${escape(s.draft)}</textarea>` : ""}<div id="model-answer" class="answer"><h2>Model answer</h2><ol class="model-points">${q.rubric.map((line) => `<li>${escape(line)}</li>`).join("")}</ol></div>${visual(true)}`;
+      controls = s.unknown
+        ? '<button class="primary next" data-action="continue">Next</button>'
+        : ratings;
+      ratingControls = !s.unknown;
     }
   } else if (q.choices !== undefined) {
     content = `<div class="example-choices">${q.choices.map((choice, i) => `<button data-choice="${i}" ${s.selected !== null ? "disabled" : ""} class="${s.selected === i ? (i === q.correctChoice ? "selected-correct" : "selected-wrong") : ""}">${escape(choice)}</button>`).join("")}</div>`;
@@ -176,7 +178,10 @@ function advance() {
       )
     )
       s.openStage = "write";
-    else menu();
+    else {
+      s.openStage = "model";
+      s.unknown = true;
+    }
   }
 }
 async function reveal(unknown: boolean) {

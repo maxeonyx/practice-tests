@@ -1,6 +1,6 @@
 # Prototype and curriculum delivery
 
-Current work is testing one exemplar of each proposed question interaction with Max. Full-curriculum authoring, review and the admin page are paused for this feedback.
+Max approved the five question interactions on 5 October. Finish the open-answer return, equal example-button styling and stable layout during flips, then complete the full curriculum, curriculum review page and deployment.
 
 Max approved this delivery plan on 4 October 2026. Kibra needs the app and whole curriculum ready by 5 pm Monday 5 October 2026, New Zealand daylight time. Max can participate until midnight tonight, Sunday 4 October; complete the feedback that needs him in that window, then continue autonomously.
 
