@@ -452,3 +452,35 @@ test("iPhone installation help is available on demand with the requested button 
   await expect(page.getByRole("dialog")).toContainText("Safari");
   await context.close();
 });
+
+test("supporting recall after correcting a revealed parent is recorded as cued learning", async ({
+  page,
+}) => {
+  await begin(page);
+  await findTeachBackQuestion(page);
+  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await expect(page.locator("#question-answer")).toBeVisible();
+  await page.getByRole("button", { name: "I was wrong", exact: true }).click();
+  await expect(page.locator("#question-prompt")).toHaveText(
+    "Why use teach-back after a medicine explanation?",
+  );
+  const supportId = await page.locator("main").getAttribute("data-question-id");
+  await page.getByRole("button", { name: "I know it", exact: true }).click();
+  await expect(page.locator("#question-answer")).toBeVisible();
+  await page.getByRole("button", { name: "Easy", exact: true }).click();
+  await expect(
+    page.getByRole("button", { name: "I know it", exact: true }),
+  ).toBeEnabled();
+  const progress = await readProgress(page);
+  const recall = progress.attempts.find((value) => {
+    const attempt = value as { questionId: string; rating: string };
+    return attempt.questionId === supportId && attempt.rating === "easy";
+  });
+  expect(recall).toMatchObject({ independent: false });
+  const review = progress.reviews.find(
+    (value) => (value as { questionId: string }).questionId === supportId,
+  ) as { card: { due: string } };
+  expect(new Date(review.card.due).getTime()).toBeLessThan(
+    (await page.evaluate(() => Date.now())) + 24 * 60 * 60 * 1000,
+  );
+});
