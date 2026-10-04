@@ -52,6 +52,13 @@ export interface Question {
   sources: SourceReference[];
   importance: number;
   estimatedSeconds: number;
+  visual?: {
+    src: string;
+    alt: string;
+    showOn: "question" | "answer" | "both";
+    sourceId?: string;
+    page?: number;
+  };
   provenance?: {
     kind: "guide-revision";
     sourceId: string;
@@ -83,6 +90,7 @@ export interface Cluster {
   };
 }
 interface Curriculum {
+  studyRootIds: string[];
   sources: Source[];
   assessments: Assessment[];
   units: CurriculumUnit[];
@@ -91,8 +99,15 @@ interface Curriculum {
   clusters: Cluster[];
 }
 export const curriculum = data as Curriculum;
-export const { sources, assessments, units, concepts, questions, clusters } =
-  curriculum;
+export const {
+  sources,
+  assessments,
+  units,
+  concepts,
+  questions,
+  clusters,
+  studyRootIds,
+} = curriculum;
 export const courses = [
   {
     id: "integrated-care" as const,

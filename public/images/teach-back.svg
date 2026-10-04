@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 190" fill="none">
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 6 3 0 6" fill="none" stroke="#327d69" stroke-width="1.5"/></marker></defs>
+<path d="M61 173c-12-43-5-83 26-83 30 0 43 38 38 83" fill="#b9d3ca"/>
+<circle cx="88" cy="63" r="22" fill="#d7b397"/>
+<path d="M68 51c1-24 36-27 42-3" fill="#354e47"/>
+<path d="M247 173c-5-45 8-83 37-83 28 0 41 39 34 83" fill="#e9d7bd"/>
+<circle cx="284" cy="63" r="22" fill="#a86f51"/>
+<path d="M263 52c-2-27 39-29 43-3" fill="#394b42"/>
+<path d="M91 105c20 19 35 30 69 26M283 110c-25 29-38 32-69 23" stroke="#a86f51" stroke-width="11" stroke-linecap="round"/>
+<rect x="161" y="104" width="35" height="54" rx="9" fill="#edf4f0" stroke="#327d69" stroke-width="2"/><rect x="165" y="98" width="27" height="9" rx="3" fill="#327d69"/>
+<path d="M126 68c35-24 62-24 95-1" stroke="#327d69" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M221 87c-37 22-64 22-95 0" stroke="#327d69" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M45 176h282" stroke="#dae6df" stroke-width="2" stroke-linecap="round"/>
+</svg>

@@ -10,6 +10,8 @@ Max supplied the Pharmacology final as “50% Nov 2” and confirmed long answer
 
 ## Authoring and review
 
+The prototype feed uses the eight `studyRootIds` in `data.json`, with 24 reachable question cards; the full collection remains available for curriculum review and saved-progress compatibility.
+
 Use the supplied current guide/lecture/lab content first. Check the actual PDF page or slide, including image and SmartArt content, rather than relying on extraction alone. A source excerpt must exist on the referenced page and support the answer. Preserve source qualifiers. Do not import unanswered quiz attempts as an answer key. Older mindmaps are marked outdated in the course pages and need current corroboration.
 
 Ground learning in accurate subject images wherever useful. Use a chain for a genuine sequence, a timeline for time or age, a comparison for alternatives, and a person/whānau map for parallel care domains. These content visuals serve a different purpose from the subtle wordless prerequisite DAG. Keep each ordinary question clear and its answer concise. Larger written cases can carry the reasoning needed for later exam practice.
@@ -18,7 +20,7 @@ Record coverage limits for authors and on-demand source information. Missing tex
 
 ## Reviewed grounding example
 
-This Integrated Care ordinary flashcard is a design example for discussion, outside the application’s question collection.
+The prototype's opening Integrated Care flashcard asks one directly testable schedule fact.
 
 **Question:** At the six-week immunisation visit, which vaccine is given by mouth?
 
@@ -38,3 +40,11 @@ Source catalogue entries:
 
 - `raw-stream-html/linked-pages/a50f1bd3fa57-NZ-Immunisation-Schedule.html` — SHA-256 `a538e3adcf104b484512a0e0a83ac5040c055a4bef1d13f7fa72a5278c306b7f`.
 - `raw-stream-files/9dd756fa9ece-NIP8860_Immunisation_Schedule_Card_v20_WEB.pdf` — SHA-256 `50f5cb634c8e64e1e9be6b1c7ae42751e93f909525d9716bf61b5032b388035d`.
+
+## Integrated Care application exemplar
+
+`medicine-teach-back` asks: “A person nods during your medicine explanation but cannot tell you how to take it at home. What should you do next?”
+
+The authored answer applies the supplied Health Literacy & Digital Empathy lecture: explain again in plain language, use teach-back, and adapt the explanation until understanding is clear; slide 14 specifies plain language and teach-back, and slide 3 shares responsibility with providers and services.
+
+Its two supporting questions ask why teach-back is used and who shares communication responsibility; both can step back to the meaning of health literacy, so the supporting graph contains a shared concept rather than an artificial sequence.

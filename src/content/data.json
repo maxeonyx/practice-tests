@@ -4178,6 +4178,207 @@
           "excerpt": "Whether cured or palliated – cancer becomes a part of the person, their family, and everyday life. Even complete survivorship requires a new level of vigilance."
         }
       ]
+    },
+    {
+      "id": "six-week-oral-vaccine",
+      "unitId": "i1",
+      "clusterId": "immun-infant",
+      "title": "At the six-week immunisation visit, which vaccine is given by mouth?",
+      "prerequisiteIds": [],
+      "sources": [
+        {
+          "sourceId": "immun-scope",
+          "page": 1,
+          "excerpt": "Please know the 2025 NZ Immunisation Schedule here: (You will be tested on this for your knowledge test, so please download it!) Accessibility Reset All Background Colour Reset Font Face Reset Serif Sans Serif Dyslexic F"
+        },
+        {
+          "sourceId": "schedule",
+          "page": 1,
+          "excerpt": "Rotavirus Rotarix® (oral) 6 (first dose must be given before 15 weeks) Diphtheria + tetanus + whooping cough (pertussis) + Infanrix® hexa weeks polio + hepatitis B + Haemophilus influenzae type b (Hib) Pneumoco"
+        },
+        {
+          "sourceId": "schedule",
+          "page": 2,
+          "excerpt": "RV1 oral vaccine (Rotarix®) (Infanrix® hexa) PCV13 injection (Prevenar 13®) 3 months DTaP-IPV-Hep B/Hib injection MenB injection (Bexsero®) RV1 oral vaccine (Rotarix®) (I"
+        }
+      ]
+    },
+    {
+      "id": "health-literacy-meaning",
+      "unitId": "i1",
+      "clusterId": "health-literacy",
+      "title": "What does health literacy mean?",
+      "prerequisiteIds": [],
+      "sources": [
+        {
+          "sourceId": "literacy",
+          "page": 3,
+          "excerpt": "…the capacity to obtain, process and understand basic health information and services in order to make informed and appropriate health decisions’ (Ministry of Health, 2010). However… International support is gr"
+        }
+      ]
+    },
+    {
+      "id": "teach-back-purpose",
+      "unitId": "i1",
+      "clusterId": "health-literacy",
+      "title": "Why use teach-back after a medicine explanation?",
+      "prerequisiteIds": ["health-literacy-meaning"],
+      "sources": [
+        {
+          "sourceId": "literacy",
+          "page": 14,
+          "excerpt": "Use teach back to Don’t just give written Try to avoid giving too required and provide Provide hands on or ensure patients have information – discuss it much information at information in de"
+        }
+      ]
+    },
+    {
+      "id": "health-communication-responsibility",
+      "unitId": "i1",
+      "clusterId": "health-literacy",
+      "title": "Who shares responsibility for making health information understandable?",
+      "prerequisiteIds": ["health-literacy-meaning"],
+      "sources": [
+        {
+          "sourceId": "literacy",
+          "page": 3,
+          "excerpt": "International support is growing for a stronger focus on how health systems, health care providers and practitioners can support consumers to access and understand health services."
+        }
+      ]
+    },
+    {
+      "id": "medicine-teach-back",
+      "unitId": "i1",
+      "clusterId": "health-literacy",
+      "title": "A person nods during your medicine explanation but cannot tell you how to take it at home. What should you do next?",
+      "prerequisiteIds": [
+        "teach-back-purpose",
+        "health-communication-responsibility"
+      ],
+      "sources": [
+        {
+          "sourceId": "literacy",
+          "page": 14,
+          "excerpt": "Avoid using jargon – Focus on building a Work within speak using simple Avoid speaking too relationship with the Show empathy the patient's reality and terms and plain quickly person cultura"
+        },
+        {
+          "sourceId": "literacy",
+          "page": 14,
+          "excerpt": "Use teach back to Don’t just give written Try to avoid giving too required and provide Provide hands on or ensure patients have information – discuss it much information at information in de"
+        },
+        {
+          "sourceId": "literacy",
+          "page": 3,
+          "excerpt": "International support is growing for a stronger focus on how health systems, health care providers and practitioners can support consumers to access and understand health services."
+        }
+      ]
+    },
+    {
+      "id": "clinic-access",
+      "unitId": "i5",
+      "clusterId": "disability-models",
+      "title": "A wheelchair user cannot enter a clinic because it has steps. Which model of disability focuses on changing this barrier?",
+      "prerequisiteIds": ["disability-models-social"],
+      "sources": [
+        {
+          "sourceId": "disability",
+          "page": 4,
+          "excerpt": "Disability is created by barriers within society. • Focuses on diagnosis, treatment, • Focuses on removing physical, social, and rehabilitation, and cure. attitudinal barriers. • The person is expected to adapt"
+        }
+      ]
+    },
+    {
+      "id": "dementia-one-step",
+      "unitId": "i5",
+      "clusterId": "dementia-communication",
+      "title": "A person with dementia becomes distressed by several instructions at once. How should you change your instructions?",
+      "prerequisiteIds": ["dementia-communication-message"],
+      "sources": [
+        {
+          "sourceId": "dementia",
+          "page": 16,
+          "excerpt": "Use simple sentences that contain one idea or instruction  Avoid words or phrases that can be misinterpreted  Allow time to process  Repeat if necessary – But try not to change the words  Offer opportunity "
+        }
+      ]
+    },
+    {
+      "id": "cancer-spread",
+      "unitId": "i6",
+      "clusterId": "cancer-long-term",
+      "title": "Cancer cells spread from the original tumour to a distant part of the body. What is this called?",
+      "prerequisiteIds": [],
+      "sources": [
+        {
+          "sourceId": "cancer",
+          "page": 3,
+          "excerpt": "These cancerous cells can invade nearby tissues and may spread to other parts of the body through, a process known as metastasis. the bloodstream or lymphatic system"
+        }
+      ]
+    },
+    {
+      "id": "candidiasis-meaning",
+      "unitId": "p2",
+      "clusterId": "antifungal",
+      "title": "What is candidiasis commonly called?",
+      "prerequisiteIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 311,
+          "excerpt": "This can lead to Candidiasis or oral thrush. 2. Suppression of hypothalamic-pituitary axis, hyperglycaemia, hypokalaemia, fluid retention, negative nitrogen and calcium balance, and increased susceptibility to "
+        },
+        {
+          "sourceId": "pharm",
+          "page": 59,
+          "excerpt": "thrush caused by Candida albicans. Study Guide – Chapter 2  52"
+        }
+      ]
+    },
+    {
+      "id": "fungal-treatment-type",
+      "unitId": "p2",
+      "clusterId": "antifungal",
+      "title": "What type of medicine treats a fungal infection?",
+      "prerequisiteIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 75,
+          "excerpt": "Antifungal drugs are drugs that kill or deactivate fungi and are used to treat fungal (including yeast) infections. Study Question In the last 20-30 years there has been a steady increase in systemic fungal inf"
+        }
+      ]
+    },
+    {
+      "id": "salbutamol-thrush",
+      "unitId": "p5",
+      "clusterId": "salbutamol",
+      "title": "Is salbutamol a treatment for candidiasis?",
+      "prerequisiteIds": [
+        "salbutamol-receptor",
+        "candidiasis-meaning",
+        "fungal-treatment-type"
+      ],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 127,
+          "excerpt": "salbutamol selective β2 agonists  salmeterol Selective α2 agonists Selective α1 antagonists  clonidine  doxazosin (see CVD module)  brimonidine Below is a summary of the key ideas. 1. Adrenergic pharmacolog"
+        },
+        {
+          "sourceId": "pharm",
+          "page": 147,
+          "excerpt": "The short-acting 2-agonists are fast onset bronchodilators and are sometimes known as relievers. These are used for quick relief of bronchospasm when needed by patients and is an important part of emergency tr"
+        },
+        {
+          "sourceId": "pharm",
+          "page": 75,
+          "excerpt": "Antifungal drugs are drugs that kill or deactivate fungi and are used to treat fungal (including yeast) infections. Study Question In the last 20-30 years there has been a steady increase in systemic fungal inf"
+        },
+        {
+          "sourceId": "pharm",
+          "page": 311,
+          "excerpt": "This can lead to Candidiasis or oral thrush. 2. Suppression of hypothalamic-pituitary axis, hyperglycaemia, hypokalaemia, fluid retention, negative nitrogen and calcium balance, and increased susceptibility to "
+        }
+      ]
     }
   ],
   "questions": [
@@ -4370,7 +4571,12 @@
         }
       ],
       "importance": 2,
-      "estimatedSeconds": 45
+      "estimatedSeconds": 45,
+      "visual": {
+        "src": "/images/first-pass.svg",
+        "alt": "A swallowed drug passes from the intestine to the liver before joining the wider circulation. A sublingual route bypasses that first liver passage.",
+        "showOn": "answer"
+      }
     },
     {
       "id": "first-pass-availability",
@@ -4423,11 +4629,9 @@
       "clusterId": "first-pass",
       "kind": "constructed",
       "title": "First pass and route",
-      "prompt": "Explain why glyceryl trinitrate for angina is given sublingually rather than swallowed. Link the route to first-pass metabolism and bioavailability.",
+      "prompt": "Why is glyceryl trinitrate given under the tongue rather than swallowed?",
       "rubric": [
-        "It can enter the portal circulation and reach the liver first, where metabolism may remove much of the active drug.",
-        "The percentage of the administered drug dose reaching the systemic circulation.",
-        "GTN has extensive first-pass metabolism when swallowed. Sublingual administration avoids that initial portal-liver passage."
+        "It avoids extensive first-pass metabolism in the liver, which would destroy much of a swallowed dose before it reaches the circulation."
       ],
       "conceptIds": [
         "first-pass-portal",
@@ -4436,8 +4640,7 @@
       ],
       "prerequisiteQuestionIds": [
         "first-pass-portal",
-        "first-pass-availability",
-        "first-pass-route"
+        "first-pass-availability"
       ],
       "sources": [
         {
@@ -4457,7 +4660,12 @@
         }
       ],
       "importance": 2,
-      "estimatedSeconds": 180
+      "estimatedSeconds": 40,
+      "visual": {
+        "src": "/images/first-pass.svg",
+        "alt": "A swallowed drug passes from the intestine to the liver before joining the wider circulation. A sublingual route bypasses that first liver passage.",
+        "showOn": "answer"
+      }
     },
     {
       "id": "drug-action-agonist",
@@ -4584,7 +4792,12 @@
         }
       ],
       "importance": 1,
-      "estimatedSeconds": 45
+      "estimatedSeconds": 45,
+      "visual": {
+        "src": "/images/half-life.svg",
+        "alt": "An initial group of eight drug particles halves to four, then two, then one.",
+        "showOn": "answer"
+      }
     },
     {
       "id": "half-life-calculation",
@@ -4637,9 +4850,7 @@
       "title": "Follow the falling concentration",
       "prompt": "The half-life of a drug is 4 hours. Administration of this drug has stopped. How much drug has left the body after 12 hours? Show workings.",
       "rubric": [
-        "The time for a drug’s plasma concentration to fall by 50%.",
-        "100% → 50% → 25% → 12.5%. Twelve hours is three four-hour half-lives.",
-        "100% − 12.5% = 87.5% has left the body after twelve hours."
+        "87.5% has left the body. Twelve hours is three half-lives: 100% → 50% → 25% → 12.5% remains."
       ],
       "conceptIds": [
         "half-life-meaning",
@@ -4674,12 +4885,17 @@
         }
       ],
       "importance": 1,
-      "estimatedSeconds": 180,
+      "estimatedSeconds": 55,
       "origin": {
         "sourceId": "2019",
         "page": 9,
         "year": 2019,
         "marks": 1
+      },
+      "visual": {
+        "src": "/images/half-life.svg",
+        "alt": "An initial group of eight drug particles halves to four, then two, then one.",
+        "showOn": "answer"
       }
     },
     {
@@ -6203,19 +6419,29 @@
       "unitId": "p4",
       "clusterId": "salbutamol",
       "kind": "recall",
-      "prompt": "Which receptor class and action describe salbutamol?",
-      "rubric": ["Salbutamol is a selective beta-2 adrenergic agonist."],
+      "prompt": "What type of drug is salbutamol?",
+      "rubric": ["A short-acting, selective beta-2 agonist bronchodilator."],
       "conceptIds": ["salbutamol-receptor"],
       "prerequisiteQuestionIds": ["drug-action-agonist"],
       "sources": [
         {
           "sourceId": "pharm",
           "page": 127,
-          "excerpt": "salbutamol selective β2 agonists  salmeterol Selective α2 agonists Selective α1 antagonists  clonidine  doxazosin (see CVD module)  brimonidine Below is a summary of the key ideas. 1. Adrenergic pharmacology refers to drugs that mediate their effects via adrenergic receptors. Adrenergic receptors are found in the sympathetic nervous system. They are also found in the brain and central nervous system. 2. Adrenergic agonists (sympathomimetic drugs) mimic sympathetic stimula"
+          "excerpt": "salbutamol selective β2 agonists  salmeterol Selective α2 agonists Selective α1 antagonists  clonidine  doxazosin (see CVD module)  brimonidine Below is a summary of the key ideas. 1. Adrenergic pharmacolog"
+        },
+        {
+          "sourceId": "pharm",
+          "page": 145,
+          "excerpt": "SABA (Short-acting beta-2 agonist)  salbutamol  terbutaline LABA (Long-acting beta-2 agonist)  salmeterol  formoterol SAMA (Short-acting muscarinic antagonist)  ipratropium LAMA (Long-acting muscarinic ant"
         }
       ],
       "importance": 2,
-      "estimatedSeconds": 45
+      "estimatedSeconds": 45,
+      "visual": {
+        "src": "/images/bronchodilation.svg",
+        "alt": "A constricted airway cross-section beside a relaxed airway with a larger opening.",
+        "showOn": "answer"
+      }
     },
     {
       "id": "salbutamol-tissue",
@@ -12640,9 +12866,9 @@
       "unitId": "i5",
       "clusterId": "disability-models",
       "kind": "recall",
-      "prompt": "How does the social model change the assessment question?",
+      "prompt": "Where does the social model locate the cause of disability?",
       "rubric": [
-        "Ask what physical, social or attitudinal barriers prevent participation; society and services should adapt, with disabled people recognised as experts in their experience."
+        "In physical, social and attitudinal barriers that prevent participation."
       ],
       "conceptIds": ["disability-models-social"],
       "prerequisiteQuestionIds": [],
@@ -12918,9 +13144,9 @@
       "unitId": "i5",
       "clusterId": "dementia-communication",
       "kind": "recall",
-      "prompt": "How should instructions be presented?",
+      "prompt": "How much information should one instruction contain when speaking with a person with dementia?",
       "rubric": [
-        "Gain mutual attention, speak calmly and clearly, give one idea or instruction at a time, allow processing time and repeat using the same words if needed."
+        "One idea or instruction. Allow time to process it before continuing."
       ],
       "conceptIds": ["dementia-communication-message"],
       "prerequisiteQuestionIds": [],
@@ -14001,6 +14227,326 @@
       ],
       "importance": 2,
       "estimatedSeconds": 240
+    },
+    {
+      "id": "six-week-oral-vaccine",
+      "courseId": "integrated-care",
+      "unitId": "i1",
+      "clusterId": "immun-infant",
+      "kind": "recall",
+      "prompt": "At the six-week immunisation visit, which vaccine is given by mouth?",
+      "rubric": ["Rotarix — the oral rotavirus vaccine."],
+      "conceptIds": ["six-week-oral-vaccine"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "immun-scope",
+          "page": 1,
+          "excerpt": "Please know the 2025 NZ Immunisation Schedule here: (You will be tested on this for your knowledge test, so please download it!) Accessibility Reset All Background Colour Reset Font Face Reset Serif Sans Serif Dyslexic F"
+        },
+        {
+          "sourceId": "schedule",
+          "page": 1,
+          "excerpt": "Rotavirus Rotarix® (oral) 6 (first dose must be given before 15 weeks) Diphtheria + tetanus + whooping cough (pertussis) + Infanrix® hexa weeks polio + hepatitis B + Haemophilus influenzae type b (Hib) Pneumoco"
+        },
+        {
+          "sourceId": "schedule",
+          "page": 2,
+          "excerpt": "RV1 oral vaccine (Rotarix®) (Infanrix® hexa) PCV13 injection (Prevenar 13®) 3 months DTaP-IPV-Hep B/Hib injection MenB injection (Bexsero®) RV1 oral vaccine (Rotarix®) (I"
+        }
+      ],
+      "importance": 2,
+      "estimatedSeconds": 35,
+      "visual": {
+        "src": "/images/rotarix-source.png",
+        "alt": "Rotarix vaccine box and the oral tube shown in the supplied immunisation schedule.",
+        "showOn": "answer",
+        "sourceId": "schedule",
+        "page": 2
+      }
+    },
+    {
+      "id": "health-literacy-meaning",
+      "courseId": "integrated-care",
+      "unitId": "i1",
+      "clusterId": "health-literacy",
+      "kind": "recall",
+      "prompt": "What does health literacy mean?",
+      "rubric": [
+        "Being able to obtain, understand and use health information and services to make informed health decisions."
+      ],
+      "conceptIds": ["health-literacy-meaning"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "literacy",
+          "page": 3,
+          "excerpt": "…the capacity to obtain, process and understand basic health information and services in order to make informed and appropriate health decisions’ (Ministry of Health, 2010). However… International support is gr"
+        }
+      ],
+      "importance": 2,
+      "estimatedSeconds": 35
+    },
+    {
+      "id": "teach-back-purpose",
+      "courseId": "integrated-care",
+      "unitId": "i1",
+      "clusterId": "health-literacy",
+      "kind": "recall",
+      "prompt": "Why use teach-back after a medicine explanation?",
+      "rubric": [
+        "To check that the person understands the health information before using it at home."
+      ],
+      "conceptIds": ["teach-back-purpose"],
+      "prerequisiteQuestionIds": ["health-literacy-meaning"],
+      "sources": [
+        {
+          "sourceId": "literacy",
+          "page": 14,
+          "excerpt": "Use teach back to Don’t just give written Try to avoid giving too required and provide Provide hands on or ensure patients have information – discuss it much information at information in de"
+        }
+      ],
+      "importance": 2,
+      "estimatedSeconds": 35,
+      "visual": {
+        "src": "/images/teach-back.svg",
+        "alt": "The clinician explains a medicine; the person then shows their understanding back to the clinician.",
+        "showOn": "answer"
+      }
+    },
+    {
+      "id": "health-communication-responsibility",
+      "courseId": "integrated-care",
+      "unitId": "i1",
+      "clusterId": "health-literacy",
+      "kind": "recall",
+      "prompt": "Who shares responsibility for making health information understandable?",
+      "rubric": [
+        "Healthcare providers and services share that responsibility with the person."
+      ],
+      "conceptIds": ["health-communication-responsibility"],
+      "prerequisiteQuestionIds": ["health-literacy-meaning"],
+      "sources": [
+        {
+          "sourceId": "literacy",
+          "page": 3,
+          "excerpt": "International support is growing for a stronger focus on how health systems, health care providers and practitioners can support consumers to access and understand health services."
+        }
+      ],
+      "importance": 2,
+      "estimatedSeconds": 35
+    },
+    {
+      "id": "medicine-teach-back",
+      "courseId": "integrated-care",
+      "unitId": "i1",
+      "clusterId": "health-literacy",
+      "kind": "recall",
+      "prompt": "A person nods during your medicine explanation but cannot tell you how to take it at home. What should you do next?",
+      "rubric": [
+        "Explain again in plain language, then use teach-back: ask them to explain how they will take it. Adapt your explanation until their understanding is clear."
+      ],
+      "conceptIds": ["medicine-teach-back"],
+      "prerequisiteQuestionIds": [
+        "teach-back-purpose",
+        "health-communication-responsibility"
+      ],
+      "sources": [
+        {
+          "sourceId": "literacy",
+          "page": 14,
+          "excerpt": "Avoid using jargon – Focus on building a Work within speak using simple Avoid speaking too relationship with the Show empathy the patient's reality and terms and plain quickly person cultura"
+        },
+        {
+          "sourceId": "literacy",
+          "page": 14,
+          "excerpt": "Use teach back to Don’t just give written Try to avoid giving too required and provide Provide hands on or ensure patients have information – discuss it much information at information in de"
+        },
+        {
+          "sourceId": "literacy",
+          "page": 3,
+          "excerpt": "International support is growing for a stronger focus on how health systems, health care providers and practitioners can support consumers to access and understand health services."
+        }
+      ],
+      "importance": 2,
+      "estimatedSeconds": 35,
+      "visual": {
+        "src": "/images/teach-back.svg",
+        "alt": "A medicine explanation travels from clinician to person and back as the person demonstrates understanding.",
+        "showOn": "answer"
+      }
+    },
+    {
+      "id": "clinic-access",
+      "courseId": "integrated-care",
+      "unitId": "i5",
+      "clusterId": "disability-models",
+      "kind": "recall",
+      "prompt": "A wheelchair user cannot enter a clinic because it has steps. Which model of disability focuses on changing this barrier?",
+      "rubric": [
+        "The social model: remove barriers in the environment so the person can participate."
+      ],
+      "conceptIds": ["clinic-access"],
+      "prerequisiteQuestionIds": ["disability-models-social"],
+      "sources": [
+        {
+          "sourceId": "disability",
+          "page": 4,
+          "excerpt": "Disability is created by barriers within society. • Focuses on diagnosis, treatment, • Focuses on removing physical, social, and rehabilitation, and cure. attitudinal barriers. • The person is expected to adapt"
+        }
+      ],
+      "importance": 2,
+      "estimatedSeconds": 35,
+      "visual": {
+        "src": "/images/clinic-steps.svg",
+        "alt": "A wheelchair user faces steps at a clinic entrance.",
+        "showOn": "both"
+      }
+    },
+    {
+      "id": "dementia-one-step",
+      "courseId": "integrated-care",
+      "unitId": "i5",
+      "clusterId": "dementia-communication",
+      "kind": "recall",
+      "prompt": "A person with dementia becomes distressed by several instructions at once. How should you change your instructions?",
+      "rubric": [
+        "Give one simple idea or instruction at a time, calmly, and allow time for the person to process it."
+      ],
+      "conceptIds": ["dementia-one-step"],
+      "prerequisiteQuestionIds": ["dementia-communication-message"],
+      "sources": [
+        {
+          "sourceId": "dementia",
+          "page": 16,
+          "excerpt": "Use simple sentences that contain one idea or instruction  Avoid words or phrases that can be misinterpreted  Allow time to process  Repeat if necessary – But try not to change the words  Offer opportunity "
+        }
+      ],
+      "importance": 2,
+      "estimatedSeconds": 35,
+      "visual": {
+        "src": "/images/one-instruction.svg",
+        "alt": "Several competing messages become one clear message, with space to respond.",
+        "showOn": "answer"
+      }
+    },
+    {
+      "id": "cancer-spread",
+      "courseId": "integrated-care",
+      "unitId": "i6",
+      "clusterId": "cancer-long-term",
+      "kind": "recall",
+      "prompt": "Cancer cells spread from the original tumour to a distant part of the body. What is this called?",
+      "rubric": ["Metastasis."],
+      "conceptIds": ["cancer-spread"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "cancer",
+          "page": 3,
+          "excerpt": "These cancerous cells can invade nearby tissues and may spread to other parts of the body through, a process known as metastasis. the bloodstream or lymphatic system"
+        }
+      ],
+      "importance": 2,
+      "estimatedSeconds": 35,
+      "visual": {
+        "src": "/images/cancer-local-distant-extent.webp",
+        "alt": "The supplied cancer lecture illustrates local disease and distant spread.",
+        "showOn": "answer",
+        "sourceId": "cancer",
+        "page": 8
+      }
+    },
+    {
+      "id": "candidiasis-meaning",
+      "courseId": "pharmacology",
+      "unitId": "p2",
+      "clusterId": "antifungal",
+      "kind": "recall",
+      "prompt": "What is candidiasis commonly called?",
+      "rubric": ["Thrush — an infection caused by Candida fungi."],
+      "conceptIds": ["candidiasis-meaning"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 311,
+          "excerpt": "This can lead to Candidiasis or oral thrush. 2. Suppression of hypothalamic-pituitary axis, hyperglycaemia, hypokalaemia, fluid retention, negative nitrogen and calcium balance, and increased susceptibility to "
+        },
+        {
+          "sourceId": "pharm",
+          "page": 59,
+          "excerpt": "thrush caused by Candida albicans. Study Guide – Chapter 2  52"
+        }
+      ],
+      "importance": 2,
+      "estimatedSeconds": 35
+    },
+    {
+      "id": "fungal-treatment-type",
+      "courseId": "pharmacology",
+      "unitId": "p2",
+      "clusterId": "antifungal",
+      "kind": "recall",
+      "prompt": "What type of medicine treats a fungal infection?",
+      "rubric": ["An antifungal medicine."],
+      "conceptIds": ["fungal-treatment-type"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 75,
+          "excerpt": "Antifungal drugs are drugs that kill or deactivate fungi and are used to treat fungal (including yeast) infections. Study Question In the last 20-30 years there has been a steady increase in systemic fungal inf"
+        }
+      ],
+      "importance": 2,
+      "estimatedSeconds": 35
+    },
+    {
+      "id": "salbutamol-thrush",
+      "courseId": "pharmacology",
+      "unitId": "p5",
+      "clusterId": "salbutamol",
+      "kind": "recall",
+      "prompt": "Is salbutamol a treatment for candidiasis?",
+      "rubric": [
+        "No. Salbutamol opens narrowed airways; candidiasis is a fungal infection treated with an antifungal medicine."
+      ],
+      "conceptIds": ["salbutamol-thrush"],
+      "prerequisiteQuestionIds": [
+        "salbutamol-receptor",
+        "candidiasis-meaning",
+        "fungal-treatment-type"
+      ],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 127,
+          "excerpt": "salbutamol selective β2 agonists  salmeterol Selective α2 agonists Selective α1 antagonists  clonidine  doxazosin (see CVD module)  brimonidine Below is a summary of the key ideas. 1. Adrenergic pharmacolog"
+        },
+        {
+          "sourceId": "pharm",
+          "page": 147,
+          "excerpt": "The short-acting 2-agonists are fast onset bronchodilators and are sometimes known as relievers. These are used for quick relief of bronchospasm when needed by patients and is an important part of emergency tr"
+        },
+        {
+          "sourceId": "pharm",
+          "page": 75,
+          "excerpt": "Antifungal drugs are drugs that kill or deactivate fungi and are used to treat fungal (including yeast) infections. Study Question In the last 20-30 years there has been a steady increase in systemic fungal inf"
+        },
+        {
+          "sourceId": "pharm",
+          "page": 311,
+          "excerpt": "This can lead to Candidiasis or oral thrush. 2. Suppression of hypothalamic-pituitary axis, hyperglycaemia, hypokalaemia, fluid retention, negative nitrogen and calcium balance, and increased susceptibility to "
+        }
+      ],
+      "importance": 2,
+      "estimatedSeconds": 35,
+      "visual": {
+        "src": "/images/bronchodilation.svg",
+        "alt": "Salbutamol relaxes airway smooth muscle, allowing a larger opening.",
+        "showOn": "answer"
+      }
     }
   ],
   "clusters": [
@@ -16682,5 +17228,15 @@
         }
       ]
     }
+  ],
+  "studyRootIds": [
+    "six-week-oral-vaccine",
+    "medicine-teach-back",
+    "clinic-access",
+    "dementia-one-step",
+    "cancer-spread",
+    "salbutamol-thrush",
+    "half-life",
+    "first-pass"
   ]
 }
