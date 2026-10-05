@@ -4,7 +4,9 @@ An offline nursing revision app at https://practice-tests.maxeonyx.com. A time c
 
 Answer mentally. “I know” reveals the answer and difficulty controls. “I don’t know” steps into supporting questions, then returns to the original; a standalone fact reveals its answer and Next. Learning images ground the content, with a separate wordless prerequisite cue. The scheduler balances exam preparation and spaced recall. Progress stays on the device, with quick reopening at the saved step and fresh starts after a new day or three hours away.
 
-The feed includes 740 focused cards and 180 larger exam questions, with multiple choice, true/false, diagram recall and scaffolded written answers. Short sessions use manageable cards; longer sessions can include full answers after supporting concepts are recalled. Curriculum accuracy and scope review continues; [CONTENT.md](CONTENT.md) records the assessment evidence and remaining gaps.
+The curriculum contains 768 focused cards and 180 larger exam questions, with multiple choice, true/false, diagram recall and scaffolded written answers. Short sessions use manageable cards; longer sessions can include full answers after supporting concepts are recalled. Curriculum accuracy and scope review continues; [CONTENT.md](CONTENT.md) records the assessment evidence and remaining gaps.
+
+The read-only curriculum review at https://practice-tests.maxeonyx.com/curriculum-review.html traces assessment scope through topics, questions, prerequisite cards and original sources. It includes the archive inventory and unresolved review findings; a mapped question does not establish complete preparation.
 
 The review link, https://practice-tests.maxeonyx.com/?review=1, uses separate practice progress.
 

@@ -4,7 +4,11 @@ export default defineConfig({
   base: "/",
   build: {
     rollupOptions: {
-      input: { main: "index.html", examples: "examples.html" },
+      input: {
+        main: "index.html",
+        examples: "examples.html",
+        curriculumReview: "curriculum-review.html",
+      },
     },
   },
   plugins: [
@@ -34,7 +38,10 @@ export default defineConfig({
         cleanupOutdatedCaches: true,
         importScripts: ["sw-refresh.js"],
         navigateFallback: "/index.html",
-        navigateFallbackDenylist: [/\/examples\.html(?:\?|$)/],
+        navigateFallbackDenylist: [
+          /\/examples\.html(?:\?|$)/,
+          /\/curriculum-review\.html(?:\?|$)/,
+        ],
         ignoreURLParametersMatching: [
           /^utm_/,
           /^fbclid$/,

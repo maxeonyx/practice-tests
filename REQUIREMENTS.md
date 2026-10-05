@@ -953,3 +953,19 @@ One other small issue. Also there's one other small issue I noticed, which is th
 > Good Monday evening. You ran into a usage limit, and I'm only returning now. Kibra really, really liked the app. She used it a lot today, way more than I expected, and in doing so ran into a bunch of bugs and the limitations, I believe, of the curriculum. So I need you to start now and get a better version out there. She had at least two problems that she told me. First of all, she clicks, like, five minutes to start, but does nothing. The PWA doesn't seem to have any way to, like, refresh the page or update it, I don't know. And then also she said it's repeating the same questions over and over. Maybe that's because the curriculum is still small? Hard to call. But yeah, keep going, and I'd like you to get a live version of the app improved, more curriculum, and then continue and update the app further. And she shouldn't need to think about updating the app; it should just automatically happen, right? When she opens the app, she should just go, you know? No thinking about these kind of stupid things. I don't know if that's possible.
 
 The stalled-start report does not establish its cause. The repetition report may reflect curriculum size or scheduling; both need investigation. Max asks for a live improvement with more curriculum first, followed by continued curriculum and product work. Updates should happen without learner management.
+
+## Monday evening follow-up — version and one-off shuffle
+
+> Sorry ChatGPT, we opened it up. I don't know how to, um, like reinstall the app or update it or what. I've no idea. There's no version number or anything. Probably you can, like, put a little version on the home or something for me. But now it's given us the same questions she already had. Can you shuffle the order or something? Do that now, please. In one minute.
+
+> I mean just a one-off shuffle.
+
+> Doesn't have to shuffle on every open. But if that's fine by the algorithm, then fine by me. But the point is, she did these current eight questions, like five times today. So they should just disappear.
+
+> Quickly.
+
+> What are you up to?
+
+> Too slow. Kibra has lost interest. You have 20 min now.
+
+> Also for the life of me I cannot see any version on the homepage.

@@ -889,7 +889,20 @@
     "exam-reference-older-falls",
     "genetic-examples-slow",
     "inhaled-steroid-names",
-    "gliclazide-missed-meal-application"
+    "gliclazide-missed-meal-application",
+    "individual-response-factors",
+    "mode-of-action-definition",
+    "pregnancy-first-eight-weeks",
+    "pregnancy-free-fraction",
+    "pregnancy-later-exposure",
+    "pregnancy-metabolism-clearance",
+    "pregnancy-volume-dilution",
+    "prodrug-definition",
+    "therapeutic-monitoring-why",
+    "therapeutic-window-broad",
+    "variation-age-dose",
+    "variation-genetic-dose",
+    "variation-pathology-dose"
   ],
   "sources": [
     {
@@ -11275,6 +11288,174 @@
       "clusterId": "parkinsons",
       "title": "Parkinsons Cause",
       "prerequisiteIds": []
+    },
+    {
+      "id": "pharmacology-language-moa",
+      "unitId": "p1",
+      "clusterId": "pharmacology-language",
+      "title": "Mode of action",
+      "prerequisiteIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 13,
+          "excerpt": "Mode of Action (MOA) of a drug: This is the mechanism by which the drug exerts its effect on the body."
+        }
+      ]
+    },
+    {
+      "id": "therapeutic-window-broad",
+      "unitId": "p1",
+      "clusterId": "therapeutic-window",
+      "title": "Broad therapeutic index",
+      "prerequisiteIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 14,
+          "excerpt": "A broad therapeutic index, where there is a wide gap between the desired effect and toxic effects."
+        }
+      ]
+    },
+    {
+      "id": "therapeutic-window-monitoring",
+      "unitId": "p1",
+      "clusterId": "therapeutic-window",
+      "title": "Therapeutic monitoring",
+      "prerequisiteIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 14,
+          "excerpt": "These types of drugs require therapeutic drug monitoring (normally measurement of blood levels) in order to ensure that the drug is having a therapeutic effect and has not caused undue toxic effects."
+        }
+      ]
+    },
+    {
+      "id": "adme-prodrug",
+      "unitId": "p1",
+      "clusterId": "adme",
+      "title": "Prodrug activation",
+      "prerequisiteIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 22,
+          "excerpt": "Conversion of prodrug to active form."
+        }
+      ]
+    },
+    {
+      "id": "variation-factors",
+      "unitId": "p1",
+      "clusterId": "variation",
+      "title": "Individual response factors",
+      "prerequisiteIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 37,
+          "excerpt": "Factors that can affect pharmacological response are: age; gender; body weight and composition; genetic factors; tolerance; pathological status; drug interactions; placebo effect; habits e.g. smoking/drinking."
+        }
+      ]
+    },
+    {
+      "id": "variation-age-dose",
+      "unitId": "p1",
+      "clusterId": "variation",
+      "title": "Age and dose",
+      "prerequisiteIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 37,
+          "excerpt": "Newborn’s drug metabolism is qualitatively and quantitatively very deficient and older people – abilities to metabolise drugs and excrete drugs declines with age therefore older people are prone to toxicity i.e. what was a suitable dose at 60 years may produce severe toxicity at 70 years of age."
+        }
+      ]
+    },
+    {
+      "id": "variation-genetic-dose",
+      "unitId": "p1",
+      "clusterId": "variation",
+      "title": "Genetic dose variation",
+      "prerequisiteIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 38,
+          "excerpt": "People with a high concentration of N-acetyltransferase will be fast acetylators. Drugs will be acetylated and inactivated quickly and effectively. For some people this may be too effective and they end up with low concentrations of active drug in the blood stream. There their dosage may have to be raised to accommodate this."
+        }
+      ]
+    },
+    {
+      "id": "variation-pathology-dose",
+      "unitId": "p1",
+      "clusterId": "variation",
+      "title": "Pathology and dose",
+      "prerequisiteIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 39,
+          "excerpt": "Pathological Status: e.g. Liver/kidney disease – dose reduction may be needed."
+        }
+      ]
+    },
+    {
+      "id": "pregnancy-distribution-detail",
+      "unitId": "p1",
+      "clusterId": "pregnancy-risk",
+      "title": "Pregnancy and distribution",
+      "prerequisiteIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 48,
+          "excerpt": "Plasma volume and ECF increase up to 50% – causing a “haemodilution”. This will reduce plasma concentration of drugs. Albumin decreases and α-acidglycoprotein increases. This will affect free drug available. So: with acidic drugs (e.g. phenytoin): more free drug available; with basic drugs (e.g. chlorpromazine): lower levels of free drug."
+        }
+      ]
+    },
+    {
+      "id": "pregnancy-metabolism-clearance",
+      "unitId": "p1",
+      "clusterId": "pregnancy-risk",
+      "title": "Pregnancy and clearance",
+      "prerequisiteIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 48,
+          "excerpt": "For most drugs renal excretion is relatively unaltered. Accelerated clearance of drugs in third trimester. Liver metabolism is induced by progesterone in pregnancy and so clearance of drugs metabolised by the liver may be enhanced."
+        }
+      ]
+    },
+    {
+      "id": "pregnancy-risk-early",
+      "unitId": "p1",
+      "clusterId": "pregnancy-risk",
+      "title": "Early pregnancy risk",
+      "prerequisiteIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 49,
+          "excerpt": "If drug is taken early in pregnancy, especially the first 8 weeks when major organ development occurs and at a time the woman may not realise she is pregnant the effects are likely to be: congenital malformations; early miscarriage."
+        }
+      ]
+    },
+    {
+      "id": "pregnancy-risk-later",
+      "unitId": "p1",
+      "clusterId": "pregnancy-risk",
+      "title": "Later pregnancy risk",
+      "prerequisiteIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 49,
+          "excerpt": "If the drug is taken later in pregnancy effects are more likely to be: growth retardation; prematurity – breathing difficulties; may affect labour – premature, delayed or prolonged; pharmacological effect on foetus in utero and depending on the drug, withdrawal or rebound effects after birth."
+        }
+      ]
     }
   ],
   "questions": [
@@ -12736,7 +12917,7 @@
       "unitId": "i2",
       "clusterId": "postnatal-care",
       "kind": "recall",
-      "prompt": "Which recovery interventions are listed in the lecture?",
+      "prompt": "Which comfort and recovery measures can support someone after birth?",
       "rubric": [
         "Analgesia, perineal comfort and hygiene, support for voiding, and constipation measures including hydration, fibre and ambulation."
       ],
@@ -13827,7 +14008,7 @@
       "unitId": "i3",
       "clusterId": "b4-school",
       "kind": "recall",
-      "prompt": "Which sectors does the example bring together?",
+      "prompt": "In the B4 School Check example, which sectors work together to support the child?",
       "rubric": [
         "Health, education and social services, including health professionals, early childhood education and appropriate referral services."
       ],
@@ -14153,7 +14334,7 @@
       "kind": "recall",
       "prompt": "For a person at risk of alcohol or opioid withdrawal, what initial assessments and monitoring does the supplied lecture name?",
       "rubric": [
-        "Mental state and risk assessment, vital signs and physical assessment, and withdrawal monitoring; CIWA-Ar is one of the tools named in the lecture."
+        "Mental-state and risk assessment, vital signs and physical assessment, plus withdrawal monitoring. The lecture names both CIWA-Ar and COWS but does not specify their substance-specific use; follow the applicable clinical protocol."
       ],
       "conceptIds": ["withdrawal-risk-assessment"],
       "prerequisiteQuestionIds": [],
@@ -16276,7 +16457,7 @@
       "unitId": "i6",
       "clusterId": "cancer-support",
       "kind": "recall",
-      "prompt": "Which treatment-related effects are listed in the lecture?",
+      "prompt": "Which cancer-treatment effects does the lecture list?",
       "rubric": [
         "Fatigue, hair loss, nausea or vomiting, diarrhoea, anaemia, bruising or bleeding, infection, oral ulcers, skin changes and urinary problems."
       ],
@@ -16692,7 +16873,7 @@
       "unitId": "i3",
       "clusterId": "growth-interpretation",
       "kind": "recall",
-      "prompt": "Which downward pattern does the lecture identify for further consideration?",
+      "prompt": "Which downward centile pattern should prompt further assessment?",
       "rubric": [
         "Downward crossing of two or more centiles, or weight two or more centiles below the length/height centile; use these patterns as a prompt for assessment of growth and nutrition."
       ],
@@ -16868,7 +17049,7 @@
       "unitId": "i3",
       "clusterId": "infant-differences",
       "kind": "recall",
-      "prompt": "Which rate differences are labelled in the lecture’s illustration?",
+      "prompt": "Which rate differences between infants and adults are labelled in the lecture’s illustration?",
       "rubric": [
         "Higher respiratory rates and higher metabolic rate are highlighted, so adult expectations cannot simply be applied to infants and children."
       ],
@@ -16937,7 +17118,7 @@
       "unitId": "i3",
       "clusterId": "attachment-support",
       "kind": "recall",
-      "prompt": "How does the lecture describe attachment?",
+      "prompt": "How does the lecture define parent-child attachment?",
       "rubric": [
         "A strong emotional or affectional tie to an intimate companion, central to emotional development."
       ],
@@ -31676,6 +31857,381 @@
       "objectiveIds": ["8.4.1"]
     },
     {
+      "id": "mode-of-action-definition",
+      "courseId": "pharmacology",
+      "unitId": "p1",
+      "clusterId": "pharmacology-language",
+      "kind": "recall",
+      "prompt": "What does “mode of action” mean when describing a drug?",
+      "rubric": [
+        "It is the mechanism by which the drug exerts its effect on the body."
+      ],
+      "conceptIds": ["pharmacology-language-moa"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 13,
+          "excerpt": "Mode of Action (MOA) of a drug: This is the mechanism by which the drug exerts its effect on the body.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Mode of Action (MOA) of a drug: This is the mechanism by which the drug exerts its effect on the body."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 30,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["1.1.5"]
+    },
+    {
+      "id": "therapeutic-window-broad",
+      "courseId": "pharmacology",
+      "unitId": "p1",
+      "clusterId": "therapeutic-window",
+      "kind": "recall",
+      "prompt": "How does a broad therapeutic index differ from a narrow one?",
+      "rubric": [
+        "A broad therapeutic index has a wide gap between the desired effect and toxic effects; a narrow index has a small margin of safety."
+      ],
+      "conceptIds": ["therapeutic-window-broad"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 14,
+          "excerpt": "A broad therapeutic index, where there is a wide gap between the desired effect and toxic effects.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "A broad therapeutic index, where there is a wide gap between the desired effect and toxic effects."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 30,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["1.1.8"]
+    },
+    {
+      "id": "therapeutic-monitoring-why",
+      "courseId": "pharmacology",
+      "unitId": "p1",
+      "clusterId": "therapeutic-window",
+      "kind": "recall",
+      "prompt": "Why are blood levels and clinical effects monitored for a narrow-therapeutic-window medicine?",
+      "rubric": [
+        "To check that the medicine is effective without causing undue toxicity."
+      ],
+      "conceptIds": ["therapeutic-window-monitoring"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 14,
+          "excerpt": "These types of drugs require therapeutic drug monitoring (normally measurement of blood levels) in order to ensure that the drug is having a therapeutic effect and has not caused undue toxic effects.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "These types of drugs require therapeutic drug monitoring (normally measurement of blood levels) in order to ensure that the drug is having a therapeutic effect and has not caused undue toxic effects."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 30,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["1.1.9"]
+    },
+    {
+      "id": "prodrug-definition",
+      "courseId": "pharmacology",
+      "unitId": "p1",
+      "clusterId": "adme",
+      "kind": "recall",
+      "prompt": "What is a prodrug?",
+      "rubric": ["A prodrug is converted by metabolism into an active form."],
+      "conceptIds": ["adme-prodrug"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 22,
+          "excerpt": "Conversion of prodrug to active form.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Conversion of prodrug to active form."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 30,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["1.2.4"]
+    },
+    {
+      "id": "individual-response-factors",
+      "courseId": "pharmacology",
+      "unitId": "p1",
+      "clusterId": "variation",
+      "kind": "recall",
+      "prompt": "Which factors does the guide list as affecting individual drug response?",
+      "rubric": [
+        "Age, gender, body weight/composition, genetics, tolerance, pathological status, drug interactions, placebo effect and habits such as smoking or drinking."
+      ],
+      "conceptIds": ["variation-factors"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 37,
+          "excerpt": "Factors that can affect pharmacological response are: age; gender; body weight and composition; genetic factors; tolerance; pathological status; drug interactions; placebo effect; habits e.g. smoking/drinking.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Factors that can affect pharmacological response are: age; gender; body weight and composition; genetic factors; tolerance; pathological status; drug interactions; placebo effect; habits e.g. smoking/drinking."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 30,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["1.5.1"]
+    },
+    {
+      "id": "variation-age-dose",
+      "courseId": "pharmacology",
+      "unitId": "p1",
+      "clusterId": "variation",
+      "kind": "recall",
+      "prompt": "Why may an adult dose cause harm in a newborn or an older person?",
+      "rubric": [
+        "Newborn drug metabolism is deficient; metabolism and excretion decline with age in older people. A dose suitable at 60 may cause severe toxicity at 70, so assess the individual rather than assuming an age-neutral dose."
+      ],
+      "conceptIds": ["variation-age-dose"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 37,
+          "excerpt": "Newborn’s drug metabolism is qualitatively and quantitatively very deficient and older people – abilities to metabolise drugs and excrete drugs declines with age therefore older people are prone to toxicity i.e. what was a suitable dose at 60 years may produce severe toxicity at 70 years of age.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Newborn’s drug metabolism is qualitatively and quantitatively very deficient and older people – abilities to metabolise drugs and excrete drugs declines with age therefore older people are prone to toxicity i.e. what was a suitable dose at 60 years may produce severe toxicity at 70 years of age."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 30,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["1.6.1", "1.6.2"]
+    },
+    {
+      "id": "variation-genetic-dose",
+      "courseId": "pharmacology",
+      "unitId": "p1",
+      "clusterId": "variation",
+      "kind": "recall",
+      "prompt": "How can fast and slow acetylation change dose requirements?",
+      "rubric": [
+        "Fast acetylators may inactivate a drug quickly, lowering active concentrations so the dose may need to increase. Slow acetylators may accumulate drug and develop toxicity, so dose may need to change."
+      ],
+      "conceptIds": ["variation-genetic-dose"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 38,
+          "excerpt": "People with a high concentration of N-acetyltransferase will be fast acetylators. Drugs will be acetylated and inactivated quickly and effectively. For some people this may be too effective and they end up with low concentrations of active drug in the blood stream. There their dosage may have to be raised to accommodate this.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "People with a high concentration of N-acetyltransferase will be fast acetylators. Drugs will be acetylated and inactivated quickly and effectively. For some people this may be too effective and they end up with low concentrations of active drug in the blood stream. There their dosage may have to be raised to accommodate this."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 30,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["1.5.1", "1.6.2"]
+    },
+    {
+      "id": "variation-pathology-dose",
+      "courseId": "pharmacology",
+      "unitId": "p1",
+      "clusterId": "variation",
+      "kind": "recall",
+      "prompt": "How can liver or kidney disease affect medicine dosage?",
+      "rubric": [
+        "The guide notes that liver or kidney disease can impair handling of medicines, so dose reduction may be needed. Assess the exact medicine and response."
+      ],
+      "conceptIds": ["variation-pathology-dose"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 39,
+          "excerpt": "Pathological Status: e.g. Liver/kidney disease – dose reduction may be needed.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Pathological Status: e.g. Liver/kidney disease – dose reduction may be needed."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 30,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["1.5.1", "1.6.2"]
+    },
+    {
+      "id": "pregnancy-metabolism-clearance",
+      "courseId": "pharmacology",
+      "unitId": "p1",
+      "clusterId": "pregnancy-risk",
+      "kind": "recall",
+      "prompt": "How does the guide describe medicine clearance during pregnancy?",
+      "rubric": [
+        "It says renal excretion is relatively unaltered for most drugs, clearance accelerates in the third trimester, and progesterone induces liver metabolism."
+      ],
+      "conceptIds": ["pregnancy-metabolism-clearance"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 48,
+          "excerpt": "For most drugs renal excretion is relatively unaltered. Accelerated clearance of drugs in third trimester. Liver metabolism is induced by progesterone in pregnancy and so clearance of drugs metabolised by the liver may be enhanced.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "For most drugs renal excretion is relatively unaltered. Accelerated clearance of drugs in third trimester. Liver metabolism is induced by progesterone in pregnancy and so clearance of drugs metabolised by the liver may be enhanced."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 30,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["1.6.1", "1.6.2"]
+    },
+    {
+      "id": "pregnancy-first-eight-weeks",
+      "courseId": "pharmacology",
+      "unitId": "p1",
+      "clusterId": "pregnancy-risk",
+      "kind": "recall",
+      "prompt": "What fetal risks does the guide associate with medicine exposure during the first eight weeks?",
+      "rubric": [
+        "Exposure during early organ development can cause congenital malformations or early miscarriage; the guide identifies the first eight weeks as a key period."
+      ],
+      "conceptIds": ["pregnancy-risk-early"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 49,
+          "excerpt": "If drug is taken early in pregnancy, especially the first 8 weeks when major organ development occurs and at a time the woman may not realise she is pregnant the effects are likely to be: congenital malformations; early miscarriage.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "If drug is taken early in pregnancy, especially the first 8 weeks when major organ development occurs and at a time the woman may not realise she is pregnant the effects are likely to be: congenital malformations; early miscarriage."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 30,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["1.6.5"]
+    },
+    {
+      "id": "pregnancy-later-exposure",
+      "courseId": "pharmacology",
+      "unitId": "p1",
+      "clusterId": "pregnancy-risk",
+      "kind": "recall",
+      "prompt": "What fetal or newborn effects does the guide associate with later-pregnancy medicine exposure?",
+      "rubric": [
+        "Possible effects include growth restriction, prematurity with breathing difficulties, altered timing or duration of labour, and fetal drug effects or withdrawal/rebound after birth, depending on the medicine."
+      ],
+      "conceptIds": ["pregnancy-risk-later"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 49,
+          "excerpt": "If the drug is taken later in pregnancy effects are more likely to be: growth retardation; prematurity – breathing difficulties; may affect labour – premature, delayed or prolonged; pharmacological effect on foetus in utero and depending on the drug, withdrawal or rebound effects after birth.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "If the drug is taken later in pregnancy effects are more likely to be: growth retardation; prematurity – breathing difficulties; may affect labour – premature, delayed or prolonged; pharmacological effect on foetus in utero and depending on the drug, withdrawal or rebound effects after birth."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 30,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["1.6.5"]
+    },
+    {
+      "id": "pregnancy-volume-dilution",
+      "courseId": "pharmacology",
+      "unitId": "p1",
+      "clusterId": "pregnancy-risk",
+      "kind": "recall",
+      "prompt": "How can increased plasma volume affect drug concentration during pregnancy?",
+      "rubric": [
+        "The guide says plasma volume and extracellular fluid increase up to 50%, causing haemodilution that lowers plasma drug concentration."
+      ],
+      "conceptIds": ["pregnancy-distribution-detail"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 48,
+          "excerpt": "Plasma volume and ECF increase up to 50% – causing a “haemodilution”. This will reduce plasma concentration of drugs.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Plasma volume and ECF increase up to 50% – causing a “haemodilution”. This will reduce plasma concentration of drugs."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 30,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["1.6.1", "1.6.2"]
+    },
+    {
+      "id": "pregnancy-free-fraction",
+      "courseId": "pharmacology",
+      "unitId": "p1",
+      "clusterId": "pregnancy-risk",
+      "kind": "recall",
+      "prompt": "How can pregnancy-related plasma proteins alter free-drug levels?",
+      "rubric": [
+        "The guide says albumin decreases and α1-acid glycoprotein increases. It gives acidic phenytoin as an example with more free drug and basic chlorpromazine as an example with lower free levels."
+      ],
+      "conceptIds": ["pregnancy-distribution-detail"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 48,
+          "excerpt": "Albumin decreases and α-acidglycoprotein increases. This will affect free drug available. So: with acidic drugs (e.g. phenytoin): more free drug available; with basic drugs (e.g. chlorpromazine): lower levels of free drug.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Albumin decreases and α-acidglycoprotein increases. This will affect free drug available."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 35,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["1.6.1", "1.6.2"]
+    },
+    {
       "id": "exam-reference-phc-access",
       "sourceQuestionId": "phc-access",
       "questionId": "application-phc-access",
@@ -33731,7 +34287,7 @@
       "prompt": "A person with heavy alcohol use reports their last drink was yesterday. Explain why withdrawal needs careful assessment, the monitoring domains in the lecture and how risk and protective factors shape the plan.",
       "rubric": [
         "It can be life-threatening; severity is influenced by consumption, co-existing conditions and age, so screening, assessment and monitoring are important.",
-        "Mental state and risk assessment, vital signs and physical assessment, and withdrawal monitoring; CIWA-Ar is one of the tools named in the lecture.",
+        "Mental-state and risk assessment, vital signs and physical assessment, and withdrawal monitoring. The lecture names CIWA-Ar and COWS but does not specify their substance-specific use; follow the applicable clinical protocol.",
         "Static factors include age, family history and past events; dynamic factors include current intoxication, mental state, stressors, housing and relationships; protective factors include support, service engagement and coping skills.",
         "Harm reduction, education, brief intervention or motivational interviewing, care coordination, withdrawal care, rehabilitation, counselling and peer support, according to assessed needs."
       ],
@@ -36226,7 +36782,8 @@
         "adme-absorption",
         "adme-distribution",
         "adme-metabolism",
-        "adme-excretion"
+        "adme-excretion",
+        "prodrug-definition"
       ],
       "sources": [
         {
@@ -42312,7 +42869,8 @@
         "pharmacology-language-scope",
         "pharmacology-language-branches",
         "pharmacology-language-names",
-        "pharmacology-language-source"
+        "pharmacology-language-source",
+        "mode-of-action-definition"
       ],
       "sources": [
         {
@@ -42511,7 +43069,12 @@
         "pregnancy-risk-mother",
         "pregnancy-risk-timing",
         "pregnancy-risk-benefit",
-        "pregnancy-risk-advice"
+        "pregnancy-risk-advice",
+        "pregnancy-volume-dilution",
+        "pregnancy-metabolism-clearance",
+        "pregnancy-first-eight-weeks",
+        "pregnancy-later-exposure",
+        "pregnancy-free-fraction"
       ],
       "sources": [
         {
@@ -43187,7 +43750,9 @@
       "prerequisiteQuestionIds": [
         "therapeutic-window-margin",
         "therapeutic-window-example",
-        "therapeutic-window-monitor"
+        "therapeutic-window-monitor",
+        "therapeutic-window-broad",
+        "therapeutic-monitoring-why"
       ],
       "sources": [
         {
@@ -43381,7 +43946,11 @@
       "prerequisiteQuestionIds": [
         "variation-young",
         "variation-older",
-        "variation-genes"
+        "variation-genes",
+        "individual-response-factors",
+        "variation-age-dose",
+        "variation-genetic-dose",
+        "variation-pathology-dose"
       ],
       "sources": [
         {
@@ -45312,6 +45881,11 @@
             "conceptId": "adme-excretion",
             "label": "Excretion",
             "answer": "Kidneys → urine"
+          },
+          {
+            "conceptId": "prodrug-definition",
+            "label": "Prodrug",
+            "answer": "Metabolism → active form"
           }
         ]
       }
@@ -45424,6 +45998,16 @@
             "conceptId": "therapeutic-window-monitor",
             "label": "Monitoring",
             "answer": "Measure → effective and safe range"
+          },
+          {
+            "conceptId": "therapeutic-window-broad",
+            "label": "Broad index",
+            "answer": "Wide desired-to-toxic margin"
+          },
+          {
+            "conceptId": "therapeutic-monitoring-why",
+            "label": "Monitoring",
+            "answer": "Effect + blood level → efficacy/safety"
           }
         ]
       }
@@ -45452,6 +46036,26 @@
             "conceptId": "variation-genes",
             "label": "Pharmacogenetics",
             "answer": "Genes → processing or response"
+          },
+          {
+            "conceptId": "individual-response-factors",
+            "label": "Response factors",
+            "answer": "Age · body · genes · context"
+          },
+          {
+            "conceptId": "variation-age-dose",
+            "label": "Age",
+            "answer": "Immature/declining clearance"
+          },
+          {
+            "conceptId": "variation-genetic-dose",
+            "label": "Acetylation",
+            "answer": "Fast ↓ levels · slow ↑ toxicity"
+          },
+          {
+            "conceptId": "variation-pathology-dose",
+            "label": "Disease",
+            "answer": "Impaired organ function → dose review"
           }
         ]
       }
@@ -46503,6 +47107,11 @@
             "conceptId": "pharmacology-language-source",
             "label": "Natural or synthetic",
             "answer": "Same molecule → same mechanism"
+          },
+          {
+            "conceptId": "mode-of-action-definition",
+            "label": "Mode of action",
+            "answer": "Mechanism → effect"
           }
         ]
       }
@@ -46770,6 +47379,36 @@
             "conceptId": "pregnancy-risk-advice",
             "label": "Risk information",
             "answer": "Medicine-specific NZF advice"
+          },
+          {
+            "conceptId": "pregnancy-metabolism-clearance",
+            "label": "Clearance",
+            "answer": "Third trimester · progesterone"
+          },
+          {
+            "conceptId": "pregnancy-first-eight-weeks",
+            "label": "Early",
+            "answer": "First 8 weeks · malformations/miscarriage"
+          },
+          {
+            "conceptId": "pregnancy-later-exposure",
+            "label": "Later",
+            "answer": "Growth · birth · neonatal effects"
+          },
+          {
+            "conceptId": "pregnancy-volume-dilution",
+            "label": "Distribution",
+            "answer": "Volume dilution · protein changes"
+          },
+          {
+            "conceptId": "pregnancy-first-eight-weeks",
+            "label": "Early",
+            "answer": "First 8 weeks · malformations/miscarriage"
+          },
+          {
+            "conceptId": "pregnancy-later-exposure",
+            "label": "Later",
+            "answer": "Growth · birth · neonatal effects"
           }
         ]
       }

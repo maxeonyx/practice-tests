@@ -10,7 +10,7 @@ Max supplied the Pharmacology final as “50% Nov 2” and confirmed long answer
 
 ## Authoring and review
 
-The feed contains 740 focused questions and 180 larger exam questions, all reachable from 575 study roots. Flashcards, multiple choice, true/false, diagram recall and scaffolded open answers share the learner feed. The 46 source records distinguish supplied teaching from attributed supplementary references.
+The curriculum contains 768 focused questions and 180 larger exam questions, all reachable from 903 study roots. Flashcards, multiple choice, true/false, diagram recall and scaffolded open answers share the learner feed. The 47 source records distinguish supplied teaching from attributed supplementary references.
 
 Use the supplied current guide/lecture/lab content first. Check the actual PDF page or slide, including image and SmartArt content, rather than relying on extraction alone. A source excerpt must exist on the referenced page and support the answer. Preserve source qualifiers. Do not import unanswered quiz attempts as an answer key. Older mindmaps are marked outdated in the course pages and need current corroboration.
 
@@ -22,7 +22,7 @@ Graph validation checks every question, concept, source and prerequisite link. S
 
 ## Reviewed grounding example
 
-The prototype's opening Integrated Care flashcard asks one directly testable schedule fact.
+This Integrated Care flashcard asks one directly testable schedule fact.
 
 **Question:** At the six-week immunisation visit, which vaccine is given by mouth?
 

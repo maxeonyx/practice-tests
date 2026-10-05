@@ -1,0 +1,296 @@
+[
+  {
+    "id": "example-factual-mcq-six-week-oral-vaccine",
+    "taskFormat": "factual_mcq",
+    "cognitiveTask": "retrieve a date-qualified schedule fact",
+    "prompt": "In the August 2025 National Immunisation Schedule, which vaccine is given orally at 6 weeks?",
+    "options": [
+      { "id": "A", "text": "Rotarix" },
+      { "id": "B", "text": "Bexsero" },
+      { "id": "C", "text": "Prevenar 13" },
+      { "id": "D", "text": "Infanrix hexa" }
+    ],
+    "answer": "A",
+    "answerText": "Rotarix.",
+    "explanation": "The course schedule labels Rotarix as the oral rotavirus vaccine at 6 weeks. The date qualifier matters: this card teaches the supplied August 2025 schedule, not a claim that all schedule details remain current.",
+    "sources": [
+      {
+        "sourceId": "immun-scope",
+        "sourceTitle": "Immunisation knowledge-test guidance",
+        "sourceURL": null,
+        "location": 1,
+        "quote": "“You will be tested on this for your knowledge test, so please download it!”",
+        "evidenceType": "course-source-quote"
+      },
+      {
+        "sourceId": "schedule",
+        "sourceTitle": "National Immunisation Schedule · August 2025",
+        "sourceURL": null,
+        "location": 1,
+        "quote": "Visual transcript, August 2025 schedule, 6 weeks: Rotavirus—Rotarix oral.",
+        "evidenceType": "visual-transcription"
+      },
+      {
+        "sourceId": "schedule",
+        "sourceTitle": "National Immunisation Schedule · August 2025",
+        "sourceURL": null,
+        "location": 1,
+        "quote": "Visual transcript, August 2025 schedule, 6 weeks: Rotavirus—Rotarix oral; diphtheria, tetanus, pertussis, polio, hepatitis B and Hib—Infanrix hexa; pneumococcal disease—Prevenar 13.",
+        "evidenceType": "visual-transcription"
+      }
+    ],
+    "ordinaryCardIds": ["six-week-oral-vaccine", "immun-infant-six-weeks"],
+    "fullReferenceIDs": ["exam-reference-immun-infant"],
+    "howCardsSupportTransfer": "The schedule card teaches the vaccine and route; the six-week list card anchors the age and distinguishes the other products. A differently worded item can test the same age/product/route relationship."
+  },
+  {
+    "id": "example-scenario-best-action-crying-safety",
+    "taskFormat": "scenario_best_action_mcq",
+    "cognitiveTask": "select an immediate safety response",
+    "prompt": "A caregiver is becoming overwhelmed while their baby cries. What is the safest immediate action?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Put the baby in a safe place, take a break and wait until calm before picking the baby up; never shake the baby."
+      },
+      {
+        "id": "B",
+        "text": "Keep holding and rocking the baby even if the caregiver feels unable to stay calm."
+      },
+      {
+        "id": "C",
+        "text": "Leave the baby alone in the home while the caregiver goes outside."
+      },
+      { "id": "D", "text": "Shake the baby gently to interrupt the crying." }
+    ],
+    "answer": "A",
+    "answerText": "Put the baby in a safe place and take a break until calm. Never shake the baby.",
+    "explanation": "The Power to Protect material normalises caregiver frustration while teaching a safe pause and a clear prohibition against shaking. The correct choice applies that rule to the immediate situation.",
+    "sources": [
+      {
+        "sourceId": "postnatal",
+        "sourceTitle": "Maternity care · Part 2",
+        "sourceURL": null,
+        "location": 26,
+        "quote": "“It is normal for babies to cry, and it is normal for caregivers to get frustrated It’s okay to walk away.”",
+        "evidenceType": "course-source"
+      },
+      {
+        "sourceId": "postnatal",
+        "sourceTitle": "Maternity care · Part 2",
+        "sourceURL": null,
+        "location": 26,
+        "quote": "Visual transcript: “Put baby in a safe place, close the door and take a break”; “Don’t pick baby up until you are calm”; “Never, ever shake a baby”.",
+        "evidenceType": "visual-transcription"
+      }
+    ],
+    "ordinaryCardIds": [
+      "application-crying-safety",
+      "crying-safety-pause",
+      "crying-safety-normal"
+    ],
+    "fullReferenceIDs": ["exam-reference-crying-safety"],
+    "howCardsSupportTransfer": "The recall cards teach each safety component. The application card rehearses choosing the response when a caregiver is overwhelmed; a new vignette can vary the context while retaining the same safe-action principle."
+  },
+  {
+    "id": "example-tf-pregnancy-test-sign",
+    "taskFormat": "true_false_with_correction",
+    "cognitiveTask": "classify a finding and correct a misconception",
+    "prompt": "A positive urine pregnancy test is a positive sign of pregnancy.",
+    "answer": "False. It is classed as a probable sign in the supplied teaching; positive signs are attributable only to the presence of a foetus.",
+    "explanation": "The lecture distinguishes a positive test from signs attributable only to a foetus. “Positive” in the test result does not make it a positive sign in this classification.",
+    "sources": [
+      {
+        "sourceId": "antenatal",
+        "sourceTitle": "Maternity care · Part 1",
+        "sourceURL": null,
+        "location": 11,
+        "quote": "“Probable signs of pregnancy (Highly suggestive – but not definitive) Objective signs of pregnancy that are observed by the examiner – BUT could also be caused by other conditions”",
+        "evidenceType": "course-source"
+      },
+      {
+        "sourceId": "antenatal",
+        "sourceTitle": "Maternity care · Part 1",
+        "sourceURL": null,
+        "location": 12,
+        "quote": "Positive signs of pregnancy Signs that are attributable only to the presence of a foetus  Foetal heartbeat (Doppler)  Visualisation of foetus (Ultrasound)  Foetal movement palpated by examiner",
+        "evidenceType": "course-source"
+      }
+    ],
+    "ordinaryCardIds": ["pregnancy-signs-probable", "pregnancy-signs-positive"],
+    "fullReferenceIDs": ["exam-reference-pregnancy-signs"],
+    "howCardsSupportTransfer": "The two cards teach the boundary between probable and positive signs, so learners can correct a reworded classification statement rather than memorise only the example."
+  },
+  {
+    "id": "example-compare-delirium-dementia-depression",
+    "taskFormat": "short_answer_compare",
+    "cognitiveTask": "compare time course and symptoms, avoid diagnostic anchoring, prioritise urgent assessment",
+    "prompt": "An older adult has gradually worsening memory, but today is suddenly inattentive and disoriented; they have also had low mood and little interest for weeks. What should you consider and do first?",
+    "answer": "These patterns may coexist. Gradual cognitive change can fit dementia; persistent low mood or loss of interest over weeks can fit depression; sudden inattention and disorientation may indicate delirium. Arrange urgent medical assessment for the sudden change rather than assuming dementia.",
+    "explanation": "The cards teach the time-course clues, while the case requires applying all three without forcing an exclusive diagnosis. NICE advises managing delirium first when distinguishing delirium from dementia is difficult; sudden confusion needs urgent medical assessment. This is externally supplemented because the supplied course comparison is absent.",
+    "sources": [
+      {
+        "sourceId": "nice-delirium",
+        "sourceTitle": "NICE · Delirium: prevention, diagnosis and management",
+        "sourceURL": "https://www.nice.org.uk/guidance/cg103/chapter/Recommendations",
+        "location": "Recommendations 1.3.1, 1.6.2–1.6.3",
+        "quote": "“Recent (within hours or days) changes or fluctuations that may indicate delirium.” “If there is difficulty distinguishing between the diagnoses of delirium, dementia or delirium superimposed on dementia, manage the delirium first.”",
+        "evidenceType": "quoted-web-source"
+      },
+      {
+        "sourceId": "nhs-confusion",
+        "sourceTitle": "NHS · Sudden confusion (delirium)",
+        "sourceURL": "https://www.nhs.uk/conditions/confusion/",
+        "location": "Sudden confusion (delirium)",
+        "quote": "“Get medical help immediately if someone suddenly becomes confused (delirious).”",
+        "evidenceType": "quoted-web-source"
+      },
+      {
+        "sourceId": "nhs-dementia-symptoms",
+        "sourceTitle": "NHS · Symptoms of dementia",
+        "sourceURL": "https://www.nhs.uk/conditions/dementia/symptoms-and-diagnosis/symptoms/",
+        "location": "Common early symptoms of dementia",
+        "quote": "“These symptoms are often mild and may get worse only very gradually.”",
+        "evidenceType": "quoted-web-source"
+      },
+      {
+        "sourceId": "nhs-depression-symptoms",
+        "sourceTitle": "NHS · Symptoms of depression in adults",
+        "sourceURL": "https://www.nhs.uk/mental-health/conditions/depression-in-adults/symptoms/",
+        "location": "Symptoms - Depression in adults",
+        "quote": "“You may feel sad, hopeless and lose interest in things you used to enjoy.” “The symptoms persist for weeks or months.”",
+        "evidenceType": "quoted-web-source"
+      },
+      {
+        "sourceId": "nice-delirium",
+        "sourceTitle": "NICE · Delirium: prevention, diagnosis and management",
+        "sourceURL": "https://www.nice.org.uk/guidance/cg103/chapter/Recommendations",
+        "location": "Recommendations 1.3.1",
+        "quote": "“Recent (within hours or days) changes or fluctuations that may indicate delirium.”",
+        "evidenceType": "quoted-web-source"
+      },
+      {
+        "sourceId": "nhs-confusion",
+        "sourceTitle": "NHS · Sudden confusion (delirium)",
+        "sourceURL": "https://www.nhs.uk/conditions/confusion/",
+        "location": "How to tell if someone is confused",
+        "quote": "“If a person is confused, they may ... struggle to pay attention.”",
+        "evidenceType": "quoted-web-source"
+      },
+      {
+        "sourceId": "nhs-dementia-symptoms",
+        "sourceTitle": "NHS · Symptoms of dementia",
+        "sourceURL": "https://www.nhs.uk/conditions/dementia/symptoms-and-diagnosis/symptoms/",
+        "location": "Common early symptoms of dementia",
+        "quote": "“These symptoms are often mild and may get worse only very gradually.” “In some people, these symptoms will remain the same and not worsen.”",
+        "evidenceType": "quoted-web-source"
+      }
+    ],
+    "ordinaryCardIds": [
+      "application-dementia-delirium-depression",
+      "dementia-patterns-delirium-timecourse",
+      "dementia-patterns-gradual-change",
+      "dementia-patterns-depression"
+    ],
+    "fullReferenceIDs": [
+      "exam-reference-application-dementia-delirium-depression"
+    ],
+    "howCardsSupportTransfer": "Three prerequisite cards teach the discriminating clues; the manageable application card rehearses the combined judgement and first response. A different case can change the symptoms while testing the same time-course reasoning.",
+    "sourceLimit": "The clinical comparison comes from the named NHS/NICE sources, not from the missing comparison in the supplied lecture."
+  },
+  {
+    "id": "example-image-interpretation-cancer-spread",
+    "taskFormat": "image_interpretation_short_answer",
+    "cognitiveTask": "interpret an illustrated primary-to-distant spread pattern",
+    "prompt": "In the supplied breast-cancer illustration, a tumour has spread from the breast to the brain, lungs and liver. Is the illustrated disease localised or metastatic?",
+    "answer": "Metastatic disease; the supplied illustration labels the distant-spread example Stage IV.",
+    "explanation": "The course illustration contrasts a primary-site tumour with distant secondary sites. This answer is limited to the labels and examples actually shown; it does not teach a complete staging system.",
+    "visual": {
+      "src": "/images/cancer-local-distant-extent.webp",
+      "alt": "The supplied breast-cancer illustration compares a primary-site tumour with spread to distant organs."
+    },
+    "sources": [
+      {
+        "sourceId": "cancer",
+        "sourceTitle": "Cancer prevention & long-term management",
+        "sourceURL": null,
+        "location": 8,
+        "quote": "Visual transcript: the illustration labels distant spread “Stage IV” and shows secondary sites in the brain, lungs and liver.",
+        "evidenceType": "visual-transcription"
+      },
+      {
+        "sourceId": "cancer",
+        "sourceTitle": "Cancer prevention & long-term management",
+        "sourceURL": null,
+        "location": 8,
+        "quote": "Visual transcript: the illustration labels the primary-site tumour “Stage I” and shows it remaining in the breast.",
+        "evidenceType": "visual-transcription"
+      }
+    ],
+    "ordinaryCardIds": [
+      "cancer-extent-metastatic",
+      "application-cancer-extent"
+    ],
+    "fullReferenceIDs": ["exam-reference-cancer-extent"],
+    "howCardsSupportTransfer": "The labelled card links distant organ spread to the term metastasis; the application card rehearses classifying a new primary-to-distant spread description. The diagram helps interpret location and extent, rather than asking learners to infer unshown staging rules."
+  },
+  {
+    "id": "example-short-answer-postnatal-risk-plan",
+    "taskFormat": "short_answer_clinical_plan",
+    "cognitiveTask": "recognise symptoms, structure risk assessment, make an actionable individual plan",
+    "prompt": "A new parent reports low mood, poor concentration and guilt about caring for the baby. In three points, describe what you would explore and how you would plan the response.",
+    "answer": "1. Explore the reported symptoms and their effect; do not dismiss them as ordinary tiredness. 2. Assess relevant risks, including suicide, self-harm, aggression and vulnerability, and consider static, dynamic and protective factors. 3. Agree an individualised, recovery-focused plan with specific actions and responsibility; use SMART actions where appropriate.",
+    "markingPoints": [
+      {
+        "point": 1,
+        "criterion": "Explores the reported symptoms and their effect rather than dismissing them.",
+        "supportingCardIds": ["postnatal-mental-health-symptoms"]
+      },
+      {
+        "point": 2,
+        "criterion": "Assesses the named risk categories and relevant static, dynamic and protective factors.",
+        "supportingCardIds": ["postnatal-mental-health-risk"]
+      },
+      {
+        "point": 3,
+        "criterion": "Creates an individualised, recovery-focused plan with clear actions and responsibility; SMART structure may be used.",
+        "supportingCardIds": ["postnatal-mental-health-plan"]
+      }
+    ],
+    "explanation": "Each marking point is taught by a small supporting card. The application card combines symptom recognition and risk assessment, while the plan card adds the action-and-responsibility step. The three points are illustrative practice marks, not an official A5 marking scheme.",
+    "sources": [
+      {
+        "sourceId": "postnatal",
+        "sourceTitle": "Maternity care · Part 2",
+        "sourceURL": null,
+        "location": 18,
+        "quote": "Post natal Depression (PND)  Low mood  Irritability  Loss of interest in pleasurable activity  Fatigue and/or insomnia  Appetite changes  Decreased libido  Poor concentration  A sense of guilt or inability to care for the infant",
+        "evidenceType": "course-source"
+      },
+      {
+        "sourceId": "risk",
+        "sourceTitle": "Postnatal mental health · Risk assessment",
+        "sourceURL": null,
+        "location": 1,
+        "quote": "“Risk of suicide”; “Risk of self-harm”; “Risk of aggression”; “Risk of vulnerability”; “Risk factors can be static, dynamic or protective.”",
+        "evidenceType": "course-source-quote"
+      },
+      {
+        "sourceId": "risk",
+        "sourceTitle": "Postnatal mental health · Risk assessment",
+        "sourceURL": null,
+        "location": 1,
+        "quote": "“A well-constructed plan clearly identifies the key issues, outlines specific interventions, and assigns responsibility for each action.”",
+        "evidenceType": "course-source"
+      }
+    ],
+    "ordinaryCardIds": [
+      "application-postnatal-mental-health",
+      "postnatal-mental-health-symptoms",
+      "postnatal-mental-health-risk",
+      "postnatal-mental-health-plan"
+    ],
+    "fullReferenceIDs": ["exam-reference-postnatal-mental-health"],
+    "howCardsSupportTransfer": "The prerequisite cards teach symptoms, risk categories and plan structure separately. The ordinary application card practises connecting the first two; the complete reference answer shows how to organise them into a longer response. A variant can change the symptoms or risk context while retaining the same reasoning sequence."
+  }
+]
