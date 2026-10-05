@@ -140,6 +140,26 @@ test("published curriculum has complete links, source traces, and acyclic prereq
   ).toBeGreaterThanOrEqual(3);
 });
 
+test("short sessions can reach every focused card without requiring a written question", () => {
+  const reachable = new Set<string>();
+  function visit(id: string) {
+    const q = question(id);
+    if (reachable.has(id) || q.interaction?.type === "open-answer") return;
+    reachable.add(id);
+    for (const child of q.prerequisiteQuestionIds) visit(child);
+  }
+  for (const id of studyRootIds) visit(id);
+  const inaccessible = questions
+    .filter(
+      (q) =>
+        q.interaction?.type !== "open-answer" &&
+        q.feedEligible !== false &&
+        !reachable.has(q.id),
+    )
+    .map((q) => q.id);
+  expect(inaccessible).toEqual([]);
+});
+
 test("independent due recall sessions count toward course balance", () => {
   const state = empty();
   const recall = questions

@@ -431,3 +431,10 @@ textarea:focus {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+
+.app-version {
+  display: block;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 12px;
+}

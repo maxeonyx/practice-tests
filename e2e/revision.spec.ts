@@ -6,6 +6,7 @@ const reviewDatabase = "kira-revision-review";
 async function begin(page: Page) {
   await page.goto(reviewUrl);
   await page.getByRole("button", { name: "10 min", exact: true }).click();
+  await page.goto("/?review=1&question=six-week-oral-vaccine");
   await expect(page.locator("#question-prompt")).toBeVisible();
 }
 

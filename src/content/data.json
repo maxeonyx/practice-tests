@@ -1,13 +1,5 @@
 {
   "studyRootIds": [
-    "six-week-oral-vaccine",
-    "medicine-teach-back",
-    "clinic-access",
-    "dementia-one-step",
-    "cancer-spread",
-    "salbutamol-thrush",
-    "half-life",
-    "first-pass",
     "phc-access-barriers",
     "phc-access-participation",
     "phc-access-safety",
@@ -574,7 +566,324 @@
     "phenoxymethylpenicillin-id",
     "psychosis-meaning",
     "raas-conversion-enzyme",
-    "terbutaline-id"
+    "terbutaline-id",
+    "ace-inhibitor-clinical-applications",
+    "activity-units-liquid-volume",
+    "adme-distribution",
+    "adme-excretion",
+    "adme-metabolism",
+    "administration-form",
+    "administration-otc",
+    "adr-reporting-b",
+    "adr-reporting-report",
+    "adrenaline-common-adverse-effects",
+    "adrenaline-route",
+    "adrenergic-language-block",
+    "adrenergic-language-select",
+    "adrenergic-targets-alpha2",
+    "adrenergic-targets-beta1",
+    "adrenergic-targets-beta2",
+    "aminoglycoside-systemic-route",
+    "anaesthesia-general",
+    "anaesthesia-local",
+    "antibiotic-families-macrolide",
+    "antibiotic-families-quinolone",
+    "antibiotic-families-tetracycline",
+    "antibiotic-safety-binding",
+    "antibiotic-safety-doxycycline",
+    "anticoagulant-targets-heparin",
+    "anticoagulant-targets-lmwh",
+    "anticoagulant-targets-warfarin",
+    "antidepressant-care-snri",
+    "antidepressant-care-support",
+    "antidepressant-care-tca",
+    "antidepressants-enzyme",
+    "antidepressants-tyramine",
+    "antiemetic-dopamine",
+    "antiemetic-sedation",
+    "antiemetic-selection-d2",
+    "antiemetic-selection-h1",
+    "antiemetic-selection-muscarinic",
+    "antiemetic-selection-serotonin",
+    "antiepileptic-safety-phenytoin",
+    "antiepileptic-safety-pregnancy",
+    "antiepileptic-safety-therapy",
+    "antiepileptic-safety-warning",
+    "antifungal-action",
+    "antifungal-choices-care",
+    "antifungal-choices-polyene",
+    "antifungal-choices-terbinafine",
+    "antifungal-opportunistic",
+    "antimicrobial-care-reaction",
+    "antimicrobial-care-selection",
+    "antimicrobial-care-skin",
+    "antimicrobial-resistance",
+    "antimicrobial-spectrum",
+    "antipsychotic-monitoring-clozapine",
+    "antipsychotic-monitoring-eps",
+    "antipsychotic-monitoring-general",
+    "antipsychotic-monitoring-symptoms",
+    "antipsychotics-movement",
+    "antipsychotics-profiles",
+    "antisepsis-dilution",
+    "antisepsis-handling",
+    "asthma-antiinflammatory-device",
+    "asthma-antiinflammatory-montelukast",
+    "asthma-antiinflammatory-steroid",
+    "autonomic-airways",
+    "autonomic-gut",
+    "balanced-anaesthesia-general",
+    "balanced-anaesthesia-muscle",
+    "balanced-anaesthesia-premed",
+    "benzodiazepines-duration",
+    "benzodiazepines-falls",
+    "beta-blocker-workload",
+    "blocker-selection-beta",
+    "blocker-selection-calcium",
+    "blocker-selection-continuity",
+    "bowel-bulk",
+    "bowel-osmotic",
+    "bowel-selection-antimotility",
+    "bowel-selection-bulk",
+    "bowel-selection-diarrhoea",
+    "bowel-selection-osmotic",
+    "bowel-stimulant-softener",
+    "cancer-long-term-disease",
+    "cardiac-effects-roles",
+    "cardiac-effects-stimulants",
+    "cardiac-effects-terms",
+    "chemotherapy-nursing-comfort",
+    "chemotherapy-nursing-infection",
+    "chemotherapy-resistance-regimen",
+    "cholinergic-antagonist",
+    "cholinergic-enzyme",
+    "cholinergic-locations-location",
+    "cholinergic-locations-muscarinic",
+    "cholinergic-locations-nicotine",
+    "clotting-dissolve",
+    "clotting-safety",
+    "cns-signals-functions",
+    "cns-signals-targets",
+    "coc-first-last-week-backup",
+    "coc-two-plus-missed",
+    "concentration-time-onset",
+    "concentration-time-peak",
+    "contraception-methods",
+    "contraception-risk",
+    "contraceptive-failure-why",
+    "contraceptive-options-implant",
+    "contraceptive-options-iud",
+    "contraceptive-options-oral",
+    "contraceptive-options-popcare",
+    "contraceptive-safety-interaction",
+    "contraceptive-safety-suitability",
+    "contraceptive-safety-urgent",
+    "copper-iud-emergency-window",
+    "cytotoxic-classes-antibiotic",
+    "cytotoxic-classes-m",
+    "cytotoxic-classes-s",
+    "cytotoxic-courses",
+    "cytotoxic-cycle-nonspecific",
+    "cytotoxic-cycle-specific",
+    "cytotoxic-drug-definition",
+    "cytotoxic-effects",
+    "cytotoxic-four-groups",
+    "cytotoxic-handling-ppe",
+    "cytotoxic-occupational-hazards",
+    "depression-context-context",
+    "diabetes-care-plan-meals",
+    "diabetes-care-plan-metformin",
+    "diabetes-care-plan-monitoring",
+    "diabetes-drugs-metformin",
+    "diabetes-drugs-sglt2",
+    "diabetes-monitoring-cgm",
+    "diabetes-monitoring-gestational",
+    "diabetes-monitoring-ketones",
+    "diabetes-other-classes-glp1",
+    "diabetes-other-classes-pathway",
+    "diabetes-other-classes-sglt2",
+    "diabetes-other-classes-tzd",
+    "digoxin-monitoring-monitor",
+    "digoxin-monitoring-response",
+    "digoxin-monitoring-toxicity",
+    "diuretic-sites-monitor",
+    "diuretic-sites-sparing",
+    "diuretic-sites-thiazide",
+    "dobutamine-common-adverse-effects",
+    "dopamine-dobutamine-route",
+    "drug-action-antagonist",
+    "drug-action-unwanted",
+    "emergency-contraceptive-pill-window",
+    "epilepsy-interactions",
+    "epilepsy-one",
+    "gastric-antacid",
+    "gastric-care-antacidcare",
+    "gastric-care-cause",
+    "gastric-care-formulation",
+    "gastric-care-h2care",
+    "gastric-care-ppicare",
+    "gastric-h2",
+    "gastric-mucosal-bismuth",
+    "gastric-mucosal-sucralfate",
+    "genetic-examples-care",
+    "genetic-examples-prodrug",
+    "h-pylori-tetracycline-alternative",
+    "h-pylori-therapy-combination",
+    "heart-failure-regimen-fluid",
+    "heart-failure-regimen-otherpillars",
+    "hiv-care-interaction",
+    "hiv-care-prep",
+    "hiv-care-toxicity",
+    "hiv-combination-combination",
+    "hiv-combination-other",
+    "hiv-drug-examples-nnrti",
+    "hiv-drug-examples-nrti",
+    "hiv-drug-examples-protease",
+    "hormone-treatment-care-mht",
+    "hormone-treatment-care-oestrogen",
+    "hormone-treatment-care-progestogen",
+    "hormone-treatment-care-uterus",
+    "hypoglycaemia-care-recognise",
+    "hypoglycaemia-care-review",
+    "hypoglycaemia-care-unconscious",
+    "im-route-comparison",
+    "im-route-costs",
+    "inhaled-steroid-local",
+    "inhaled-steroid-mouth",
+    "inhaler-comparison-comparison",
+    "inhaler-comparison-ipratropium",
+    "inhaler-comparison-salbutamol",
+    "insulin-glucagon",
+    "insulin-meal",
+    "insulin-preparations-bolus",
+    "insulin-preparations-mixed",
+    "insulin-preparations-route",
+    "insulin-response-interactions",
+    "insulin-response-person",
+    "interaction-induction",
+    "interaction-pathways-binding",
+    "interaction-pathways-grapefruit",
+    "interaction-pathways-vitamink",
+    "lactation-care-effects",
+    "lactation-care-monitor",
+    "lipid-care-fibrate",
+    "lipid-care-indication",
+    "lipid-care-statin",
+    "lipids-ezetimibe",
+    "lipids-fibrate",
+    "lisinopril-class",
+    "local-labour-anaesthesia-labour",
+    "local-labour-anaesthesia-local",
+    "local-labour-anaesthesia-toxicity",
+    "macrolide-clinical-application",
+    "mechanism-options-dose",
+    "mechanism-options-physical",
+    "mechanism-options-receptor",
+    "medicine-access-pharmacy",
+    "medicine-access-prescription",
+    "medicine-access-resource",
+    "medicine-forms-route",
+    "medicine-forms-tablet",
+    "metabolic-clearance-absorption",
+    "metabolic-clearance-binding",
+    "metabolic-clearance-routes",
+    "metabolism-other-organs",
+    "metabolism-phase-two",
+    "metronidazole-care-effects",
+    "metronidazole-care-target",
+    "metronidazole-care-uses",
+    "mood-stabiliser-care-alternatives",
+    "mood-stabiliser-care-longterm",
+    "mood-stabiliser-care-toxicity",
+    "multimodal-pain-multiple",
+    "multimodal-pain-prevent",
+    "neuromuscular-relaxants-blocking",
+    "norfloxacin-uti-reserve",
+    "older-person-medicines-context",
+    "older-person-medicines-response",
+    "opioid-care-gut",
+    "opioid-care-monitoring",
+    "opioid-dependence-addiction",
+    "opioid-dependence-dependence",
+    "opioid-dependence-interaction",
+    "opioid-options-form",
+    "opioid-options-purpose",
+    "opioid-options-strong",
+    "opioid-overdose-naloxone",
+    "opioid-overdose-signs",
+    "other-antivirals-covid",
+    "other-antivirals-review",
+    "paediatric-dose-maturity",
+    "paediatric-safe-range-application",
+    "pain-pathway-peripheral",
+    "pain-pathway-transmission",
+    "pain-pathway-types",
+    "paracetamol-nsaid-paracetamol",
+    "paracetamol-nsaid-renal",
+    "paracetamol-nsaid-selectivity",
+    "parkinsons-cause",
+    "parkinsons-drug-options-agonist",
+    "parkinsons-drug-options-combination",
+    "parkinsons-drug-options-druginduced",
+    "parkinsons-periphery",
+    "parkinsons-precursor",
+    "penicillin-wall",
+    "pharmacology-language-names",
+    "pharmacology-language-scope",
+    "pharmacology-language-source",
+    "platelets-fibrinolysis-lysis",
+    "platelets-fibrinolysis-platelet",
+    "platelets-fibrinolysis-select",
+    "pop-traditional-backup",
+    "pregnancy-category-a",
+    "pregnancy-category-b1",
+    "pregnancy-category-b2",
+    "pregnancy-category-b3",
+    "pregnancy-category-c",
+    "pregnancy-category-d",
+    "pregnancy-category-x",
+    "pregnancy-category-x-example",
+    "pregnancy-risk-benefit",
+    "pregnancy-risk-mother",
+    "pregnancy-risk-timing",
+    "quinapril-class",
+    "release-formulations-check",
+    "release-formulations-interval",
+    "reproductive-clomiphene",
+    "reproductive-desogestrel-role",
+    "reproductive-mifepristone",
+    "reproductive-mifepristone-use",
+    "reproductive-progestogen-agonists",
+    "reproductive-regulation-gonad",
+    "reproductive-regulation-replacement",
+    "reproductive-tamoxifen",
+    "reproductive-tamoxifen-use",
+    "respiratory-other-targets-methylxanthine",
+    "respiratory-other-targets-muscarinic",
+    "salbutamol-selectivity",
+    "salbutamol-tissue",
+    "sedative-hypnotic-care-purpose",
+    "sedative-hypnotic-care-safety",
+    "sedative-hypnotic-care-sleep",
+    "serotonin-safety-care",
+    "serotonin-safety-signs",
+    "sleep-physiology-cycles",
+    "synapse-message-chemical",
+    "synapse-message-clear",
+    "therapeutic-window-example",
+    "therapeutic-window-monitor",
+    "treatment-purpose-control",
+    "treatment-purpose-symptom",
+    "triple-whammy-person",
+    "ulcer-mechanisms-protection",
+    "variation-genes",
+    "variation-older",
+    "vasodilator-targets-effects",
+    "vasodilator-targets-route",
+    "vasodilator-targets-vein",
+    "warfarin-antibiotic-interactions",
+    "warfarin-displacement-interactions",
+    "warfarin-enzyme-inducers"
   ],
   "sources": [
     {
@@ -982,6 +1291,16 @@
       "kind": "supplemental-web-page",
       "collection": "supplementary",
       "sha256": "17754b3a5eb0aaf4c100f3bb520ea0bb29fbc96ec67a1abb43927bc950de479f"
+    },
+    {
+      "id": "nhlbi-sleep-stages",
+      "title": "How Sleep Works: Sleep Phases and Stages · NHLBI, NIH",
+      "url": "https://www.nhlbi.nih.gov/health/sleep/stages-of-sleep",
+      "file": "nhlbi-sleep.html",
+      "accessed": "2026-10-05",
+      "kind": "supplemental-web-page",
+      "collection": "supplementary",
+      "sha256": "8560b604093b9dc19f1b1f76ef2790501aa8c00573b86f2cafb988b640f111b7"
     }
   ],
   "assessments": [
@@ -10936,6 +11255,20 @@
       "clusterId": "chemotherapy-nursing",
       "title": "Cytotoxic handling precautions",
       "prerequisiteIds": []
+    },
+    {
+      "id": "sleep-physiology-cycles",
+      "unitId": "p6",
+      "clusterId": "sedative-hypnotic-care",
+      "title": "Sleep Physiology Cycles",
+      "prerequisiteIds": []
+    },
+    {
+      "id": "parkinsons-cause",
+      "unitId": "p6",
+      "clusterId": "parkinsons",
+      "title": "Parkinsons Cause",
+      "prerequisiteIds": []
     }
   ],
   "questions": [
@@ -15553,7 +15886,7 @@
       "visual": {
         "src": "/images/cancer-local-distant-extent.webp",
         "alt": "The supplied breast-cancer schematic labels an early illustrated finding as Stage 0.",
-        "showOn": "question",
+        "showOn": "answer",
         "sourceId": "cancer",
         "page": 8
       }
@@ -15581,7 +15914,7 @@
       "visual": {
         "src": "/images/cancer-local-distant-extent.webp",
         "alt": "The supplied breast-cancer schematic labels a tumour at its primary site as Stage I.",
-        "showOn": "question",
+        "showOn": "answer",
         "sourceId": "cancer",
         "page": 8
       }
@@ -15609,7 +15942,7 @@
       "visual": {
         "src": "/images/cancer-local-distant-extent.webp",
         "alt": "The supplied breast-cancer schematic labels spread to distant organs as Stage IV.",
-        "showOn": "question",
+        "showOn": "answer",
         "sourceId": "cancer",
         "page": 8
       }
@@ -15715,7 +16048,7 @@
       "visual": {
         "src": "/images/adolescent-positive-spiral.svg",
         "alt": "A positive adolescent-development sequence: exploration and learning risks, adult support and guided responsibility, then confidence and supported learning.",
-        "showOn": "question",
+        "showOn": "answer",
         "sourceId": "adolescent",
         "page": 8
       }
@@ -15871,9 +16204,9 @@
       "importance": 2,
       "estimatedSeconds": 45,
       "visual": {
-        "src": "/images/youth-capacity-diagram.png",
-        "alt": "A diagram of four areas for assessing a child’s capacity: autonomy, evidence, support and protection, with associated rights and considerations.",
-        "showOn": "question",
+        "src": "/images/youth-capacity.svg",
+        "alt": "Four parallel areas from the supplied youth-capacity framework: autonomy, evidence, support and protection.",
+        "showOn": "answer",
         "sourceId": "adolescent",
         "page": 22
       }
@@ -17226,7 +17559,8 @@
         "showOn": "answer",
         "sourceId": "schedule",
         "page": 2
-      }
+      },
+      "feedEligible": false
     },
     {
       "id": "health-literacy-meaning",
@@ -17335,7 +17669,8 @@
         "showOn": "answer",
         "sourceId": "literacy",
         "page": 14
-      }
+      },
+      "feedEligible": false
     },
     {
       "id": "clinic-access",
@@ -17364,7 +17699,8 @@
         "showOn": "answer",
         "sourceId": "disability",
         "page": 4
-      }
+      },
+      "feedEligible": false
     },
     {
       "id": "dementia-one-step",
@@ -17393,7 +17729,8 @@
         "showOn": "answer",
         "sourceId": "dementia",
         "page": 16
-      }
+      },
+      "feedEligible": false
     },
     {
       "id": "cancer-spread",
@@ -17420,7 +17757,8 @@
         "showOn": "answer",
         "sourceId": "cancer",
         "page": 8
-      }
+      },
+      "feedEligible": false
     },
     {
       "id": "dementia-patterns-delirium-timecourse",
@@ -23217,7 +23555,8 @@
         "alt": "A swallowed drug passes from the intestine to the liver before joining the wider circulation. A sublingual route bypasses that first liver passage.",
         "showOn": "answer"
       },
-      "authoringKind": "authored"
+      "authoringKind": "authored",
+      "feedEligible": false
     },
     {
       "id": "first-pass-availability",
@@ -23829,7 +24168,8 @@
         "alt": "An initial group of eight drug particles halves to four, then two, then one.",
         "showOn": "answer"
       },
-      "authoringKind": "authentic"
+      "authoringKind": "authentic",
+      "feedEligible": false
     },
     {
       "id": "half-life-calculation",
@@ -29428,7 +29768,8 @@
       },
       "questionRole": "supporting-card",
       "authoringKind": "authored",
-      "cognitiveDemand": "recall"
+      "cognitiveDemand": "recall",
+      "feedEligible": false
     },
     {
       "id": "salbutamol-tissue",
@@ -29560,7 +29901,7 @@
         "It is a non-benzodiazepine hypnotic acting at the GABA-A complex. It reduces sleep latency/awakening but alters sleep architecture and can cause tolerance, dependence and rebound insomnia."
       ],
       "conceptIds": ["sedative-hypnotic-care-sleep"],
-      "prerequisiteQuestionIds": [],
+      "prerequisiteQuestionIds": ["sleep-physiology-cycles"],
       "sources": [
         {
           "sourceId": "pharm",
@@ -30861,6 +31202,469 @@
       "answerStatus": "course-derived answer",
       "authoringKind": "authored",
       "objectiveIds": ["2.5.7"]
+    },
+    {
+      "id": "sleep-physiology-cycles",
+      "courseId": "pharmacology",
+      "unitId": "p6",
+      "clusterId": "sedative-hypnotic-care",
+      "kind": "recall",
+      "prompt": "What normal sleep stages and cycle pattern are relevant when a hypnotic alters sleep architecture?",
+      "rubric": [
+        "Sleep alternates between non-REM (three stages) and REM in cycles of about 80–100 minutes, usually four to six times a night. Deep slow-wave sleep is more common early in the night; REM is more common later."
+      ],
+      "conceptIds": ["sleep-physiology-cycles"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "nhlbi-sleep-stages",
+          "excerpt": "When you sleep, you cycle through two phases of sleep: rapid eye movement (REM) and non-REM sleep. The cycle starts over every 80 to 100 minutes. Usually there are four to six cycles per night.",
+          "proofExcerpt": "When you sleep, you cycle through two phases of sleep: rapid eye movement (REM) and non-REM sleep. The cycle starts over every 80 to 100 minutes. Usually there are four to six cycles per night.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "evidenceNote": "National Heart, Lung, and Blood Institute, NIH, “How Sleep Works: Sleep Phases and Stages,” accessed 2026-10-05."
+        },
+        {
+          "sourceId": "nhlbi-sleep-stages",
+          "excerpt": "Non-REM sleep has three stages, defined by measurements of brain activity taken in sleep studies.",
+          "proofExcerpt": "Non-REM sleep has three stages, defined by measurements of brain activity taken in sleep studies.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "evidenceNote": "NHLBI sleep-stage description."
+        },
+        {
+          "sourceId": "nhlbi-sleep-stages",
+          "excerpt": "This stage is called deep sleep or slow-wave sleep, after a particular pattern that appears in measurements of brain activity. You usually spend more time in this stage early in the night.",
+          "proofExcerpt": "This stage is called deep sleep or slow-wave sleep, after a particular pattern that appears in measurements of brain activity. You usually spend more time in this stage early in the night.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "evidenceNote": "NHLBI stage 3 description."
+        },
+        {
+          "sourceId": "nhlbi-sleep-stages",
+          "excerpt": "You usually have more REM sleep later in the night, but you do not have as much REM sleep in colder temperatures.",
+          "proofExcerpt": "You usually have more REM sleep later in the night, but you do not have as much REM sleep in colder temperatures.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "evidenceNote": "NHLBI REM sleep description."
+        }
+      ],
+      "importance": 2,
+      "estimatedSeconds": 55,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "sleep physiology from NIH supplement; zopiclone effect from supplied course guide",
+      "authoringKind": "authored",
+      "objectiveIds": ["6.5.2"]
+    },
+    {
+      "id": "parkinsons-cause",
+      "courseId": "pharmacology",
+      "unitId": "p6",
+      "clusterId": "parkinsons",
+      "kind": "recall",
+      "prompt": "According to the guide, what is known about the cause of dopamine-neuron loss in Parkinson’s disease?",
+      "rubric": [
+        "The exact cause is not fully understood. Proposed factors include genetic predisposition, environmental toxins, oxidative stress and possible autoimmune mechanisms."
+      ],
+      "conceptIds": ["parkinsons-cause"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 193,
+          "excerpt": "The exact cause of this neuronal loss is not fully understood, but proposed factors include genetic predisposition, environmental toxins, oxidative stress, and possible autoimmune mechanisms.",
+          "proofExcerpt": "The exact cause of this neuronal loss is not fully understood, but proposed factors include genetic predisposition, environmental toxins, oxidative stress, and possible autoimmune mechanisms.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "evidenceNote": "Guide pathophysiology paragraph; physical PDF p.193."
+        }
+      ],
+      "importance": 2,
+      "estimatedSeconds": 45,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["6.6.1"]
+    },
+    {
+      "id": "macrolide-clinical-application",
+      "courseId": "pharmacology",
+      "unitId": "p2",
+      "clusterId": "antibiotic-families",
+      "kind": "recall",
+      "prompt": "When can a macrolide be a useful antibiotic alternative?",
+      "rubric": [
+        "The guide describes macrolides as broad-spectrum antibiotics and a good alternative for a person allergic to penicillins."
+      ],
+      "conceptIds": ["antibiotic-families-macrolide"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 70,
+          "excerpt": "Macrolides have a broad spectrum of activity and are a good alternative for people who are allergic to penicillins.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Macrolides have a broad spectrum of activity and are a good alternative for people who are allergic to penicillins."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 30,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["2.3.1"]
+    },
+    {
+      "id": "norfloxacin-uti-reserve",
+      "courseId": "pharmacology",
+      "unitId": "p2",
+      "clusterId": "antibiotic-families",
+      "kind": "recall",
+      "prompt": "When does the guide reserve norfloxacin for a urinary tract infection?",
+      "rubric": [
+        "For a UTI resistant to the first-choice options trimethoprim or nitrofurantoin; the guide links this reservation to increasing antibiotic resistance."
+      ],
+      "conceptIds": ["antibiotic-families-quinolone"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 70,
+          "excerpt": "Norfloxacin may be used in the treatment of urinary tract infections. Due to the increase in antibiotic resistance, it is now recommended that norfloxacin is reserved for infections that are resistant to the first choices of either trimethoprim or nitrofurantoin.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Norfloxacin may be used in the treatment of urinary tract infections. Due to the increase in antibiotic resistance, it is now recommended that norfloxacin is reserved for infections that are resistant to the first choices of either trimethoprim or nitrofurantoin."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 35,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["2.3.1"]
+    },
+    {
+      "id": "aminoglycoside-systemic-route",
+      "courseId": "pharmacology",
+      "unitId": "p2",
+      "clusterId": "antibiotic-families",
+      "kind": "recall",
+      "prompt": "Why must an aminoglycoside be given parenterally for a systemic infection?",
+      "rubric": [
+        "Aminoglycosides are not absorbed from the gastrointestinal tract, so systemic treatment must use a parenteral route."
+      ],
+      "conceptIds": ["antibiotic-safety-gentamicin"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 69,
+          "excerpt": "However, they are not absorbed from the gastro-intestinal tract and so must be administered parenterally for systemic infections.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "They are not absorbed from the gastro-intestinal tract and so must be administered parenterally for systemic infections."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 30,
+      "cognitiveDemand": "explain",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["2.3.1"]
+    },
+    {
+      "id": "dopamine-dobutamine-route",
+      "courseId": "pharmacology",
+      "unitId": "p8",
+      "clusterId": "cardiac-effects",
+      "kind": "recall",
+      "prompt": "What route does the guide specify for dopamine and dobutamine?",
+      "rubric": ["Both are administered intravenously."],
+      "conceptIds": ["cardiac-effects-stimulants"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 223,
+          "excerpt": "Dopamine and dobutamine are administered intravenously.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Dopamine and dobutamine are administered intravenously."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 25,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["8.2.2"]
+    },
+    {
+      "id": "dobutamine-common-adverse-effects",
+      "courseId": "pharmacology",
+      "unitId": "p8",
+      "clusterId": "cardiac-effects",
+      "kind": "recall",
+      "prompt": "Which common adverse effects does the guide list for dobutamine?",
+      "rubric": [
+        "Increased heart rate, ventricular ectopic beats, tolerance, and nausea or vomiting."
+      ],
+      "conceptIds": ["cardiac-effects-stimulants"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 223,
+          "excerpt": "Common adverse effects: increase in heart rate and ventricular ectopic beats; tolerance, nausea/vomiting.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Common adverse effects: increase in heart rate and ventricular ectopic beats; tolerance, nausea/vomiting."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 30,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["8.2.2"]
+    },
+    {
+      "id": "adrenaline-route",
+      "courseId": "pharmacology",
+      "unitId": "p8",
+      "clusterId": "cardiac-effects",
+      "kind": "recall",
+      "prompt": "Which routes does the guide list for adrenaline?",
+      "rubric": [
+        "Adrenaline is administered intramuscularly or intravenously."
+      ],
+      "conceptIds": ["cardiac-effects-stimulants"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 222,
+          "excerpt": "Adrenaline is administered via IM or IV.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Adrenaline is administered via IM or IV."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 30,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["8.2.2"]
+    },
+    {
+      "id": "adrenaline-common-adverse-effects",
+      "courseId": "pharmacology",
+      "unitId": "p8",
+      "clusterId": "cardiac-effects",
+      "kind": "recall",
+      "prompt": "Which adverse effects does the guide list for adrenaline?",
+      "rubric": [
+        "Nausea, vomiting, tremors, agitation, dizziness, hypertension, constipation and tachycardia."
+      ],
+      "conceptIds": ["cardiac-effects-stimulants"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 222,
+          "excerpt": "The adverse effects include nausea, vomiting, tremors, agitation, dizziness, hypertension, constipation, and tachycardia.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "The adverse effects include nausea, vomiting, tremors, agitation, dizziness, hypertension, constipation, and tachycardia."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 30,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["8.2.2"]
+    },
+    {
+      "id": "warfarin-displacement-interactions",
+      "courseId": "pharmacology",
+      "unitId": "p8",
+      "clusterId": "clotting",
+      "kind": "recall",
+      "prompt": "Which drugs does the guide say can displace warfarin from protein binding, and what is the effect?",
+      "rubric": [
+        "Salicylates, clofibrate and sulfonylureas can displace warfarin and increase its anticoagulant effect."
+      ],
+      "conceptIds": ["clotting-prevent"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 246,
+          "excerpt": "Warfarin can be displaced from its protein binding site by other drugs e.g. salicylates, clofibrate, sulfonylureas (this will INCREASE the anticoagulant effect).",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Warfarin can be displaced from its protein binding site by other drugs e.g. salicylates, clofibrate, sulfonylureas (this will INCREASE the anticoagulant effect)."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 35,
+      "cognitiveDemand": "explain",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["8.5.3"]
+    },
+    {
+      "id": "warfarin-enzyme-inducers",
+      "courseId": "pharmacology",
+      "unitId": "p8",
+      "clusterId": "clotting",
+      "kind": "recall",
+      "prompt": "How can enzyme-inducing drugs change warfarin’s anticoagulant effect?",
+      "rubric": [
+        "They increase warfarin metabolism and decrease its anticoagulant effect. The guide gives heavy alcohol use and anticonvulsants such as carbamazepine as examples."
+      ],
+      "conceptIds": ["clotting-prevent"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 246,
+          "excerpt": "Other drugs can induce (increase) liver metabolising enzymes (microsomal enzymes) and increase the metabolism of warfarin e.g. alcohol (when used heavily), anticonvulsant drugs (e.g. carbamazepine) (this will DECREASE the anticoagulant effect).",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Other drugs can induce (increase) liver metabolising enzymes (microsomal enzymes) and increase the metabolism of warfarin e.g. alcohol (when used heavily), anticonvulsant drugs (e.g. carbamazepine) (this will DECREASE the anticoagulant effect)."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 35,
+      "cognitiveDemand": "explain",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["8.5.3"]
+    },
+    {
+      "id": "warfarin-antibiotic-interactions",
+      "courseId": "pharmacology",
+      "unitId": "p8",
+      "clusterId": "clotting",
+      "kind": "recall",
+      "prompt": "Why can many antibiotics increase warfarin’s anticoagulant effect?",
+      "rubric": [
+        "They can inhibit vitamin K synthesis by intestinal flora, inhibit warfarin metabolism, or do both."
+      ],
+      "conceptIds": ["clotting-prevent"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 246,
+          "excerpt": "Many antibiotics can inhibit vitamin K synthesis by intestinal flora or inhibit warfarin metabolism or both (this will INCREASE the anticoagulant effect).",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Many antibiotics can inhibit vitamin K synthesis by intestinal flora or inhibit warfarin metabolism or both (this will INCREASE the anticoagulant effect)."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 35,
+      "cognitiveDemand": "explain",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["8.5.3"]
+    },
+    {
+      "id": "h-pylori-tetracycline-alternative",
+      "courseId": "pharmacology",
+      "unitId": "p9",
+      "clusterId": "h-pylori-therapy",
+      "kind": "recall",
+      "prompt": "Which antibiotic does the guide name as an alternative in some H. pylori regimens?",
+      "rubric": [
+        "Tetracycline is sometimes used as an alternative antibiotic in H. pylori eradication therapy."
+      ],
+      "conceptIds": ["h-pylori-therapy-agents"],
+      "prerequisiteQuestionIds": [],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 258,
+          "excerpt": "Antibiotics commonly used to eradicate Helicobacter pylori include clarithromycin, amoxicillin, and metronidazole, with tetracycline sometimes used as an alternative.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Antibiotics commonly used to eradicate Helicobacter pylori include clarithromycin, amoxicillin, and metronidazole, with tetracycline sometimes used as an alternative."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 30,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["2.3.1"]
+    },
+    {
+      "id": "lisinopril-class",
+      "courseId": "pharmacology",
+      "unitId": "p8",
+      "clusterId": "raas",
+      "kind": "recall",
+      "prompt": "Which drug class does lisinopril belong to?",
+      "rubric": [
+        "Lisinopril is an angiotensin-converting enzyme (ACE) inhibitor."
+      ],
+      "conceptIds": ["raas-ace"],
+      "prerequisiteQuestionIds": [
+        "raas-ace",
+        "ace-inhibitor-clinical-applications",
+        "raas-care-acecare"
+      ],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 235,
+          "excerpt": "Commonly used ACE inhibitors are lisinopril and quinapril.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Commonly used ACE inhibitors are lisinopril and quinapril."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 25,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["8.4.1"]
+    },
+    {
+      "id": "quinapril-class",
+      "courseId": "pharmacology",
+      "unitId": "p8",
+      "clusterId": "raas",
+      "kind": "recall",
+      "prompt": "Which drug class does quinapril belong to?",
+      "rubric": [
+        "Quinapril is an angiotensin-converting enzyme (ACE) inhibitor. The guide also identifies quinapril as a prodrug."
+      ],
+      "conceptIds": ["raas-ace"],
+      "prerequisiteQuestionIds": [
+        "raas-ace",
+        "ace-inhibitor-clinical-applications",
+        "raas-care-acecare"
+      ],
+      "sources": [
+        {
+          "sourceId": "pharm",
+          "page": 235,
+          "excerpt": "Commonly used ACE inhibitors are lisinopril and quinapril (the latter is an example of a prodrug).",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Commonly used ACE inhibitors are lisinopril and quinapril (the latter is an example of a prodrug)."
+        }
+      ],
+      "importance": 1,
+      "estimatedSeconds": 25,
+      "cognitiveDemand": "recall",
+      "questionRole": "supporting-card",
+      "answerStatus": "course-derived answer",
+      "authoringKind": "authored",
+      "objectiveIds": ["8.4.1"]
     },
     {
       "id": "exam-reference-phc-access",
@@ -35775,7 +36579,10 @@
         "antibiotic-families-cefalexin",
         "antibiotic-families-macrolide",
         "antibiotic-families-quinolone",
-        "antibiotic-families-tetracycline"
+        "antibiotic-families-tetracycline",
+        "macrolide-clinical-application",
+        "norfloxacin-uti-reserve",
+        "aminoglycoside-systemic-route"
       ],
       "sources": [
         {
@@ -37254,7 +38061,11 @@
         "cardiac-effects-terms",
         "cardiac-effects-stimulants",
         "cardiac-effects-risks",
-        "cardiac-effects-roles"
+        "cardiac-effects-roles",
+        "dopamine-dobutamine-route",
+        "dobutamine-common-adverse-effects",
+        "adrenaline-route",
+        "adrenaline-common-adverse-effects"
       ],
       "sources": [
         {
@@ -37534,7 +38345,10 @@
       "prerequisiteQuestionIds": [
         "clotting-prevent",
         "clotting-dissolve",
-        "clotting-safety"
+        "clotting-safety",
+        "warfarin-displacement-interactions",
+        "warfarin-enzyme-inducers",
+        "warfarin-antibiotic-interactions"
       ],
       "sources": [
         {
@@ -38994,13 +39808,14 @@
       "title": "Why combine two antibiotics?",
       "prompt": "What are the common antibiotics used in the treatment of peptic ulcers due to H. pylori? Why are two antibiotics used?",
       "rubric": [
-        "Clarithromycin, metronidazole and amoxicillin; an appropriate regimen uses a combination rather than all three indiscriminately.",
+        "The guide names clarithromycin, amoxicillin and metronidazole as common options; tetracycline is sometimes an alternative. Regimens combine antibiotics with ulcer-healing treatment rather than using all listed antibiotics indiscriminately.",
         "Combination treatment improves eradication and reduces the chance of resistance undermining a single agent."
       ],
       "conceptIds": ["h-pylori-therapy-agents", "h-pylori-therapy-combination"],
       "prerequisiteQuestionIds": [
         "h-pylori-therapy-agents",
-        "h-pylori-therapy-combination"
+        "h-pylori-therapy-combination",
+        "h-pylori-tetracycline-alternative"
       ],
       "sources": [
         {
@@ -39017,6 +39832,13 @@
           "sourceId": "pharm",
           "page": 272,
           "excerpt": "What are the common antibiotics used in the treatment of peptic ulcers due to H. pylori? Why are two antibiotics used? 6. Explain the pharmacological basis for using triple therapy. 7. Which of the following gastrointestinal compounds does not stimulate the parietal cells? (a) acetylcholine (b) gastrin (c) histamine (d) prostaglandins Study Guide – Chapter 9  265"
+        },
+        {
+          "sourceId": "pharm",
+          "page": 258,
+          "excerpt": "Antibiotics commonly used to eradicate Helicobacter pylori include clarithromycin, amoxicillin, and metronidazole, with tetracycline sometimes used as an alternative. Because eradication of H. pylori requires combination therapy to prevent resistance and improve efficacy, more than one antibiotic must be used.",
+          "proofExcerptStatus": "manually-checked-readable-quote",
+          "proofExcerpt": "Antibiotics commonly used to eradicate Helicobacter pylori include clarithromycin, amoxicillin, and metronidazole, with tetracycline sometimes used as an alternative."
         }
       ],
       "importance": 1,
@@ -41299,7 +42121,8 @@
       "prerequisiteQuestionIds": [
         "parkinsons-balance",
         "parkinsons-precursor",
-        "parkinsons-periphery"
+        "parkinsons-periphery",
+        "parkinsons-cause"
       ],
       "sources": [
         {
@@ -41779,7 +42602,9 @@
         "raas-care-acecare",
         "raas-care-arbcare",
         "raas-care-combination",
-        "ace-inhibitor-clinical-applications"
+        "ace-inhibitor-clinical-applications",
+        "lisinopril-class",
+        "quinapril-class"
       ],
       "sources": [
         {
@@ -42169,7 +42994,8 @@
         "sedative-hypnotic-care-purpose",
         "sedative-hypnotic-care-choice",
         "sedative-hypnotic-care-sleep",
-        "sedative-hypnotic-care-safety"
+        "sedative-hypnotic-care-safety",
+        "sleep-physiology-cycles"
       ],
       "sources": [
         {

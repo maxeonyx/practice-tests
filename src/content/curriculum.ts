@@ -54,6 +54,7 @@ export interface Question {
   conceptIds: string[];
   prerequisiteQuestionIds: string[];
   sources: SourceReference[];
+  feedEligible?: boolean;
   importance: number;
   estimatedSeconds: number;
   interaction?:

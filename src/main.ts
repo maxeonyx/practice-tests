@@ -1,4 +1,5 @@
 import "./style.css";
+import { version } from "../package.json";
 import { knowledgeShape, controlIcon } from "./ui/visuals";
 import { escape, presentQuestion } from "./ui/question";
 import { advance, decompose, canStepBack } from "./study/traversal";
@@ -102,6 +103,8 @@ function canResume(session: Session | null): session is Session {
     session === null ||
     session.phase === "complete" ||
     !questionById.has(session.rootId) ||
+    (question(session.rootId).feedEligible === false &&
+      new URLSearchParams(location.search).get("review") !== "1") ||
     !questionById.has(session.questionId) ||
     session.frames.some((frame) =>
       [frame.parentId, ...frame.childIds].some((id) => !questionById.has(id)),
@@ -138,7 +141,7 @@ function home() {
     )
     .join(
       "",
-    )}</div><div class="home-tools"><button class="text-button" data-action="install">Install app</button></div></section>`;
+    )}</div><div class="home-tools"><button class="text-button" data-action="install">Install app</button><small class="app-version">v${version}</small></div></section>`;
 }
 function study() {
   const s = state.session!;

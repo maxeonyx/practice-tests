@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 350" role="img" aria-labelledby="title">
+  <title id="title">Four parallel areas in the supplied youth-capacity framework: autonomy, evidence, support and protection.</title>
+  <g fill="none" stroke="#d2e0d5" stroke-width="2"><path d="M210 26v298M30 175h360"/></g>
+  <g fill="none" stroke="#3f7764" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="112" cy="65" r="12"/><path d="M112 81v28m0-16-23 13m23-13 23 13M112 109l-14 19m14-19 14 19M78 74l-12 11 12 11m-12-11h25m55-11 12 11-12 11m12-11h-25"/>
+    <rect x="284" y="43" width="44" height="63" rx="6"/><path d="M297 43v-6h18v6m-20 19 5 5 12-13m-17 31h21m-21 11h15"/>
+    <circle cx="92" cy="226" r="12"/><circle cx="133" cy="228" r="10"/><path d="M70 268v-13c0-16 44-16 44 0v13m6 0v-12c0-12 28-12 28 0v12M101 250l16 8 16-8"/>
+    <path d="M306 205l31 13v21c0 21-13 35-31 44-18-9-31-23-31-44v-21Z"/><path d="m291 240 10 10 20-24"/>
+  </g>
+  <g fill="#315c4d" font-family="system-ui,sans-serif" font-size="20" font-weight="500" text-anchor="middle">
+    <text x="112" y="153">Autonomy</text><text x="306" y="153">Evidence</text>
+    <text x="112" y="316">Support</text><text x="306" y="316">Protection</text>
+  </g>
+</svg>

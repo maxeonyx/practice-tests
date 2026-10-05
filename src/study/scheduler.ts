@@ -110,7 +110,7 @@ export function recommend(
   let candidates = (
     options.fresh === true ? studyRootIds.map(question) : questions
   )
-    .filter((q) => studyQuestionIds.has(q.id))
+    .filter((q) => studyQuestionIds.has(q.id) && q.feedEligible !== false)
     .filter((q) => active.some((a) => a.courseId === q.courseId))
     .filter(
       (q) =>
