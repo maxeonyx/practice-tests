@@ -113,13 +113,20 @@ test("published curriculum has complete links, source traces, and acyclic prereq
         sources.some((s) => s.id === r.sourceId),
         q.id,
       ).toBe(true);
-      expect(r.page, q.id).toBeGreaterThan(0);
+      if (typeof r.page === "number") expect(r.page, q.id).toBeGreaterThan(0);
+      else if (typeof r.page === "string")
+        expect(r.page.length, q.id).toBeGreaterThan(0);
+      else {
+        const source = sources.find((s) => s.id === r.sourceId)!;
+        expect(source.kind, q.id).toContain("web");
+        expect(source.url, q.id).toMatch(/^https:\/\//);
+      }
       expect(r.excerpt.length, q.id).toBeGreaterThan(0);
     }
     visit(q.id);
   }
   for (const c of clusters)
-    for (const n of c.diagram.nodes)
+    for (const n of c.diagram?.nodes ?? [])
       expect(question(n.conceptId).clusterId).toBe(c.id);
   for (const u of units)
     expect(
@@ -236,18 +243,31 @@ test("fresh openings after the first exam contain Pharmacology full questions on
   expect(studyRootIds).toContain(next.id);
 });
 
-test("old catalogue reviews remain saved without entering the prototype feed", () => {
+test("removed questions remain in saved history without preventing new revision", () => {
   const state = empty();
+  state.attempts = [
+    {
+      id: "old",
+      questionId: "removed-catalogue-question",
+      courseId: "pharmacology",
+      answeredAt: now.toISOString(),
+      rating: "again",
+      independent: true,
+      answer: "",
+    },
+  ];
   state.reviews = [
     scheduleReview(
-      "adme",
+      "removed-catalogue-question",
       "again",
       undefined,
       new Date(now.getTime() - 3600000),
     ),
   ];
-  expect(recommend(state, now)?.question.id).not.toBe("adme");
-  expect(state.reviews[0].questionId).toBe("adme");
+  expect(recommend(state, now)?.question.id).not.toBe(
+    "removed-catalogue-question",
+  );
+  expect(state.reviews[0].questionId).toBe("removed-catalogue-question");
 });
 
 test("a fresh opening varies even when the previous question was not rated", () => {

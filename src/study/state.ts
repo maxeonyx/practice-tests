@@ -32,10 +32,6 @@ export interface Session {
   questionId: string;
   phase: "answer" | "feedback" | "complete";
   claim: "known" | "unknown" | null;
-  answer: string;
-  parts: string[];
-  partIndex: number;
-  assisted: boolean;
   seenIds: string[];
   cuedIds?: string[];
   decomposedIds: string[];
@@ -43,6 +39,12 @@ export interface Session {
   startedAt: string;
   lastActiveAt?: string;
   completedRating?: AnswerRating;
+  selectedChoice?: number;
+  recalledIds?: string[];
+  openResponses?: Record<
+    string,
+    { stage: "preview" | "supports" | "write" | "model"; draft: string }
+  >;
 }
 export interface LearnerState {
   preferences: Preferences;
@@ -57,10 +59,6 @@ export function startSession(questionId: string, now = new Date()): Session {
     questionId,
     phase: "answer",
     claim: null,
-    answer: "",
-    parts: [],
-    partIndex: 0,
-    assisted: false,
     seenIds: [],
     decomposedIds: [],
     frames: [],

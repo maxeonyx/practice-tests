@@ -6,10 +6,14 @@ export interface Source {
   file: string;
   sha256: string;
   kind: string;
+  url?: string;
+  contextUrl?: string;
+  collection?: "archive" | "supplementary";
 }
 export interface SourceReference {
   sourceId: string;
-  page: number;
+  page?: number | string;
+  section?: string;
   excerpt: string;
 }
 export interface Assessment {
@@ -52,12 +56,22 @@ export interface Question {
   sources: SourceReference[];
   importance: number;
   estimatedSeconds: number;
+  interaction?:
+    | {
+        type: "multiple-choice" | "true-false";
+        choices: string[];
+        correctChoice: number;
+        incorrectExplanations: string[];
+      }
+    | { type: "open-answer" }
+    | { type: "diagram"; diagramId?: "raas" };
   visual?: {
     src: string;
     alt: string;
     showOn: "question" | "answer" | "both";
     sourceId?: string;
     page?: number;
+    answerSrc?: string;
   };
   provenance?: {
     kind: "guide-revision";
@@ -83,7 +97,7 @@ export interface Cluster {
   title: string;
   section: string;
   questionId: string;
-  diagram: {
+  diagram?: {
     kind: "chain" | "map" | "compare" | "timeline";
     central: string;
     nodes: { conceptId: string; label: string; answer: string }[];
@@ -131,3 +145,12 @@ export function question(id: string): Question {
     );
   return value;
 }
+
+export const studyQuestionIds = new Set<string>();
+function includeStudyQuestion(id: string): void {
+  if (studyQuestionIds.has(id)) return;
+  studyQuestionIds.add(id);
+  for (const child of question(id).prerequisiteQuestionIds)
+    includeStudyQuestion(child);
+}
+for (const id of studyRootIds) includeStudyQuestion(id);

@@ -10,13 +10,15 @@ Max supplied the Pharmacology final as “50% Nov 2” and confirmed long answer
 
 ## Authoring and review
 
-The prototype feed uses the eight `studyRootIds` in `data.json`, with 24 reachable question cards; the full collection remains available for curriculum review and saved-progress compatibility.
+The feed contains 740 focused questions and 180 larger exam questions, all reachable from 575 study roots. Flashcards, multiple choice, true/false, diagram recall and scaffolded open answers share the learner feed. The 46 source records distinguish supplied teaching from attributed supplementary references.
 
 Use the supplied current guide/lecture/lab content first. Check the actual PDF page or slide, including image and SmartArt content, rather than relying on extraction alone. A source excerpt must exist on the referenced page and support the answer. Preserve source qualifiers. Do not import unanswered quiz attempts as an answer key. Older mindmaps are marked outdated in the course pages and need current corroboration.
 
 Ground learning in accurate subject images wherever useful. Use a chain for a genuine sequence, a timeline for time or age, a comparison for alternatives, and a person/whānau map for parallel care domains. These content visuals serve a different purpose from the subtle wordless prerequisite DAG. Keep each ordinary question clear and its answer concise. Larger written cases can carry the reasoning needed for later exam practice.
 
 Record coverage limits for authors and on-demand source information. Missing textbooks and external teaching links cannot supply answers; conflicting or clinically questionable statements require an accuracy check before teaching. These limits affect coverage, so counts of practised questions are not a predicted exam score.
+
+Graph validation checks every question, concept, source and prerequisite link. Source and objective review is ongoing; structural completeness does not establish exhaustive exam preparation. Integrated Care still has unavailable catheter and vaccine-procedure teaching, unresolved PHQ-3/EPDS details, partial wound-treatment selection, and unverified current cancer-screening guidance. Supplementary sources explicitly support the older-adult condition comparison. Pharmacology review checks each guide objective and named medicine against the actual answer facets, rather than counting a keyword or reachable card as coverage.
 
 ## Reviewed grounding example
 

@@ -9,7 +9,7 @@ export default defineConfig({
   },
   plugins: [
     VitePWA({
-      registerType: "prompt",
+      registerType: "autoUpdate",
       includeAssets: ["icon.svg", "icon-192.png", "icon-512.png"],
       manifest: {
         name: "Recall · Nursing revision",
@@ -32,10 +32,16 @@ export default defineConfig({
       },
       workbox: {
         cleanupOutdatedCaches: true,
+        importScripts: ["sw-refresh.js"],
         navigateFallback: "/index.html",
         navigateFallbackDenylist: [/\/examples\.html(?:\?|$)/],
-        ignoreURLParametersMatching: [/^utm_/, /^fbclid$/, /^review$/],
-        globPatterns: ["**/*.{js,css,html,png,svg,webp,webmanifest}"],
+        ignoreURLParametersMatching: [
+          /^utm_/,
+          /^fbclid$/,
+          /^review$/,
+          /^recall-update$/,
+        ],
+        globPatterns: ["**/*.{js,css,html,png,jpg,jpeg,svg,webp,webmanifest}"],
       },
     }),
   ],

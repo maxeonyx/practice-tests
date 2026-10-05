@@ -30,22 +30,9 @@ async function readProgress(page: Page, name = reviewDatabase) {
 }
 
 async function findTeachBackQuestion(page: Page) {
-  for (let count = 0; count < 12; count++) {
-    if (
-      (await page.locator("#question-prompt").innerText()).includes(
-        "nods during your medicine explanation",
-      )
-    ) {
-      return;
-    }
-    await page.getByRole("button", { name: "I know", exact: true }).click();
-    await page.getByRole("button", { name: "Easy", exact: true }).click();
-    await expect(
-      page.getByRole("button", { name: "I know", exact: true }),
-    ).toBeVisible();
-  }
-  throw new Error(
-    "The representative feed never offered its teach-back question.",
+  await page.goto("/?review=1&question=medicine-teach-back");
+  await expect(page.locator("#question-prompt")).toContainText(
+    "nods during your medicine explanation",
   );
 }
 
@@ -171,7 +158,7 @@ test("unknown prerequisite questions step back without the parent answer and ret
   expect(supportPrompts.length).toBeGreaterThan(1);
   expect(
     supportPrompts.filter(
-      (prompt) => prompt === "What does health literacy mean?",
+      (prompt) => prompt === "How does the course define health literacy?",
     ),
   ).toHaveLength(1);
   await expect(page.locator("#question-answer")).toHaveCount(0);
@@ -307,7 +294,7 @@ test("an offline reopening retains question, image and new saved progress", asyn
   expect(errors).toEqual([]);
 });
 
-test("a stale tab cannot overwrite another tab’s saved question", async ({
+test("a stale home screen starts a five-minute session without requiring a reload or losing saved answers", async ({
   page,
   context,
 }) => {
@@ -315,16 +302,16 @@ test("a stale tab cannot overwrite another tab’s saved question", async ({
   const other = await context.newPage();
   await other.goto(reviewUrl);
   await expect(
-    other.getByRole("button", { name: "10 min", exact: true }),
+    other.getByRole("button", { name: "5 min", exact: true }),
   ).toBeVisible();
   await page.getByRole("button", { name: "10 min", exact: true }).click();
-  const savedQuestion = await page.locator("#question-prompt").innerText();
   await page.getByRole("button", { name: "I know", exact: true }).click();
-  await other.getByRole("button", { name: "10 min", exact: true }).click();
-  await expect(other.getByRole("alert")).toContainText("Another tab changed");
-  await other.reload();
-  await expect(other.locator("#question-prompt")).toHaveText(savedQuestion);
-  await expect(other.locator("#question-answer")).toContainText("Rotarix");
+  await page.getByRole("button", { name: "Easy", exact: true }).click();
+  await expect(page.locator(".answer-controls button:disabled")).toHaveCount(0);
+  await other.getByRole("button", { name: "5 min", exact: true }).click();
+  await expect(other.locator("#question-prompt")).toBeVisible();
+  await expect(other.getByRole("alert")).toBeHidden();
+  expect((await readProgress(other)).attempts).toHaveLength(1);
 });
 
 test("the review link keeps normal learner progress separate", async ({

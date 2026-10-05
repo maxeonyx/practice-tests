@@ -3,7 +3,9 @@ import {
   assessments,
   questions,
   question,
+  questionById,
   studyRootIds,
+  studyQuestionIds,
   type CourseId,
   type Question,
 } from "../content/curriculum";
@@ -57,14 +59,6 @@ export function recommend(
     (a) => new Date(a.date).getTime() > now.getTime(),
   );
   const roots = new Set(studyRootIds);
-  const availableIds = new Set<string>();
-  function include(id: string): void {
-    if (availableIds.has(id)) return;
-    availableIds.add(id);
-    for (const prerequisite of question(id).prerequisiteQuestionIds)
-      include(prerequisite);
-  }
-  for (const id of studyRootIds) include(id);
   const reviews = new Map(state.reviews.map((r) => [r.questionId, r]));
   const attempts = [...state.attempts].sort((a, b) =>
     b.answeredAt.localeCompare(a.answeredAt),
@@ -72,6 +66,7 @@ export function recommend(
   // A prerequisite sequence is one piece of course work, including missed answers.
   const work = new Map<string, StudyAttempt>();
   for (const attempt of attempts) {
+    if (!questionById.has(attempt.rootId ?? attempt.questionId)) continue;
     const key =
       attempt.rootId !== undefined && attempt.sessionStartedAt !== undefined
         ? `${attempt.sessionStartedAt}:${attempt.rootId}`
@@ -115,8 +110,14 @@ export function recommend(
   let candidates = (
     options.fresh === true ? studyRootIds.map(question) : questions
   )
-    .filter((q) => availableIds.has(q.id))
+    .filter((q) => studyQuestionIds.has(q.id))
     .filter((q) => active.some((a) => a.courseId === q.courseId))
+    .filter(
+      (q) =>
+        q.interaction?.type !== "open-answer" ||
+        state.preferences.availableMinutes === null ||
+        state.preferences.availableMinutes >= 20,
+    )
     .filter((q) => {
       if (options.fresh === true) return true;
       const review = reviews.get(q.id);
@@ -181,7 +182,7 @@ export function recommend(
         now.getTime() - Date.parse(a.answeredAt) < 3 * 3600000,
     ).length;
     const breadth =
-      roots.has(q.id) && review === undefined ? 1 + 1 / (1 + unitWork) : 1;
+      roots.has(q.id) && review === undefined ? 1 + 3 / (1 + unitWork) : 1;
     const short =
       state.preferences.availableMinutes !== null &&
       state.preferences.availableMinutes <= 10

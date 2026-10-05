@@ -1,6 +1,7 @@
 import "../style.css";
 import "./style.css";
-import { registerSW } from "virtual:pwa-register";
+import { escape, presentQuestion } from "../ui/question";
+import { automaticUpdates } from "../persistence/updates";
 import { sourceById } from "../content/curriculum";
 import { controlIcon, knowledgeShape } from "../ui/visuals";
 import { card, examples, type ExampleKind } from "./content";
@@ -21,14 +22,6 @@ interface ExampleState {
   openStage: "preview" | "supports" | "write" | "model";
   draft: string;
 }
-const escape = (text: string) =>
-  text.replace(
-    /[&<>"']/g,
-    (c) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
-        c
-      ]!,
-  );
 const app = document.querySelector<HTMLElement>("#app")!;
 app.innerHTML = `<main><div id="example-error" role="alert" hidden></div><div id="example-view"></div></main><dialog><button class="icon-button close" aria-label="Close">${controlIcon("close")}</button><div id="example-information"></div></dialog>`;
 const view = document.querySelector<HTMLElement>("#example-view")!;
@@ -67,22 +60,6 @@ function start(kind: ExampleKind) {
   location.hash = kind;
   render();
 }
-function raas(revealed: boolean) {
-  return `<svg class="raas-diagram" viewBox="0 0 420 350" role="img" aria-label="Renin–angiotensin pathway: angiotensin I is converted to angiotensin II at the highlighted enzyme gap; angiotensin II contributes to narrowing blood vessels and retaining sodium and water."><defs><marker id="raas-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="m0 0 8 4-8 4" fill="#87659f"/></marker></defs><g fill="none" stroke="#c6b5d3" stroke-width="3" marker-end="url(#raas-arrow)"><path d="M210 54V154"/><path d="M210 190C210 229 100 215 100 263"/><path d="M210 190C210 229 320 215 320 263"/></g><g font-family="system-ui,sans-serif" font-size="19" text-anchor="middle" fill="#523967"><text x="210" y="36">Angiotensin I</text><text x="210" y="182">Angiotensin II</text></g><rect x="163" y="88" width="94" height="44" rx="22" fill="${revealed ? "#67478b" : "#ece6f3"}" stroke="#87659f" stroke-dasharray="${revealed ? "none" : "4 4"}"/><text x="210" y="117" text-anchor="middle" font-family="system-ui,sans-serif" font-size="21" fill="${revealed ? "white" : "#67478b"}">${revealed ? "ACE" : "?"}</text><g fill="none" stroke="#87659f" stroke-width="5" stroke-linecap="round"><path d="M55 279C78 279 81 298 100 298S122 279 145 279M55 322C78 322 81 307 100 307S122 322 145 322"/><path d="M310 274C275 254 268 310 296 326C310 334 328 326 329 307C302 312 297 297 310 274Z"/></g><g fill="#bca3cb"><circle cx="348" cy="284" r="5"/><circle cx="365" cy="299" r="5"/><circle cx="350" cy="315" r="5"/></g></svg>`;
-}
-function visual(revealed: boolean) {
-  const q = card(state!.currentId);
-  if (q.id === "example-ace") return raas(revealed);
-  const image = q.visual;
-  if (
-    image === undefined ||
-    (image.showOn === "answer" && !revealed) ||
-    (image.showOn === "question" && revealed)
-  )
-    return "";
-  return `<figure class="learning-visual"><img src="${escape(image.src)}" alt="${escape(image.alt)}"/></figure>`;
-}
-const ratings = `<button class="wrong" data-rating="again">I was wrong</button><button data-rating="hard">Hard</button><button data-rating="good">Medium</button><button data-rating="easy">Easy</button>`;
 function render() {
   if (state === null) {
     document.body.dataset.course = "home";
@@ -92,54 +69,32 @@ function render() {
   const s = state;
   const q = card(s.currentId);
   document.body.dataset.course = q.courseId;
-  let content = "";
-  let controls = "";
-  let ratingControls = false;
-  if (s.kind === "open-answer" && s.currentId === root()) {
-    if (s.openStage === "preview")
-      controls =
-        '<button class="primary next" data-action="break-down">Break it down</button>';
-    if (s.openStage === "write") {
-      content = `<textarea class="response-input" aria-label="Your answer">${escape(s.draft)}</textarea><button class="dictation-help" data-action="dictation">Dictate</button>`;
-      controls = `<button class="primary next" data-action="model" ${s.draft.trim().length === 0 ? "disabled" : ""}>Show model answer</button>`;
-    }
-    if (s.openStage === "model") {
-      content = `${s.draft.trim().length > 0 ? `<textarea class="response-input" aria-label="Your answer">${escape(s.draft)}</textarea>` : ""}<div id="model-answer" class="answer"><h2>Model answer</h2><ol class="model-points">${q.rubric.map((line) => `<li>${escape(line)}</li>`).join("")}</ol></div>${visual(true)}`;
-      controls = s.unknown
-        ? '<button class="primary next" data-action="continue">Next</button>'
-        : ratings;
-      ratingControls = !s.unknown;
-    }
-  } else if (q.choices !== undefined) {
-    content = `<div class="example-choices">${q.choices.map((choice, i) => `<button data-choice="${i}" ${s.selected !== null ? "disabled" : ""} class="${s.selected === i ? (i === q.correctChoice ? "selected-correct" : "selected-wrong") : ""}">${escape(choice)}</button>`).join("")}</div>`;
-    if (s.unknown && s.revealed) {
-      content = `${visual(true)}<div id="question-answer" class="answer">${q.rubric.map((line) => `<p>${escape(line)}</p>`).join("")}</div>`;
-      controls =
-        '<button class="primary next" data-action="continue">Next</button>';
-    } else if (s.selected === null)
-      controls =
-        '<button class="secondary next" data-action="unknown">I don’t know</button>';
-    else if (s.selected === q.correctChoice) {
-      content += `<p class="choice-result" role="status">Correct</p>${visual(true)}<div id="question-answer" class="answer">${q.rubric.map((line) => `<p>${escape(line)}</p>`).join("")}</div>`;
-      controls =
-        '<button class="primary next" data-action="continue">Next</button>';
-    } else {
-      content += `<p class="choice-result" role="status">${escape(q.incorrectExplanations![s.selected])}</p>`;
-      controls =
-        '<button class="primary next" data-action="repair">Continue</button>';
-    }
-  } else {
-    content = visual(s.revealed);
-    if (s.revealed)
-      content += `<div id="question-answer" class="answer" tabindex="-1">${q.rubric.map((line) => `<p>${escape(line)}</p>`).join("")}</div>`;
-    controls = s.revealed
-      ? s.unknown
-        ? '<button class="primary next" data-action="continue">Next</button>'
-        : ratings
-      : '<button class="secondary" data-action="unknown">I don’t know</button><button class="primary" data-action="known">I know</button>';
-    ratingControls = s.revealed && !s.unknown;
-  }
-  view.innerHTML = `<section class="study example-study ${s.openStage === "model" ? "open-model" : ""}"><div class="study-tools"><button class="icon-button" data-action="menu" aria-label="Examples">${controlIcon("home")}</button>${knowledgeShape(root(), s.currentId, previousId, (id) => card(id).prerequisiteQuestionIds)}<button class="icon-button" data-action="sources" aria-label="Question information">${controlIcon("info")}</button></div><article class="card"><h1 id="question-prompt" class="question-prompt">${escape(q.prompt)}</h1>${content}</article><div class="answer-controls ${ratingControls ? "rating-controls" : ""}">${controls}</div></section>`;
+  const { content, controls, ratingControls, openModel } = presentQuestion(
+    {
+      ...q,
+      interaction:
+        q.choices !== undefined
+          ? {
+              type: s.kind === "true-false" ? "true-false" : "multiple-choice",
+              choices: q.choices,
+              correctChoice: q.correctChoice!,
+              incorrectExplanations: q.incorrectExplanations!,
+            }
+          : q.id === "example-ace"
+            ? { type: "diagram", diagramId: "raas" }
+            : s.kind === "open-answer" && s.currentId === root()
+              ? { type: "open-answer" }
+              : undefined,
+    },
+    {
+      revealed: s.revealed,
+      unknown: s.unknown,
+      selected: s.selected ?? undefined,
+      openStage: s.openStage,
+      draft: s.draft,
+    },
+  );
+  view.innerHTML = `<section class="study example-study ${openModel ? "open-model" : ""}"><div class="study-tools"><button class="icon-button" data-action="menu" aria-label="Examples">${controlIcon("home")}</button>${knowledgeShape(root(), s.currentId, previousId, (id) => card(id).prerequisiteQuestionIds)}<button class="icon-button" data-action="sources" aria-label="Question information">${controlIcon("info")}</button></div><article class="card"><h1 id="question-prompt" class="question-prompt">${escape(q.prompt)}</h1>${content}</article><div class="answer-controls ${ratingControls ? "rating-controls" : ""}">${controls}</div></section>`;
 }
 function move(id: string) {
   previousId = state!.currentId;
@@ -299,6 +254,7 @@ view.addEventListener("click", async (event) => {
     banner.textContent = `The example could not continue. ${error instanceof Error ? error.message : "Return to Examples and reopen it."}`;
   } finally {
     busy = false;
+    applyPendingUpdate();
   }
 });
 dialog.querySelector("button")!.addEventListener("click", () => dialog.close());
@@ -313,4 +269,12 @@ function navigate() {
 }
 window.addEventListener("hashchange", navigate);
 navigate();
-registerSW();
+const applyPendingUpdate = automaticUpdates(
+  () =>
+    !busy &&
+    !(
+      state !== null &&
+      state.currentId === root() &&
+      state.openStage === "write"
+    ),
+);
